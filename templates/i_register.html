@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} PROJECT APP HOMEPAGE {% endblock %}
+
+{% block body %}
+
+
+<h2>Create an account as an institution</h2>
+  <form action="/i_register" method="POST">
+    
+    <p>
+      Institution Name <input type="text" name="iname">
+    </p>
+    <p>
+      Institution Address <input type="text" name="iaddress">
+    </p>
+    <p>
+      Email <input type="text" name="iemail">
+    </p>
+
+    <p>
+      Password <input type="password" name="ipassword">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+
+    <a href="/inst_login">I already have an account</a>
+{% endblock %}

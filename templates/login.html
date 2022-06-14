@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} PROJECT APP HOMEPAGE {% endblock %}
+
+{% block body %}
+
+<h2>I'm a Volunteer</h2>
+<form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="vemail">
+    </p>
+
+    <p>
+      Password <input type="password" name="vpassword">
+    </p>
+
+    <p>
+      <input type="vsubmit">
+    </p>
+</form>
+
+<h2>I'm an Institution</h2>
+<form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="iemail">
+    </p>
+
+    <p>
+      Password <input type="password" name="ipassword">
+    </p>
+
+    <p>
+      <input type="isubmit">
+    </p>
+</form>
+
+
+
+{% endblock %}
