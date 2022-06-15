@@ -20,26 +20,9 @@ def homepage():
 
 
 
-#LOGIN PAGE
-@app.route('/login', methods=["POST"])
-def login_volunteer():
-
-    vemail = request.form.get("vemail") #form email from login page
-    vpassword = request.form.get("vpassword")
-
-    user = crud.get_volunteer_by_email(vemail)
-
-    if user and user.v_password != vpassword:
-        flash('email or password does not match')
-    else:
-        session["user_email"] = user.v_email
-        flash('Logged in')
-    return redirect('/')
-
-
 # REGISTER PAGE
 @app.route('/register')
-def login_inst():
+def register_users():
     """ Return page for user to chose how to register """
 
     return render_template('register.html')
@@ -70,9 +53,9 @@ def register_institution():
         db.session.add(user)    
         db.session.commit()
         flash('Account created! Please, log in.')
+        return redirect('/login_page')
 
-
-    return redirect('/')
+    return redirect('/inst_register')
 
 
 # REGISTER AS VOLUNTEER
@@ -102,48 +85,63 @@ def register_volunteer():
         db.session.add(user)    
         db.session.commit()
         flash('Account created! Please, log in.')
+        # return render_template('login.html')
+        return redirect('/login_page')
 
-    return redirect('/')
-
-
-
-# LOGIN PAGE
-
-# @app.route('/after_login')
-# def login_1page():
-#     return render_template('login.html')
-
-# @app.route('/login')
-# def login_page():
-#     """ Show loggged in page """
-
-#     volu_email = request.form.get("vemail")
-#     volu_password = request.form.get("vpassword")
-
-#     inst_email = request.form.get("iemail")
-#     inst_password = request.form.get("ipassword")
-
-#     volu_info = crud.Volunteer.query.filter_by(v_email=volu_email).first()
-#     inst_info = crud.Institution.query.filter_by(inst_email=inst_email).first()
-
-#     # volunteer
-#     if volu_info and volu_info.password == volu_password:
-#         flash("Logged in!")
-#         session['volunteer_id'] = volu_info.volunteer_id
-#         return redirect('/v_profile')
-
-#     else:
-#         flash("User email or password don't match. Try again.")
+    return redirect('/volu_register')
 
 
-#     # institution
-#     if inst_info and inst_info.password == inst_password:
-#         flash("Logged in!")
-#         session['inst_id'] = inst_info.inst_id
-#         return redirect('/i_profile')
+#LOGIN PAGE
+@app.route('/login_page')
+def login_page():
+    return render_template('login.html')
 
-#     else:
-#         flash("User email or password don't match. Try again.")
+
+@app.route('/login', methods=['POST'])
+def login():
+    """ Show logged in page """
+
+    volu_email = request.form.get("vemail")
+    volu_password = request.form.get("vpassword")
+
+    inst_email = request.form.get("iemail")
+    inst_password = request.form.get("ipassword")
+
+    volu_info = crud.Volunteer.query.filter_by(v_email=volu_email).first()
+    inst_info = crud.Institution.query.filter_by(inst_email=inst_email).first()
+
+    # volunteer
+    if volu_info and volu_info.v_password == volu_password:
+        session['volunteer'] = volu_info.volunteer_id # SHOULD I USE THE ID OR THE USER NAME?
+        return redirect('/vol_profile')
+
+    else:
+        flash("User email or password don't match. Try again.")
+
+
+    # institution
+    if inst_info and inst_info.inst_password == inst_password:
+        session['inst'] = inst_info.inst_id
+        return redirect('/inst_profile')
+
+    else:
+        flash("User email or password don't match. Try again.")
+
+# INSTITUTION PROFILE
+@app.route('/inst_profile/')
+def inst_profile():
+    """ Institution profile page """
+
+    if "inst" in session:
+        inst_id = session["inst"]
+
+    inst = crud.get_inst_by_id(inst_id)
+    return render_template('inst_profile.html')
+
+
+
+
+
 
 
 if __name__ == "__main__":
