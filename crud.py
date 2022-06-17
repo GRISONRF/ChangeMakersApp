@@ -71,7 +71,7 @@ def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address,
 
 def get_events():
     """ Get all the events """
-
+    
     events = Event.query.all()
     return events
 

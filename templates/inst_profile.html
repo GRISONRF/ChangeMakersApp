@@ -16,52 +16,63 @@
 
 <h1>MY EVENTS</h1>
 <p>list of all the events</p>
-
-<p>Create a new event</p>
-
-
-
-<div>
-<form action="/new_event" method="POST">
-    <!-- <div class="form-row">
-        <div class="form-group col-md-6"> -->
-
-            <label for="evt_date" >Date:</label>
-            <input name="evt_date" id="evt_date" class="" placeholder="DAY/MONTH/YEAR"></input>
-            
-        <!-- </div>
-    </div> -->
+{% for events in all_events %}
+    <p> {{ events.evt_title }} </p>
+    <p> {{ events.evt_date }}</p>
+    <p> {{ events.evt_start_time }} </p>
+{% endfor %}
 
 
-    <label for="evt_time">Event duration:</label>
-    From: <input type="time" id="appt" name="evt_start_time" min="00:00" max="24:00" required>
-    To: <input type="time" id="appt" name="evt_end_time"min="00:00" max="24:00" required>
+<!-- button to create a new event -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
 
+<div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
-
-
-    <label for="evt_address">Address:</label>
-    <input name="evt_address" id="evt_address"></input>
-
-
-
-    <!-- <label for="evt_limit">Limit of volunteers:</label>
-    <input name="evt_limit" id="evt_limit"></input> -->
-
-
-    <label for="evt_title">Event Title:</label>
-    <input name="evt_title" id="evt_title"></input>
+        <form action="/new_event" id="form-new-evt">
+          <div class="mb-3">
+            <label for="evt_title" class="col-form-label">Event Title:</label>
+            <input name="evt_title" id="evt_title"></input>
     
-    <label for="evt_description">Event Description:</label>
-    <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="evt_date" class="col-form-label">Date:</label>
+            <input name="evt_date" id="evt_date" class="" placeholder="dd/mm/yyyy"></input>            
+          </div>
+         
+          <div class="mb-3">
+            <label for="evt_time" class="col-form-label">Event duration:</label>
+            From: <input type="time" id="evt_start_time" name="evt_start_time" min="00:00" max="24:00" required>
+            To: <input type="time" id="evt_end_time" name="evt_end_time"min="00:00" max="24:00" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="evt_address" class="col-form-label">Address:</label>
+            <input name="evt_address" id="evt_address"></input>   
+          </div>
 
+          <div class="mb-3">
+            <label for="evt_description" class="col-form-label">Event Description:</label>
+            <textarea name="evt_description" id="evt_description" placeholder="Write your event description." form="form-new-evt"></textarea> 
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="create-event">Create Event</button>
+      </div>
 
-
-    <button class="btn btn-lg btn-primary btn-block mt-4" id= "create-button" type="submit">Create Event
-
-</form>
-
-
+    </div>
+  </div>
 </div>
+
+
 
 {% endblock %}

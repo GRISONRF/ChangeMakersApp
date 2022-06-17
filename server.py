@@ -145,8 +145,10 @@ def inst_profile():
         inst_id = session["inst"] 
 
         inst = crud.get_inst_by_id(inst_id)
+        all_events = crud.get_events()
 
-        return render_template('inst_profile.html', inst=inst)
+        return render_template('inst_profile.html', inst=inst, all_events=all_events)
+
     else: return render_template('login.html')
 
 
@@ -192,13 +194,40 @@ def create_event():
 
     db.session.add(new_event) #do I need this?
     db.session.commit()
+
+    all_events = crud.get_events()
     # return redirect('/new_event')
-    return render_template('new_event.html', new_event=new_event, evt_title=evt_title, evt_date=evt_date, evt_start_time=evt_start_time, evt_end_time=evt_end_time, evt_address=evt_address, evt_description=evt_description, evt_lat=evt_lat, evt_long=evt_long)
+    return render_template('inst_profile.html', all_events=all_events)
 
 
 # @app.route('/new-event', methods=['POST'])
 # def show_new_event():
-#     return render_template("new-event.html")
+
+#     evt_title = request.json.get("evt_title")
+#     evt_date = request.json.get("evt_date")
+#     evt_start_time = request.json.get("evt_start_time")
+#     evt_end_time = request.json.get("evt_end_time")
+#     evt_address = request.json.get("evt_address")
+#     evt_description = request.json.get("evt_description")
+
+#     evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
+
+#     evt_address = Nominatim(user_agent='inst-event').geocode(evt_address).address
+#     evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
+#     evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
+
+#     # need to get te inst_id to create an event
+#     if "inst" in session:
+#         inst_user = session["inst"]
+
+#     new_event = crud.create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_user, evt_description)
+
+#     db.session.add(new_event)
+#     db.session.commit()
+
+#     return { "success": True,
+#     "status": new_event
+#         }
 
 
 
