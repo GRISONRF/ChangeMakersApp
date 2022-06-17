@@ -21,7 +21,7 @@ class Volunteer(db.Model):
     v_address = db.Column(db.String(100))
 
     favorites = db.relationship("Institution", secondary="favorites", backref="volunteers")  #
-    events = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")   #FOR THE ASSOCIATION TABLE?
+    events = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")   
     # events = db.relationship("Event", back_populates="volunteers")
     comments = db.relationship("VolunteerComment", back_populates="volunteer")
 
@@ -57,6 +57,8 @@ class Institution(db.Model):
     inst_email = db.Column(db.String(60), unique=True, nullable=False)
     inst_password = db.Column(db.String(15), nullable=False)
     inst_address = db.Column(db.String(500))
+    inst_lat = db.Column(db.Integer)
+    inst_long = db.Column(db.Integer)
  
     events = db.relationship("Event", back_populates="inst")
     #free at. volunteers
@@ -92,11 +94,16 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    evt_title = db.Column(db.String(200), nullable=False)
+    evt_title = db.Column(db.String(100), nullable=False)
     evt_date = db.Column(db.Date)
-    evt_location = db.Column(db.String(200), nullable=False)
+    evt_start_time = db.Column(db.Time)
+    evt_end_time = db.Column(db.Time)
+    evt_address = db.Column(db.String, nullable=False)
+    evt_lat = db.Column(db.Integer)
+    evt_long = db.Column(db.Integer)
+    evt_description = db.Column(db.Text)
     inst_id = db.Column(db.Integer, db.ForeignKey('institutions.inst_id'))
-    volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
+    # volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
 
     inst = db.relationship("Institution", back_populates="events")
     # volunteers for free  
@@ -104,7 +111,7 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_location={self.evt_location} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
+        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_address={self.evt_address} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
 
 
 class VolunteerComment(db.Model):
@@ -148,5 +155,6 @@ if __name__ == "__main__":
     # Call connect_to_db(app, echo=False) if your program output gets
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
-
+    
     connect_to_db(app)
+    db.create_all()

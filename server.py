@@ -5,6 +5,9 @@ from flask import (Flask, render_template, request, flash, session,
 import crud
 from model import connect_to_db, db
 from jinja2 import StrictUndefined
+from datetime import datetime
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -91,7 +94,7 @@ def register_volunteer():
     return redirect('/volu_register')
 
 
-#LOGIN PAGE
+#LOGIN
 @app.route('/login_page')
 def login_page():
     return render_template('login.html')
@@ -99,20 +102,23 @@ def login_page():
 
 @app.route('/login', methods=['POST'])
 def login():
-    """ Show logged in page """
+    """ Login with email and password """
 
+    # Get data from the form
     volu_email = request.form.get("vemail")
     volu_password = request.form.get("vpassword")
 
     inst_email = request.form.get("iemail")
     inst_password = request.form.get("ipassword")
 
-    volu_info = crud.Volunteer.query.filter_by(v_email=volu_email).first()
-    inst_info = crud.Institution.query.filter_by(inst_email=inst_email).first()
+    # Get user's password to check if the entered password is correct.
+    volu_user = crud.Volunteer.query.filter_by(v_email=volu_email).first()
+
+    inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
 
     # volunteer
-    if volu_info and volu_info.v_password == volu_password:
-        session['volunteer'] = volu_info.volunteer_id # SHOULD I USE THE ID OR THE USER NAME?
+    if volu_user and volu_user.v_password == volu_password:
+        session['volunteer'] = volu_user.volunteer_id # SHOULD I USE THE ID OR THE USER NAME?
         return redirect('/vol_profile')
 
     else:
@@ -120,27 +126,79 @@ def login():
 
 
     # institution
-    if inst_info and inst_info.inst_password == inst_password:
-        session['inst'] = inst_info.inst_id
+    if inst_user and inst_user.inst_password == inst_password:
+        session['inst'] = inst_user.inst_id
+
         return redirect('/inst_profile')
 
     else:
         flash("User email or password don't match. Try again.")
+        
+    return redirect('/')
 
 # INSTITUTION PROFILE
-@app.route('/inst_profile/')
+@app.route('/inst_profile')
 def inst_profile():
     """ Institution profile page """
 
     if "inst" in session:
-        inst_id = session["inst"]
+        inst_id = session["inst"] 
 
-    inst = crud.get_inst_by_id(inst_id)
-    return render_template('inst_profile.html')
+        inst = crud.get_inst_by_id(inst_id)
+
+        return render_template('inst_profile.html', inst=inst)
+    else: return render_template('login.html')
+
+
+# VOLUNTEER PROFILE
+@app.route('/inst_profile')
+def volu_profile():
+    """ Volunteer profile page """
+
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+
+    volunteer = crud.get_volunter_by_id(volunteer_id)
+
+    return render_template('inst_profile.html', volunteer=volunteer,)
 
 
 
+# CREATE A NEW EVENT
+@app.route('/new_event', methods=['POST'])
+def create_event():
+    """ Create a new event """
 
+    # Get info from the form
+    evt_title = request.form.get("evt_title")
+    evt_date = request.form.get("evt_date") 
+    evt_start_time = request.form.get("evt_start_time")
+    evt_end_time = request.form.get("evt_end_time")
+    evt_address = request.form.get("evt_address") 
+    evt_description = request.form.get("evt_description")
+
+    evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
+
+    evt_address = Nominatim(user_agent='inst-event').geocode(evt_address).address
+    evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
+    evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
+
+
+    # need to get te inst_id to create an event
+    if "inst" in session:
+        inst_user = session["inst"]
+
+    new_event = crud.create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_user, evt_description)
+
+    db.session.add(new_event) #do I need this?
+    db.session.commit()
+    # return redirect('/new_event')
+    return render_template('new_event.html', new_event=new_event, evt_title=evt_title, evt_date=evt_date, evt_start_time=evt_start_time, evt_end_time=evt_end_time, evt_address=evt_address, evt_description=evt_description, evt_lat=evt_lat, evt_long=evt_long)
+
+
+# @app.route('/new-event', methods=['POST'])
+# def show_new_event():
+#     return render_template("new-event.html")
 
 
 

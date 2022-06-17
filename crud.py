@@ -63,9 +63,15 @@ def create_volunteer_comment(comment, event, volunteer):
 
 # EVENT
 #Do I need to add volunteer, inst and comments as parameters?
-def create_event(evt_title, evt_date, evt_location, inst, comments ):
+def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_id, evt_description):
     """ create and return an event """
 
-    event = Event(evt_title=evt_title, evt_date=evt_date, evt_location=evt_location, inst=inst, comments=comments)
-    return event
+    new_event = Event(evt_title=evt_title, evt_date=evt_date, evt_start_time=evt_start_time, evt_end_time=evt_end_time, evt_address=evt_address, evt_lat=evt_lat, evt_long=evt_long, inst_id=inst_id, evt_description=evt_description)
+    return new_event
+
+def get_events():
+    """ Get all the events """
+
+    events = Event.query.all()
+    return events
 

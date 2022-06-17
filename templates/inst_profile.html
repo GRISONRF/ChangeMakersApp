@@ -4,17 +4,64 @@
 
 {% block body %}
 
-<h2>INSTITUTION NAME</h2>
+
+<h1>{{inst.inst_name}}</h1>
 <br>
-<h1>*photo that institution can upload*</h1>
+<h2>*photo that institution can upload*</h2>
 <br>
-<h1>WHO WE ARE</h1>
+<h2>WHO WE ARE</h2>
 <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
 <h1>MAP WITH A PIN @ INST. ADDRESS</h1>
 
 <h1>MY EVENTS</h1>
 <p>list of all the events</p>
+
 <p>Create a new event</p>
+
+
+
+<div>
+<form action="/new_event" method="POST">
+    <!-- <div class="form-row">
+        <div class="form-group col-md-6"> -->
+
+            <label for="evt_date" >Date:</label>
+            <input name="evt_date" id="evt_date" class="" placeholder="DAY/MONTH/YEAR"></input>
+            
+        <!-- </div>
+    </div> -->
+
+
+    <label for="evt_time">Event duration:</label>
+    From: <input type="time" id="appt" name="evt_start_time" min="00:00" max="24:00" required>
+    To: <input type="time" id="appt" name="evt_end_time"min="00:00" max="24:00" required>
+
+
+
+
+    <label for="evt_address">Address:</label>
+    <input name="evt_address" id="evt_address"></input>
+
+
+
+    <!-- <label for="evt_limit">Limit of volunteers:</label>
+    <input name="evt_limit" id="evt_limit"></input> -->
+
+
+    <label for="evt_title">Event Title:</label>
+    <input name="evt_title" id="evt_title"></input>
+    
+    <label for="evt_description">Event Description:</label>
+    <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea>
+
+
+
+    <button class="btn btn-lg btn-primary btn-block mt-4" id= "create-button" type="submit">Create Event
+
+</form>
+
+
+</div>
 
 {% endblock %}

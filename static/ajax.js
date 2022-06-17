@@ -1,17 +1,22 @@
 // VOLUNTEER REGISTER PAGE
 
+const createEvt = document.querySelector('#create-button');
 
-function showVolunteerForm(evt) {
-    /* When click to register as volunteer */
+createEvt.addEventListener('click', () => {
+  /* When click the 'create new event' button */
+  
 
-    evt.preventDefault();
+  const queryString = new URLSearchParams({}).toString();
+  const url = `/inst_profile?${queryString}`;
 
-    const url = '/register'
 
-    fetch(url)
-    .then((response) => response.text())
-    .then((status) => {
-      document.querySelector('create-volunteer').innerHTML = status;
-    });
 
-} 
+  fetch(url)
+  .then((response) => response.json())
+  .then((status) => {
+
+    document.querySelector('create-volunteer').innerHTML = status;
+
+  });
+
+}

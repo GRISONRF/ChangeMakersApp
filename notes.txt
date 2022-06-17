@@ -22,3 +22,21 @@ db.create_all()
 **Should always do this after making changes to your schema (ex. adding tables, adding columns, changing the data types/names of columns)***
 -------------------------
 test_inst = Institution(inst_name='test_inst', inst_email='inst@test.test', inst_password='test_inst pass', inst_address='inst address test', )
+
+
+---------------
+olhar projetos
+
+https://www.youtube.com/watch?v=SJ8rJZKpxM0&list=PL15A4sWMqy6gXKjW_tHjD3zMpde-fo4oO&index=2
+
+https://github.com/shu004
+
+
+https://www.youtube.com/watch?v=Lxl4LQHNO7I&list=PL15A4sWMqy6j245RE82h1fy0cvjqljsY6&index=3
+
+https://github.com/BeatrizNiemeyer/My-Social-Dog-Project
+
+lab-ratings
+shopping-site
+
+sudo pg_ctlcluster 13 main start
