@@ -1,4 +1,4 @@
-// CREATE A NEW EVENT FORM
+// // CREATE A NEW EVENT FORM
 
 const createEvt = document.querySelector('#create-event');
 
@@ -33,8 +33,10 @@ createEvt.addEventListener('click', (evt) => {
 
 })
 
-// // CREATE A NEW EVENT BUTTON
+// CREATE A NEW EVENT BUTTON
 // const createEvent = document.getElementById('createEvent')
+// console.log(createEvent)
+
 // createEvent.addEventListener('show.bs.modal', event => {
 //   // Button that triggered the modal
 //   const button = event.relatedTarget
