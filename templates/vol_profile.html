@@ -1,26 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %} PROJECT APP HOMEPAGE {% endblock %}
+{% block title %} {{ volunteer.fname }} PROFILE {% endblock %}
 
 {% block body %}
 
-<h1 id="name">{{user.fullname}}'s Profile</h1>
+<h1 id="name"> Hi {{ volunteer.fname }} {{ volunteer.lname }}.</h1>
 <div class="profile">
 
 <h3 id="info">Your Information</h3>
-<img id="img" src="{{user.profile_photo}}">
 <ul>
-<li>Name: {{user.fullname}}</li>
-<li>Email:{{user.email}}</li>
-<li>Address: {{user.address}}</li>
+<li>Name: {{ volunteer.fname}}</li>
+<li>Email:{{ volunteer.v_email}}</li>
+<li>Address: {{volunteer.v_address}}</li>
 </ul>
-<form action="/upload_picture" method="post" enctype="multipart/form-data">
+<!-- <form action="/upload_picture" method="post" enctype="multipart/form-data">
     <input type="file" name="dog_picture">
     <button  class="button" type="submit"> Submit</button>
-</form>
+</form> -->
 <br>
 <br>
-<form action="/update_user">
+<!-- <form action="/update_user">
     <h4>Update your Information</h4>
       <p>
         Fullname <input type="text" name="fullname">
@@ -32,6 +31,17 @@
 
     <button class="button" type="submit"> Update user </button>
 
-</form>
+</form> -->
+
+
+</div>
+
+<div>
+  <h2>Events near me:</h2>
+  <form action="/events" method="POST">
+    <input type="text" name="location">
+    <button type="submit">Find</button>
+  </form>
+</div>
 
 {% endblock %}

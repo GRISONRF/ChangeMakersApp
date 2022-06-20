@@ -1,5 +1,6 @@
 """Server for movie ratings app."""
 
+from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
 import crud
@@ -113,12 +114,11 @@ def login():
 
     # Get user's password to check if the entered password is correct.
     volu_user = crud.Volunteer.query.filter_by(v_email=volu_email).first()
-
     inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
 
     # volunteer
     if volu_user and volu_user.v_password == volu_password:
-        session['volunteer'] = volu_user.volunteer_id # SHOULD I USE THE ID OR THE USER NAME?
+        session['volunteer'] = volu_user.volunteer_id
         return redirect('/vol_profile')
 
     else:
@@ -135,6 +135,14 @@ def login():
         flash("User email or password don't match. Try again.")
         
     return redirect('/')
+
+#LOGOUT
+
+@app.route('/logout')
+def logout():
+    session.pop('username',None)
+    return redirect('/homepage')
+ 
 
 # INSTITUTION PROFILE
 @app.route('/inst_profile')
@@ -153,7 +161,7 @@ def inst_profile():
 
 
 # VOLUNTEER PROFILE
-@app.route('/inst_profile')
+@app.route('/vol_profile')
 def volu_profile():
     """ Volunteer profile page """
 
@@ -162,14 +170,15 @@ def volu_profile():
 
     volunteer = crud.get_volunter_by_id(volunteer_id)
 
-    return render_template('inst_profile.html', volunteer=volunteer,)
 
+    return render_template('vol_profile.html', volunteer=volunteer)
+    
 
 
 # CREATE A NEW EVENT
 @app.route('/new_event', methods=['POST'])
 def create_event():
-    """ Create a new event """
+    """ Save event in database and show new event card on inst_profile page """
 
     # Get info from the form
     evt_title = request.form.get("evt_title")
@@ -185,49 +194,93 @@ def create_event():
     evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
     evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
 
-
-    # need to get te inst_id to create an event
+    # Still need to create an ELSE for when inst_user is NOT in session.
     if "inst" in session:
         inst_user = session["inst"]
 
-    new_event = crud.create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_user, evt_description)
+    new_event = crud.create_event(
+        evt_title, 
+        evt_date, 
+        evt_start_time, 
+        evt_end_time, 
+        evt_address, 
+        evt_lat, 
+        evt_long, 
+        inst_user, 
+        evt_description
+        )
 
-    db.session.add(new_event) #do I need this?
+   
+    db.session.add(new_event) 
     db.session.commit()
 
     all_events = crud.get_events()
-    # return redirect('/new_event')
-    return render_template('inst_profile.html', all_events=all_events)
+
+    return render_template('inst_profile.html', all_events=all_events, inst_user=inst_user)
+
+# UPDATE USER PROFILE
+# @app.route("/update_user")
+# def update_user():
+#     """ User update profile """
+
+#     if "user" in session:
+#         user_id = session["user"]
+
+#     fullname = request.args.get('fullname')
+#     address = request.args.get('address')
+#     if fullname and address:
+#         longitude = crud.get_longitude(address)
+#         latitude = crud.get_latitude(address)
+#         db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "address":address, "longitude":longitude, "latitude":latitude})
+#         db.session.commit()
+#         flash('Your profile was updated!')
+#     elif fullname:
+#         db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname})
+#         db.session.commit()
+#         flash('Your profile was updated!')
+#     elif address:
+#         longitude = crud.get_longitude(address)
+#         latitude = crud.get_latitude(address)
+#         db.session.query(User).filter(User.user_id == user_id).update({"address":address, "longitude":longitude, "latitude":latitude})
+#         db.session.commit()
+#         flash('Your profile was updated!')
+#     else:
+#         flash('Missing data!')
 
 
-# @app.route('/new-event', methods=['POST'])
-# def show_new_event():
+#     return redirect("/profile")
 
-#     evt_title = request.json.get("evt_title")
-#     evt_date = request.json.get("evt_date")
-#     evt_start_time = request.json.get("evt_start_time")
-#     evt_end_time = request.json.get("evt_end_time")
-#     evt_address = request.json.get("evt_address")
-#     evt_description = request.json.get("evt_description")
+# VOLUNTEER SIGN UP TO EVENTS
+@app.route('/events', methods=['POST'])
+def show_all_events():
+    """ Display all events by given location """
 
-#     evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
+    location = request.form.get("location")
+    evt_location = Nominatim(user_agent='inst-event').geocode(location).address
 
-#     evt_address = Nominatim(user_agent='inst-event').geocode(evt_address).address
-#     evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
-#     evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
+    all_events = crud.get_events_by_location(evt_location)
+ 
+    return render_template("events.html", all_events=all_events)
 
-#     # need to get te inst_id to create an event
-#     if "inst" in session:
-#         inst_user = session["inst"]
 
-#     new_event = crud.create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_user, evt_description)
+@app.route('/events/<event_id>')
+def event_details(event_id):
+    """ Show detais of a particular event """
 
-#     db.session.add(new_event)
-#     db.session.commit()
+    event = crud.get_event_by_id(event_id)
+    return render_template("event_details.html", event=event)
 
-#     return { "success": True,
-#     "status": new_event
-#         }
+@app.route('/events/<event_id>/sign_up')
+def volunteer_signup_evt(event_id):
+    """ Add event to volunteer events database """
+
+    if "inst" in session:
+        inst_user = session["inst"]
+        event_id = 
+
+
+    sign_up_evt = crud.create_volunteer_evt(inst_user, )
+
 
 
 

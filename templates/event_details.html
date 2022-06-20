@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} {{event.evt_title}} {% endblock %}
+
+{% block body %}
+<h1> {{ event.evt_title }} </h1>
+
+<p>
+    {{ event.evt_description }}
+</p>
+
+
+<div>
+    <form action="/">
+        <button>Sign up for this event</button>
+    </form>
+</div>
+{% endblock %}

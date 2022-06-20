@@ -111,7 +111,7 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_address={self.evt_address} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
+        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_address={self.evt_address} inst_id={self.inst_id} >>'
 
 
 class VolunteerComment(db.Model):

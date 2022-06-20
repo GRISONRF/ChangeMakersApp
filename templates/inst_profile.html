@@ -4,8 +4,9 @@
 
 {% block body %}
 
-
-<h1>{{inst.inst_name}}</h1>
+{% for events in all_events %}
+<h1>{{events.inst.inst_name}}</h1>
+{% endfor %}
 <br>
 <h2>*photo that institution can upload*</h2>
 <br>
@@ -35,7 +36,7 @@
       </div>
       <div class="modal-body">
 
-        <form action="/new_event" id="form-new-evt">
+        <form action="/new_event" method='POST' id="form-new-evt">
           <div class="mb-3">
             <label for="evt_title" class="col-form-label">Event Title:</label>
             <input name="evt_title" id="evt_title"></input>
@@ -66,7 +67,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="create-event" form="form-new-evt">Create Event</button>
+        <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
       </div>
 
     </div>
