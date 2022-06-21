@@ -15,15 +15,15 @@
         <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
         </div>
         <div class="title">
-        <h1>{{ events.evt_title }}</h1>
+            <h1>{{ events.evt_title }}</h1>
         </div>
         <div class="des">
-        <p> {{ events.evt_description }}</p>
-        <a href="/events/{{events.event_id}}">
-            <button>More details</button>
-        </a>
+            <p> {{ events.evt_description }}</p>
+            <a href="/events/{{events.event_id}}">
+                <button>More details</button>
+            </a>
         </div>
-        </div>
+    </div>
 {% endfor %}
 
 {% endblock %}

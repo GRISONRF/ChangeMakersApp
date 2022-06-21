@@ -56,12 +56,31 @@
                     <div class="navbar-nav">
                         <a href="homepage.html#about-us" class="nav-item nav-link active">About</a>
                         <a href="homepage.html#contact-us" class="nav-item nav-link">Contact us</a>
-                        
                     </div>
+
+                
+                    {% if 'volunteer' in session %}
+                    
+                    <div class="navbar-nav ms-auto">
+                        <a href="/vol_profile" class="nav-item nav-link">Profile</a>
+                        <a href="/logout" class="nav-item nav-link">Logout</a>
+                    </div>
+                    
+                    {% elif 'inst' in session %}
+
+                    <div class="navbar-nav ms-auto">
+                        <a href="/inst_profile" class="nav-item nav-link">Profile</a>
+                        <a href="/logout" class="nav-item nav-link">Logout</a>
+                    </div>
+
+                    {% else %}
+
                     <div class="navbar-nav ms-auto">
                         <a href="/login_page" class="nav-item nav-link">Login</a>
                         <a href="/register" class="nav-item nav-link">Register</a>
-                    </div>
+                    </div> 
+          
+                    {% endif %}                  
                 </div>
             </div>
         </nav>

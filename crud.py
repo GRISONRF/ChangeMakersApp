@@ -4,14 +4,15 @@ from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, Vol
 
 
 # VOLUNTEER
-def create_volunteer(fname, lname, v_email, v_password):
+def create_volunteer(fname, lname, v_email, v_password, v_address):
     """ Create and return a new user (volunteer) """
 
     volunteer = Volunteer(
         fname=fname, 
         lname=lname, 
         v_email=v_email, 
-        v_password=v_password
+        v_password=v_password,
+        v_address=v_address
         )
     return volunteer
 
@@ -107,9 +108,10 @@ def get_events_by_location(search_address):
 
 
 def get_event_by_id(event_id):
-    """ Get event by its id """
+    """ Return event by its id """
 
     return Event.query.get(event_id)
+
 
 def create_volunteer_evt(volunteer_id, event_id):
     """ Create and return a new event that volunteer signed up """
@@ -118,4 +120,32 @@ def create_volunteer_evt(volunteer_id, event_id):
         volunteer_id=volunteer_id,
         event_id=event_id
     )
-    return volunteer_evt
+    return volunteer_evt 
+
+
+def get_events_by_volunteer_id(volunteer_id):
+    """ Return events that given volunteer signed up """
+
+    events_volunteer_id = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
+
+    return events_volunteer_id
+
+# def get_events_detais(volunteer_id):
+
+#     events = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
+#     events_detais = set()
+
+#     for event in events:
+
+#     events_detais = VolunteerEvt
+
+def event_is_saved(volunteer_id, event_id):
+    """ Return true if volunteer alrady has this event signed up """
+
+    # All the events entries by the volunteer.
+    events_volunteer_id = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
+
+    for event in events_volunteer_id:
+        if int(event_id) == event.event_id:
+            return True
+    return False

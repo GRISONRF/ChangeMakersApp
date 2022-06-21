@@ -33,6 +33,24 @@
 
 </form> -->
 
+<h2> Events I Signed Up </h2>
+
+{% for event in my_events %}
+<div class="card">
+    <div class="image">
+    <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+    </div>
+    <div class="title">
+    <h1>{{ event.event_id }}</h1>
+    </div>
+    <div class="des">
+    <p> </p>
+    <a href="/events/{{event.event_id}}">
+      <button>More details</button>
+    </a>
+    </div>
+  </div>
+{%endfor%}
 
 </div>
 

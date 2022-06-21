@@ -4,9 +4,9 @@
 
 {% block body %}
 
-{% for events in all_events %}
-<h1>{{events.inst.inst_name}}</h1>
-{% endfor %}
+
+<h1>{{inst.inst_name}}</h1>
+
 <br>
 <h2>*photo that institution can upload*</h2>
 <br>
@@ -16,12 +16,25 @@
 <h1>MAP WITH A PIN @ INST. ADDRESS</h1>
 
 <h1>MY EVENTS</h1>
-<p>list of all the events</p>
-{% for events in all_events %}
-    <p> {{ events.evt_title }} </p>
-    <p> {{ events.evt_date }}</p>
-    <p> {{ events.evt_start_time }} </p>
-{% endfor %}
+
+{% for event in all_events %}
+  {% if event.inst_id == inst.inst_id %}
+<div class="card">
+    <div class="image">
+    <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+    </div>
+    <div class="title">
+    <h1>{{ event.evt_title }}</h1>
+    </div>
+    <div class="des">
+    <p> </p>
+    <a href="/events/{{event.event_id}}">
+      <button>More details</button>
+    </a>
+    </div>
+  </div>
+  {% endif %}
+{%endfor%}
 
 
 <!-- button to create a new event -->

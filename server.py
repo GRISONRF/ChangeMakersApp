@@ -15,7 +15,7 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 
-#HOMEPAGE
+# ---------------- HOMEPAGE ----------------
 @app.route('/')
 def homepage():
     """view homepage"""
@@ -24,14 +24,14 @@ def homepage():
 
 
 
-# REGISTER PAGE
+# ---------------- REGISTER PAGE ----------------
 @app.route('/register')
 def register_users():
     """ Return page for user to chose how to register """
 
     return render_template('register.html')
 
-# REGISTER AS INSTITUTION
+# ---------------- REGISTER AS INSTITUTION ----------------
 @app.route('/inst_register')
 def inst_register_page():
     """ Return page for the institution to register """
@@ -62,7 +62,7 @@ def register_institution():
     return redirect('/inst_register')
 
 
-# REGISTER AS VOLUNTEER
+# ---------------- REGISTER AS VOLUNTEER ----------------
 @app.route('/volu_register')
 def volunteer_register_page():
     """ Return page for the volunteer to register """
@@ -85,17 +85,16 @@ def register_volunteer():
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        user = crud.create_volunteer(vfname, vlname, volu_email, volu_password)
+        user = crud.create_volunteer(vfname, vlname, volu_email, volu_password, vlocation)
         db.session.add(user)    
         db.session.commit()
         flash('Account created! Please, log in.')
-        # return render_template('login.html')
         return redirect('/login_page')
 
     return redirect('/volu_register')
 
 
-#LOGIN
+# ---------------- LOGIN ----------------
 @app.route('/login_page')
 def login_page():
     return render_template('login.html')
@@ -136,15 +135,15 @@ def login():
         
     return redirect('/')
 
-#LOGOUT
+# ---------------- LOGOUT ----------------
 
 @app.route('/logout')
 def logout():
-    session.pop('username',None)
-    return redirect('/homepage')
+    session.clear()
+    return redirect('/')
  
 
-# INSTITUTION PROFILE
+# ---------------- INSTITUTION PROFILE ----------------
 @app.route('/inst_profile')
 def inst_profile():
     """ Institution profile page """
@@ -160,7 +159,7 @@ def inst_profile():
     else: return render_template('login.html')
 
 
-# VOLUNTEER PROFILE
+# ---------------- VOLUNTEER PROFILE ----------------
 @app.route('/vol_profile')
 def volu_profile():
     """ Volunteer profile page """
@@ -169,13 +168,14 @@ def volu_profile():
         volunteer_id = session["volunteer"]
 
     volunteer = crud.get_volunter_by_id(volunteer_id)
+    my_events = crud.get_events_by_volunteer_id(volunteer_id)
 
-
-    return render_template('vol_profile.html', volunteer=volunteer)
+   
+    return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events)
     
 
-
-# CREATE A NEW EVENT
+ 
+# ---------------- INSTITUTION CREATE A NEW EVENT ----------------
 @app.route('/new_event', methods=['POST'])
 def create_event():
     """ Save event in database and show new event card on inst_profile page """
@@ -194,9 +194,10 @@ def create_event():
     evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
     evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
 
-    # Still need to create an ELSE for when inst_user is NOT in session.
+    # Still need to create an ELSE for when inst_id is NOT in session?
     if "inst" in session:
-        inst_user = session["inst"]
+        inst_id = session["inst"]
+        inst = crud.get_inst_by_id(inst_id)
 
     new_event = crud.create_event(
         evt_title, 
@@ -206,17 +207,14 @@ def create_event():
         evt_address, 
         evt_lat, 
         evt_long, 
-        inst_user, 
+        inst_id, 
         evt_description
         )
 
    
     db.session.add(new_event) 
     db.session.commit()
-
-    all_events = crud.get_events()
-
-    return render_template('inst_profile.html', all_events=all_events, inst_user=inst_user)
+    return redirect('/inst_profile')
 
 # UPDATE USER PROFILE
 # @app.route("/update_user")
@@ -250,7 +248,7 @@ def create_event():
 
 #     return redirect("/profile")
 
-# VOLUNTEER SIGN UP TO EVENTS
+# ---------------- VOLUNTEER SIGN UP TO EVENTS ----------------
 @app.route('/events', methods=['POST'])
 def show_all_events():
     """ Display all events by given location """
@@ -267,19 +265,35 @@ def show_all_events():
 def event_details(event_id):
     """ Show detais of a particular event """
 
-    event = crud.get_event_by_id(event_id)
-    return render_template("event_details.html", event=event)
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+        event = crud.get_event_by_id(event_id)
+
+    elif "inst" in session:
+        inst_id = session["inst"]
+        event = crud.get_event_by_id(event_id)
+
+    event_is_saved = crud.event_is_saved(volunteer_id, event_id)
+
+    return render_template("event_details.html", event=event, event_is_saved=event_is_saved)
+
 
 @app.route('/events/<event_id>/sign_up')
 def volunteer_signup_evt(event_id):
     """ Add event to volunteer events database """
 
-    if "inst" in session:
-        inst_user = session["inst"]
-        event_id = 
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+        
+        volunteer = crud.get_volunter_by_id(volunteer_id)
+        sign_up_evt = crud.create_volunteer_evt(volunteer_id, event_id)
+        db.session.add(sign_up_evt)
+        db.session.commit()
+        
+        my_events = crud.get_events_by_volunteer_id(volunteer_id)
+        event_is_saved = crud.event_is_saved(volunteer_id, event_id)
 
-
-    sign_up_evt = crud.create_volunteer_evt(inst_user, )
+    return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved)
 
 
 

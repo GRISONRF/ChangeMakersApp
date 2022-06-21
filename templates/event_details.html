@@ -10,8 +10,25 @@
 
 
 <div>
-    <form action="/">
-        <button>Sign up for this event</button>
-    </form>
+    
+{% if 'volunteer' in session %}
+    {% if ( event_is_saved == false ) %}  
+<form action="/events/{{event.event_id}}/sign_up">    
+    <button>Sign up for this event</button>
+</form>    
+    {% else %}
+    <button>You've already signed up for this event.</button>
+
+    {% endif %}
+{% elif 'inst' in session %}
+<form action="/inst_profile">
+    <button>Go back to your profile</button>
+</form>
+{% else %}
+<p>Login or Sign up to attend to this event!</p>
+
+{% endif %}
+   
 </div>
 {% endblock %}
+
