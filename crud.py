@@ -168,6 +168,7 @@ def create_cause(cause_name):
                     ) 
     return new_cause
 
+
 def get_all_causes():
     """ Return all the causes """
 

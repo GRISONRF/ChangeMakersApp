@@ -38,25 +38,7 @@ def register_users():
 def inst_register_page():
     """ Return page for the institution to register """
 
-    # Create and save the causes in DB to display in the form.
-
-    advocacy = crud.create_cause("Advocacy and Humans Rights")
-    animals = crud.create_cause("Animals and Enviroment")
-    art = crud.create_cause("Arts and Culture")
-    children = crud.create_cause("Children and Youth")
-    education = crud.create_cause("Education")
-    hunger = crud.create_cause("Hunger")
-    homeless = crud.create_cause("Homeless and Housing")
-    immigrants = crud.create_cause("Immigrants and Refugees")
-    lgbtq = crud.create_cause("LGBTQ+")
-    race = crud.create_cause("Race and Ethnicity")
-    women = crud.create_cause("Women")
-    
-    db.session.add_all([advocacy, animals, art, children, education, hunger, homeless, immigrants, lgbtq, race, women])
-    db.session.commit()
-
     all_causes = crud.get_all_causes()
-
 
     return render_template('i_register.html', all_causes=all_causes)
 
