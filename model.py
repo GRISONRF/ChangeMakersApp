@@ -150,9 +150,7 @@ class VolunteerComment(db.Model):
     def __repr__(self):
         return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} event_id={self.event_id} volunteer_id={self.volunteer_id} >>'
 
-
-
-
+ 
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///project", echo=True):
