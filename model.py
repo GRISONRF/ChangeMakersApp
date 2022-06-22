@@ -82,7 +82,6 @@ class VolunteerEvt(db.Model):
     # volunteer_evt = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")
 
 
-
     def __repr__(self):
         return f'<< VolunteerEvt vol_evt_id={self.vol_evt_id} volunteer_id={self.volunteer_id} event_id={self.event_id} >>'
 

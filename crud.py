@@ -126,18 +126,10 @@ def create_volunteer_evt(volunteer_id, event_id):
 def get_events_by_volunteer_id(volunteer_id):
     """ Return events that given volunteer signed up """
 
-    events_volunteer_id = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
+    events_volunteer_id = Event.query.join(VolunteerEvt).filter_by(volunteer_id=volunteer_id).all()
 
     return events_volunteer_id
 
-# def get_events_detais(volunteer_id):
-
-#     events = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
-#     events_detais = set()
-
-#     for event in events:
-
-#     events_detais = VolunteerEvt
 
 def event_is_saved(volunteer_id, event_id):
     """ Return true if volunteer alrady has this event signed up """

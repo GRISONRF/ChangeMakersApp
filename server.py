@@ -268,14 +268,14 @@ def event_details(event_id):
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
         event = crud.get_event_by_id(event_id)
+        event_is_saved = crud.event_is_saved(volunteer_id, event_id)
+        return render_template("event_details.html", event=event, event_is_saved=event_is_saved)
 
     elif "inst" in session:
         inst_id = session["inst"]
         event = crud.get_event_by_id(event_id)
+        return render_template("event_details.html", event=event)
 
-    event_is_saved = crud.event_is_saved(volunteer_id, event_id)
-
-    return render_template("event_details.html", event=event, event_is_saved=event_is_saved)
 
 
 @app.route('/events/<event_id>/sign_up')
