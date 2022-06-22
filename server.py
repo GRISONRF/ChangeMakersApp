@@ -4,11 +4,13 @@ from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
 import crud
-from model import connect_to_db, db
+from model import connect_to_db, db, Volunteer, Institution
 from jinja2 import StrictUndefined
 from datetime import datetime
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
+import cloudinary
+import cloudinary.uploader
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -36,7 +38,27 @@ def register_users():
 def inst_register_page():
     """ Return page for the institution to register """
 
-    return render_template('i_register.html')
+    # Create and save the causes in DB to display in the form.
+
+    advocacy = crud.create_cause("Advocacy and Humans Rights")
+    animals = crud.create_cause("Animals and Enviroment")
+    art = crud.create_cause("Arts and Culture")
+    children = crud.create_cause("Children and Youth")
+    education = crud.create_cause("Education")
+    hunger = crud.create_cause("Hunger")
+    homeless = crud.create_cause("Homeless and Housing")
+    immigrants = crud.create_cause("Immigrants and Refugees")
+    lgbtq = crud.create_cause("LGBTQ+")
+    race = crud.create_cause("Race and Ethnicity")
+    women = crud.create_cause("Women")
+    
+    db.session.add_all([advocacy, animals, art, children, education, hunger, homeless, immigrants, lgbtq, race, women])
+    db.session.commit()
+
+    all_causes = crud.get_all_causes()
+
+
+    return render_template('i_register.html', all_causes=all_causes)
 
 
 @app.route('/i_register', methods=['POST'])
@@ -47,13 +69,19 @@ def register_institution():
     inst_email = request.form.get("iemail")
     inst_password = request.form.get("ipassword")
     inst_address = request.form.get("iaddress")
+    inst_cause = request.form.get("cause")
+
+    iaddress = Nominatim(user_agent='inst-register').geocode(inst_address).address
+    i_lat = Nominatim(user_agent='inst-register').geocode(iaddress).latitude
+    i_long = Nominatim(user_agent='inst-register').geocode(iaddress).longitude
 
     user = crud.get_inst_by_email(inst_email)
 
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        user = crud.create_institution(inst_name, inst_email, inst_password, inst_address)
+        inst_pic = "stactic/img/ngopic.jpg"
+        user = crud.create_institution(inst_name, inst_email, inst_password, iaddress, inst_pic, inst_cause)
         db.session.add(user)    
         db.session.commit()
         flash('Account created! Please, log in.')
@@ -79,15 +107,28 @@ def register_volunteer():
     vfname = request.form.get("fname")
     vlname = request.form.get("lname")
     vlocation = request.form.get("vlocation")
+    
 
     user = crud.get_volunteer_by_email(volu_email)
 
+    
+    v_location = Nominatim(user_agent='v-register').geocode(vlocation).address
+    v_lat = Nominatim(user_agent='v-register').geocode(v_location).latitude
+    v_long = Nominatim(user_agent='v-register').geocode(v_location).longitude
+
+
     if user:
-        flash("Cannot create an account with that email. Try again.")
+        flash("Cannot create an account with this email. Try a different email.")
     else:
-        user = crud.create_volunteer(vfname, vlname, volu_email, volu_password, vlocation)
-        db.session.add(user)    
-        db.session.commit()
+        volunteer_pic = "/static/images/volunteer-icon.PNG"
+        user = crud.create_volunteer(vfname, vlname, volu_email, volu_password, vlocation, volunteer_pic)
+        
+        db.session.add(user)
+        db.session.commit()    
+        # volunteer_pic = "/static/images/volunteer1.png"
+        # db.session.query(Volunteer).filter(Volunteer.v_mail == volu_email).update({"v_pic":volunteer_pic})
+        # db.session.commit()
+
         flash('Account created! Please, log in.')
         return redirect('/login_page')
 
@@ -172,7 +213,30 @@ def volu_profile():
 
    
     return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events)
-    
+
+# @app.route('/upload', methods=["POST"])
+# def volu_uopload_picture():
+#     """ Upload a new profile picture and add it to the database"""
+
+
+
+#     cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), 
+#         api_secret=os.getenv('API_SECRET'))
+#     upload_result = None
+#     if request.method == 'POST':
+#     file_to_upload = request.files['file']
+#     app.logger.info('%s file_to_upload', file_to_upload)
+#     if file_to_upload:
+#       upload_result = cloudinary.uploader.upload(file_to_upload)
+#       app.logger.info(upload_result)
+#       return jsonify(upload_result)
+
+
+
+    # crud Get the user by id
+    # Somehow use the cloudinary to upload/update the picture
+    # save the picture to database
+    # render template/redirect (?) now with added picture
 
  
 # ---------------- INSTITUTION CREATE A NEW EVENT ----------------
@@ -216,37 +280,6 @@ def create_event():
     db.session.commit()
     return redirect('/inst_profile')
 
-# UPDATE USER PROFILE
-# @app.route("/update_user")
-# def update_user():
-#     """ User update profile """
-
-#     if "user" in session:
-#         user_id = session["user"]
-
-#     fullname = request.args.get('fullname')
-#     address = request.args.get('address')
-#     if fullname and address:
-#         longitude = crud.get_longitude(address)
-#         latitude = crud.get_latitude(address)
-#         db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname, "address":address, "longitude":longitude, "latitude":latitude})
-#         db.session.commit()
-#         flash('Your profile was updated!')
-#     elif fullname:
-#         db.session.query(User).filter(User.user_id == user_id).update({"fullname": fullname})
-#         db.session.commit()
-#         flash('Your profile was updated!')
-#     elif address:
-#         longitude = crud.get_longitude(address)
-#         latitude = crud.get_latitude(address)
-#         db.session.query(User).filter(User.user_id == user_id).update({"address":address, "longitude":longitude, "latitude":latitude})
-#         db.session.commit()
-#         flash('Your profile was updated!')
-#     else:
-#         flash('Missing data!')
-
-
-#     return redirect("/profile")
 
 # ---------------- VOLUNTEER SIGN UP TO EVENTS ----------------
 @app.route('/events', methods=['POST'])

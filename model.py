@@ -18,7 +18,8 @@ class Volunteer(db.Model):
     lname = db.Column(db.String(30), nullable=False)
     v_email = db.Column(db.String(60), unique=True, nullable=False)
     v_password = db.Column(db.String(15), nullable=False)
-    v_address = db.Column(db.String(100))
+    v_address = db.Column(db.String(100), nullable=False)
+    v_pic = db.Column(db.String, nullable=True)
 
     favorites = db.relationship("Institution", secondary="favorites", backref="volunteers")  #
     events = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")   
@@ -26,7 +27,7 @@ class Volunteer(db.Model):
     comments = db.relationship("VolunteerComment", back_populates="volunteer")
 
     def __repr__(self):
-        return f'<< Volunteer volunteer_id={self.volunteer_id} fname={self.fname} lname={self.lname} v_email={self.v_email} v_password={self.v_password} v_address={self.v_address} >>'
+        return f'<< Volunteer volunteer_id={self.volunteer_id} fname={self.fname} lname={self.lname} v_email={self.v_email} v_password={self.v_password} v_address={self.v_address} v_pic={self.v_pic} >>'
 
 
 class Favorite(db.Model):
@@ -45,6 +46,20 @@ class Favorite(db.Model):
         return f'<< Favorite fav_id={self.fav_id} volunteer_id={self.volunteer_id} inst_id={self.inst.id} >>'
 
 
+class Cause(db.Model):
+    """ A cause """
+
+    __tablename__ = 'causes'
+
+    cause_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    cause_name = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f'<< Cause cause_id={self.cause_id} cause_name={self.cause_name} >>'
+
+
 class Institution(db.Model):
     """ A institution """
 
@@ -56,16 +71,18 @@ class Institution(db.Model):
     inst_name = db.Column(db.String(100), unique=True, nullable=False)
     inst_email = db.Column(db.String(60), unique=True, nullable=False)
     inst_password = db.Column(db.String(15), nullable=False)
-    inst_address = db.Column(db.String(500))
+    inst_address = db.Column(db.String(500), nullable=False)
     inst_lat = db.Column(db.Integer)
     inst_long = db.Column(db.Integer)
+    inst_pic = db.Column(db.String, nullable=True)
+    cause_id = db.Column(db.Integer, db.ForeignKey('causes.cause_id'))
  
     events = db.relationship("Event", back_populates="inst")
     #free at. volunteers
   
 
     def __repr__(self):
-        return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} >>'
+        return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} inst_pic={self.inst_pic} cause_id={self.cause_id} >>'
 
 
 class VolunteerEvt(db.Model):
@@ -79,7 +96,7 @@ class VolunteerEvt(db.Model):
     volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
 
-    # volunteer_evt = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")
+    # volunteer_evt = db.relationship("Event", secondary="volunteer_evt", backref="volun  teers")
 
 
     def __repr__(self):
@@ -111,7 +128,7 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_address={self.evt_address} inst_id={self.inst_id} >>'
+        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_start_time={self.evt_start_time} evt_end_time={self.evt_end_time} evt_address={self.evt_address} evt_lat={self.evt_lat} evt_long={self.evt_long} evt_description={self.evt_description} inst_id={self.inst_id} >>'
 
 
 class VolunteerComment(db.Model):

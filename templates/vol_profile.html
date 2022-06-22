@@ -4,32 +4,42 @@
 
 {% block body %}
 
-<h1 id="name"> Hi {{ volunteer.fname }} {{ volunteer.lname }}.</h1>
+<h1 id="name"> Hi {{ volunteer.fname }}.</h1>
 <div class="profile">
 
-<h3 id="info">Your Information</h3>
-<ul>
-<li>Name: {{ volunteer.fname}}</li>
-<li>Email:{{ volunteer.v_email}}</li>
-<li>Address: {{volunteer.v_address}}</li>
-</ul>
-<!-- <form action="/upload_picture" method="post" enctype="multipart/form-data">
-    <input type="file" name="dog_picture">
+  <h3 id="info">Your Information</h3>
+  <div class="v_pic">
+    <img id="v_pic" src="{{ volunteer.v_pic }}">
+  </div>
+
+
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="volunteer_pic">
     <button  class="button" type="submit"> Submit</button>
-</form> -->
+  </form>
+    <ul>
+      <li>Name: {{ volunteer.fname}}</li>
+      <li>Email: {{ volunteer.v_email}}</li>
+      <li>Address: {{volunteer.v_address}}</li>
+    </ul>
+</div>
 <br>
 <br>
-<!-- <form action="/update_user">
+<!-- <form action="/update_volunteer">
     <h4>Update your Information</h4>
       <p>
-        Fullname <input type="text" name="fullname">
+        First Name <input type="text" name="fname">
       </p>
-
+      <p>
+        Last Name <input type="text" name="lname">
+      </p>
       <p>
         Address <input type="text" name="address">
       </p>
-
-    <button class="button" type="submit"> Update user </button>
+      <p>
+        Causes <input type="text" name="causes">
+      </p>
+    <button class="button" type="submit"> Update infos </button>
 
 </form> -->
 
@@ -52,7 +62,7 @@
   </div>
 {%endfor%}
 
-</div>
+
 
 <div>
   <h2>Events near me:</h2>

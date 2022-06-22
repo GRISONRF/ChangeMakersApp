@@ -27,8 +27,10 @@
     <h1>{{ event.evt_title }}</h1>
     </div>
     <div class="des">
-    <p> </p>
-    <a href="/events/{{event.event_id}}">
+      <p>{{ event.evt_date }}</p>
+      <p>{{ event.evt_start_time }} - {{ event.evt_end_time }}</p>
+      <p>{{ event.evt_address }}</p>
+      <a href="/events/{{event.event_id}}">
       <button>More details</button>
     </a>
     </div>
