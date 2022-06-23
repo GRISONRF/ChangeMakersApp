@@ -276,6 +276,7 @@ def show_all_events():
     return render_template("events.html", all_events=all_events)
 
 
+
 @app.route('/events/<event_id>')
 def event_details(event_id):
     """ Show detais of a particular event """

@@ -23,7 +23,6 @@ class Volunteer(db.Model):
 
     favorites = db.relationship("Institution", secondary="favorites", backref="volunteers")  #
     events = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")   
-    # events = db.relationship("Event", back_populates="volunteers")
     comments = db.relationship("VolunteerComment", back_populates="volunteer")
 
     def __repr__(self):
@@ -55,9 +54,13 @@ class Cause(db.Model):
                         autoincrement=True,
                         primary_key=True)
     cause_name = db.Column(db.String(100), nullable=False)
+    cause_icon = db.Column(db.String(100))
+
+    insts = db.relationship("Institution", back_populates="cause")
+ 
 
     def __repr__(self):
-        return f'<< Cause cause_id={self.cause_id} cause_name={self.cause_name} >>'
+        return f'<< Cause cause_id={self.cause_id} cause_name={self.cause_name} cause_icon={self.cause_icon} >>'
 
 
 class Institution(db.Model):
@@ -79,7 +82,7 @@ class Institution(db.Model):
  
     events = db.relationship("Event", back_populates="inst")
     #free at. volunteers
-  
+    cause = db.relationship("Cause", back_populates="insts")
 
     def __repr__(self):
         return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} inst_pic={self.inst_pic} cause_id={self.cause_id} >>'

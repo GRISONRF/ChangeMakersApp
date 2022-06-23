@@ -160,11 +160,12 @@ def update_profile_pic():
 # --------------- Cause functions ---------------
 
 
-def create_cause(cause_name):
+def create_cause(cause_name, cause_icon):
     """ Create and return a cause """
 
     new_cause = Cause(
-                    cause_name=cause_name
+                    cause_name=cause_name,
+                    cause_icon=cause_icon
                     ) 
     return new_cause
 
