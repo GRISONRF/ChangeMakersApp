@@ -36,6 +36,7 @@ def register_users():
 
     return render_template('register.html')
 
+
 # ---------------- REGISTER AS INSTITUTION ----------------
 @app.route('/inst_register')
 def inst_register_page():
@@ -321,11 +322,16 @@ def volunteer_signup_evt(event_id):
 def events_search():
     """ Redirect to the page of events of corresponded cause """
 
-    cause = request.args.get("type")
-    
-    insts = crud.get_insts_by_cause()
+    cause_id = request.args.get("type") #get the cause_id
+ 
+    inst_by_cause = crud.get_insts_by_cause(int(cause_id)) #cause_id
 
-    return redirect('/')
+    events_by_cause = crud.get_events_by_cause(cause_id)
+  
+
+    return redirect('/vol_profile')
+
+
     
 
 

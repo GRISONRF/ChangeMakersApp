@@ -68,13 +68,14 @@ def get_inst_by_email(inst_email):
 
     return Institution.query.filter(Institution.inst_email==inst_email).first()
 
-def get_insts_by_cause(cause_name):
-    """ Return institutions by cause_name """
 
-    
-    events_volunteer_id = Event.query.join(VolunteerEvt).filter_by(volunteer_id=volunteer_id).all()
+def get_insts_by_cause(cause_id):
+    """ Return institution by cause_name """
 
-    
+    return Institution.query.filter(Institution.cause_id==cause_id).all() #all insts by that cause
+
+
+
 
 # --------------- Comment functions ---------------
 def create_volunteer_comment(comment, event, volunteer):
@@ -153,6 +154,22 @@ def event_is_saved(volunteer_id, event_id):
         if int(event_id) == event.event_id:
             return True
     return False
+
+
+def get_events_by_cause(cause_id):
+    """ Return events by cause_name """
+
+    # Getting the institutions by X cause
+    institutions = Institution.query.filter(Institution.cause_id==cause_id).all()
+
+    events = []
+    for inst in institutions:
+
+        events.append(inst.events)
+    return events
+
+
+
 
 # --------------- Ulpload pictures functions ---------------
 
