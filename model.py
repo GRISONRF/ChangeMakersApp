@@ -54,13 +54,14 @@ class Cause(db.Model):
                         autoincrement=True,
                         primary_key=True)
     cause_name = db.Column(db.String(100), nullable=False)
+    cause_title = db.Column(db.String(50), nullable=False)
     cause_icon = db.Column(db.String(100))
 
     insts = db.relationship("Institution", back_populates="cause")
  
 
     def __repr__(self):
-        return f'<< Cause cause_id={self.cause_id} cause_name={self.cause_name} cause_icon={self.cause_icon} >>'
+        return f'<< Cause cause_id={self.cause_id} cause_name={self.cause_name} cause_title={self.cause_title} cause_icon={self.cause_icon} >>'
 
 
 class Institution(db.Model):

@@ -36,6 +36,7 @@ def get_volunteer_by_email(v_email):
     return Volunteer.query.filter(Volunteer.v_email == v_email).first()
 
 
+
 # --------------- Institution functions ---------------
 def create_institution(inst_name, inst_email,inst_password, inst_address, inst_pic, cause_id):
     """ Create and return a new institution """
@@ -67,11 +68,13 @@ def get_inst_by_email(inst_email):
 
     return Institution.query.filter(Institution.inst_email==inst_email).first()
 
-def get_insts_by_cause(cause_id):
-    """ Return institutions by cause_id """
+def get_insts_by_cause(cause_name):
+    """ Return institutions by cause_name """
 
-    return Institution.query.filter(Institution.cause_id==cause_id).all()
+    
+    events_volunteer_id = Event.query.join(VolunteerEvt).filter_by(volunteer_id=volunteer_id).all()
 
+    
 
 # --------------- Comment functions ---------------
 def create_volunteer_comment(comment, event, volunteer):
@@ -160,11 +163,12 @@ def update_profile_pic():
 # --------------- Cause functions ---------------
 
 
-def create_cause(cause_name, cause_icon):
+def create_cause(cause_name, cause_title, cause_icon):
     """ Create and return a cause """
 
     new_cause = Cause(
                     cause_name=cause_name,
+                    cause_title=cause_title,
                     cause_icon=cause_icon
                     ) 
     return new_cause
@@ -174,3 +178,4 @@ def get_all_causes():
     """ Return all the causes """
 
     return Cause.query.all()
+    

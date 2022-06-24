@@ -25,7 +25,7 @@
     <label for="inst_cause">Choose a Cause:</label>
       <select name="cause" id="inst_cause">
         {% for cause in all_causes %}
-        <option value="{{cause.cause_id}}">{{cause.cause_name}}</option>
+        <option value="{{cause.cause_id}}">{{cause.cause_title}}</option>
         {% endfor %}
       </select>
     <p>

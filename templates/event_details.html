@@ -20,7 +20,10 @@
     <button>Sign up for this event</button>
 </form>    
     {% else %}
-    <button>You've already signed up for this event.</button>
+    <h2>You've already signed up for this event.</h2>
+    <form action="/vol_profile">
+        <button>Go back to your profile</button>
+    </form>
 
     {% endif %}
 {% elif 'inst' in session %}

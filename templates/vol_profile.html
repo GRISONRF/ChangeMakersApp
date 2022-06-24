@@ -14,7 +14,7 @@
 
 
   <form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="volunteer_pic">
+    <input type="file" name="volunteer-pic">
     <button  class="button" type="submit"> Submit</button>
   </form>
     <ul>
@@ -73,31 +73,110 @@
 </div>
 
 
-<div>
+<!-- <div>
   <h2>Find events by causes:</h2>
   <form action="/events" method="POST">
     <input type="text" name="location">
     <button type="submit">Find</button>
   </form>
-</div>
+</div> -->
 
-<div>
-  <h2>Find Institutions by causes:</h2>
-  <button class="btn"><i class="fa-solid fa-child-reaching"></i></button>
-  <button type="button"> <img src="static/images/animals.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/arts.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/children.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/environment.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/homeless.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/humansrights.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/hunger.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/immigrants.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/lgbqt.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/race.png" height ="80" width="100" /></button>
-  <button type="button"> <img src="static/images/women.png" height ="80" width="100" /></button>
+
+<h2>Find opportunities by causes:</h2>
+
+  <div class="icons-causes">
 
 
 
+
+
+
+    <form action="/events_search">
+      <input name="type" value="animals" hidden>
+      <button name="animals" type="submit"> 
+        <img src="static/images/animals.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="arts" hidden>
+      <button name="arts" type="submit">
+        <img src="static/images/arts.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    
+    <form action="/events_search">
+      <input name="type" value="child" hidden>
+      <button name="child" type="submit"> 
+        <img src="static/images/children.png" height ="80" width="100" />
+      </button>
+    </form>
+    
+    
+    <form action="/events_search">
+      <input name="type" value="environment" hidden>
+      <button name="environment" type="submit"> 
+        <img src="static/images/environment.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="homeless" hidden>
+      <button name="homeless" type="submit">
+        <img src="static/images/homeless.png" height ="80" width="100" />
+      </button>
+    </form>
+    
+    <form action="/events_search">
+      <input name="type" value="humans" hidden>
+      <button name="humans" type="submit"> 
+        <img src="static/images/humansrights.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="hunger" hidden>
+      <button name="hunger" type="submit"> 
+        <img src="static/images/hunger.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="immigrants" hidden>
+      <button name="immigrants" type="submit"> 
+        <img src="static/images/immigrants.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="lgbqt" hidden>
+      <button name="lgbqt" type="submit"> 
+        <img src="static/images/lgbqt.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="race" hidden>
+      <button name="race" type="submit"> 
+        <img src="static/images/race.png" height ="80" width="100" />
+      </button>
+    </form>
+
+    <form action="/events_search">
+      <input name="type" value="women" hidden>
+      <button name="women" type="submit"> 
+        <img src="static/images/women.png" height ="80" width="100" />
+      </button>
+    </form>
+  
+    <form action="/events_search">
+      <input name="type" value="child" hidden>
+      <button name="education" type="submit"> 
+        <img src="static/images/education.png" height ="80" width="100" />
+      </button>
+    </form>
+    
 </div>
 
 {% endblock %}

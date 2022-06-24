@@ -9,8 +9,12 @@ from jinja2 import StrictUndefined
 from datetime import datetime
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
-import cloudinary
 import cloudinary.uploader
+import os
+
+CLOUDINARY_KEY= os.environ['CLOUDINARY_KEY']
+CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
+CLOUD_NAME = "dwn0hs3si"
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -23,7 +27,6 @@ def homepage():
     """view homepage"""
 
     return render_template('homepage.html')
-
 
 
 # ---------------- REGISTER PAGE ----------------
@@ -138,6 +141,8 @@ def login():
     volu_user = crud.Volunteer.query.filter_by(v_email=volu_email).first()
     inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
 
+    all_causes = crud.get_all_causes()
+
     # volunteer
     if volu_user and volu_user.v_password == volu_password:
         session['volunteer'] = volu_user.volunteer_id
@@ -150,6 +155,7 @@ def login():
     # institution
     if inst_user and inst_user.inst_password == inst_password:
         session['inst'] = inst_user.inst_id
+        all_causes
 
         return redirect('/inst_profile')
 
@@ -158,8 +164,8 @@ def login():
         
     return redirect('/')
 
-# ---------------- LOGOUT ----------------
 
+# ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
     session.clear()
@@ -192,33 +198,31 @@ def volu_profile():
 
     volunteer = crud.get_volunter_by_id(volunteer_id)
     my_events = crud.get_events_by_volunteer_id(volunteer_id)
+    all_causes = crud.get_all_causes()
 
    
-    return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events)
-
-# @app.route('/upload', methods=["POST"])
-# def volu_uopload_picture():
-#     """ Upload a new profile picture and add it to the database"""
+    return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events, all_causes=all_causes)
 
 
+@app.route('/upload', methods=["POST"])
+def volu_uopload_picture():
+    """ Upload a new profile picture and add it to the database"""
 
-#     cloudinary.config(cloud_name = os.getenv('CLOUD_NAME'), api_key=os.getenv('API_KEY'), 
-#         api_secret=os.getenv('API_SECRET'))
-#     upload_result = None
-#     if request.method == 'POST':
-#     file_to_upload = request.files['file']
-#     app.logger.info('%s file_to_upload', file_to_upload)
-#     if file_to_upload:
-#       upload_result = cloudinary.uploader.upload(file_to_upload)
-#       app.logger.info(upload_result)
-#       return jsonify(upload_result)
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
 
+    volunteer_pic = request.files['volunteer-pic']
+    result = cloudinary.uploader.upload(volunteer_pic,
+                                        api_key=CLOUDINARY_KEY,
+                                        api_secret=CLOUDINARY_SECRET,
+                                        cloud_name=CLOUD_NAME)
+    vpic_url = result['secure_url']
 
+    db.session.query(Volunteer).filter(Volunteer.volunteer_id==volunteer_id).update({"v_pic":vpic_url})
+    db.session.commit()
+    flash('Profile picture updated!')
 
-    # crud Get the user by id
-    # Somehow use the cloudinary to upload/update the picture
-    # save the picture to database
-    # render template/redirect (?) now with added picture
+    return redirect("/vol_profile")
 
  
 # ---------------- INSTITUTION CREATE A NEW EVENT ----------------
@@ -265,7 +269,7 @@ def create_event():
 
 # ---------------- VOLUNTEER SIGN UP TO EVENTS ----------------
 @app.route('/events', methods=['POST'])
-def show_all_events():
+def show_events_by_location():
     """ Display all events by given location """
 
     location = request.form.get("location")
@@ -274,7 +278,6 @@ def show_all_events():
     all_events = crud.get_events_by_location(evt_location)
  
     return render_template("events.html", all_events=all_events)
-
 
 
 @app.route('/events/<event_id>')
@@ -293,7 +296,6 @@ def event_details(event_id):
         return render_template("event_details.html", event=event)
 
 
-
 @app.route('/events/<event_id>/sign_up')
 def volunteer_signup_evt(event_id):
     """ Add event to volunteer events database """
@@ -308,10 +310,23 @@ def volunteer_signup_evt(event_id):
         
         my_events = crud.get_events_by_volunteer_id(volunteer_id)
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
+        all_causes = crud.get_all_causes()
 
-    return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved)
+    return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
 
 
+# ################################
+
+@app.route('/events_search')
+def events_search():
+    """ Redirect to the page of events of corresponded cause """
+
+    cause = request.args.get("type")
+    
+    insts = crud.get_insts_by_cause()
+
+    return redirect('/')
+    
 
 
 if __name__ == "__main__":
