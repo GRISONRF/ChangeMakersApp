@@ -4,94 +4,113 @@
 
 {% block body %}
 
+<div class="container" >
+  <div class="inst-container" id ="{{ inst.inst_id }}"> 
 
-<h1>{{inst.inst_name}}</h1>
-<!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
-<p>{{inst.cause.cause_title}}</p> 
-<p><img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
+    <h1>{{inst.inst_name}}</h1>
+    <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
+    <p>{{inst.cause.cause_title}}</p> 
+    <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
 
-<br>
-<h2>*photo that institution can upload*</h2>
-<br>
-<h2>WHO WE ARE</h2>
-<p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-
-<h1>MAP WITH A PIN @ INST. ADDRESS</h1>
-
-<h1>MY EVENTS</h1>
-
-{% for event in all_events %}
-  {% if event.inst_id == inst.inst_id %}
-<div class="card">
-    <div class="image">
-    <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
-    </div>
-    <div class="title">
-    <h1>{{ event.evt_title }}</h1>
-    </div>
-    <div class="des">
-      <p>{{ event.evt_date }}</p>
-      <p>{{ event.evt_start_time }} - {{ event.evt_end_time }}</p>
-      <p>{{ event.evt_address }}</p>
-      <a href="/events/{{event.event_id}}">
-      <button>More details</button>
-    </a>
-    </div>
-  </div>
-  {% endif %}
-{%endfor%}
+    <br>
+    <h2>*photo that institution can upload*</h2>
+    <br>
+    <h2>WHO WE ARE</h2>
+    <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
 
-<!-- button to create a new event -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
-
-<div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <form action="/new_event" method='POST' id="form-new-evt">
-          <div class="mb-3">
-            <label for="evt_title" class="col-form-label">Event Title:</label>
-            <input name="evt_title" id="evt_title"></input>
+    <section>
+     
+      <p>map should be here:</p>
+      <div id="inst-map"></div>
     
-          </div>
-          <div class="mb-3">
-            <label for="evt_date" class="col-form-label">Date:</label>
-            <input name="evt_date" id="evt_date" class="" placeholder="dd/mm/yyyy"></input>            
-          </div>
-         
-          <div class="mb-3">
-            <label for="evt_time" class="col-form-label">Event duration:</label>
-            From: <input type="time" id="evt_start_time" name="evt_start_time" min="00:00" max="24:00" required>
-            To: <input type="time" id="evt_end_time" name="evt_end_time"min="00:00" max="24:00" required>
-          </div>
-          
-          <div class="mb-3">
-            <label for="evt_address" class="col-form-label">Address:</label>
-            <input name="evt_address" id="evt_address"></input>   
-          </div>
+    </section>
 
-          <div class="mb-3">
-            <label for="evt_description" class="col-form-label">Event Description:</label>
-            <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea> 
+
+
+
+    <h1>MY EVENTS</h1>
+
+    {% for event in all_events %}
+      {% if event.inst_id == inst.inst_id %}
+    <div class="card">
+        <div class="image">
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+        </div>
+        <div class="title">
+        <h1>{{ event.evt_title }}</h1>
+        </div>
+        <div class="des">
+          <p>{{ event.evt_date }}</p>
+          <p>{{ event.evt_start_time }} - {{ event.evt_end_time }}</p>
+          <p>{{ event.evt_address }}</p>
+          <a href="/events/{{event.event_id}}">
+          <button>More details</button>
+        </a>
+        </div>
+      </div>
+      {% endif %}
+    {%endfor%}
+
+
+    <!-- button to create a new event -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
+
+    <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </form>
+          <div class="modal-body">
+
+            <form action="/new_event" method='POST' id="form-new-evt">
+              <div class="mb-3">
+                <label for="evt_title" class="col-form-label">Event Title:</label>
+                <input name="evt_title" id="evt_title"></input>
         
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
-      </div>
+              </div>
+              <div class="mb-3">
+                <label for="evt_date" class="col-form-label">Date:</label>
+                <input name="evt_date" id="evt_date" class="" placeholder="dd/mm/yyyy"></input>            
+              </div>
+            
+              <div class="mb-3">
+                <label for="evt_time" class="col-form-label">Event duration:</label>
+                From: <input type="time" id="evt_start_time" name="evt_start_time" min="00:00" max="24:00" required>
+                To: <input type="time" id="evt_end_time" name="evt_end_time"min="00:00" max="24:00" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="evt_address" class="col-form-label">Address:</label>
+                <input name="evt_address" id="evt_address"></input>   
+              </div>
 
+              <div class="mb-3">
+                <label for="evt_description" class="col-form-label">Event Description:</label>
+                <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea> 
+              </div>
+            </form>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
+          </div>
+
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
 
+  <script src="/static/js/maps.js"></script>
+  <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClU-Mhv9qzGPyKT4nFvI8MWkOvTuijj9k&callback=initMap">
+  </script>
 
 {% endblock %}
