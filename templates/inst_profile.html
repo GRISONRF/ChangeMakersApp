@@ -4,9 +4,6 @@
 
 {% block body %}
 
-<div class="container" >
-  <div class="inst-container" id ="{{ inst.inst_id }}"> 
-
     <h1>{{inst.inst_name}}</h1>
     <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
     <p>{{inst.cause.cause_title}}</p> 
@@ -18,17 +15,15 @@
     <h2>WHO WE ARE</h2>
     <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
-
-    <section>
+    <div class="map col-lg-4 col-12">
      
       <p>map should be here:</p>
       <div id="inst-map"></div>
     
-    </section>
+    </div>
 
-
-
-
+  <div class="container">
+    <div class="inst-container" id ="{{ inst.inst_id }}"> 
     <h1>MY EVENTS</h1>
 
     {% for event in all_events %}
@@ -103,8 +98,8 @@
       </div>
     </div>
 
-  </div>
-</div>
+  <!-- </div>
+</div> -->
 
 
   <script src="/static/js/maps.js"></script>

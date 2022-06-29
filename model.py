@@ -76,8 +76,10 @@ class Institution(db.Model):
     inst_email = db.Column(db.String(60), unique=True, nullable=False)
     inst_password = db.Column(db.String(15), nullable=False)
     inst_address = db.Column(db.String(500), nullable=False)
+    inst_city = db.Column(db.String(60), nullable=False)
+    inst_state = db.Column(db.String(60), nullable=False)
     inst_lat = db.Column(db.Integer)
-    inst_long = db.Column(db.Integer)
+    inst_lng = db.Column(db.Integer)
     inst_pic = db.Column(db.String, nullable=True)
     cause_id = db.Column(db.Integer, db.ForeignKey('causes.cause_id'))
  
@@ -86,8 +88,8 @@ class Institution(db.Model):
     cause = db.relationship("Cause", back_populates="insts")
 
     def __repr__(self):
-        return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} inst_pic={self.inst_pic} cause_id={self.cause_id} >>'
-
+        return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} inst_city={self.inst_city} inst_state={self.inst_state} inst_lat={self.inst_lat} inst_lng={self.inst_lng} inst_pic={self.inst_pic} cause_id={self.cause_id} >>'
+ 
 
 class VolunteerEvt(db.Model):
     """ Association Table - Event of specific Volunteer. """
@@ -120,8 +122,10 @@ class Event(db.Model):
     evt_start_time = db.Column(db.Time)
     evt_end_time = db.Column(db.Time)
     evt_address = db.Column(db.String, nullable=False)
+    evt_city = db.Column(db.String(60), nullable=False)
+    evt_state = db.Column(db.String(60), nullable=False)
     evt_lat = db.Column(db.Integer)
-    evt_long = db.Column(db.Integer)
+    evt_lng = db.Column(db.Integer)
     evt_description = db.Column(db.Text)
     inst_id = db.Column(db.Integer, db.ForeignKey('institutions.inst_id'))
     # volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
@@ -132,7 +136,7 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_start_time={self.evt_start_time} evt_end_time={self.evt_end_time} evt_address={self.evt_address} evt_lat={self.evt_lat} evt_long={self.evt_long} evt_description={self.evt_description} inst_id={self.inst_id} >>'
+        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_start_time={self.evt_start_time} evt_end_time={self.evt_end_time} evt_address={self.evt_address} evt_city={self.evT_city} evt_state={self.evt_state} evt_lat={self.evt_lat} evt_long={self.evt_lng} evt_description={self.evt_description} inst_id={self.inst_id} >>'
 
 
 class VolunteerComment(db.Model):

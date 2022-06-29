@@ -2,7 +2,7 @@
 
 from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+                   redirect, jsonify)
 import crud
 from model import connect_to_db, db, Volunteer, Institution
 from jinja2 import StrictUndefined
@@ -56,18 +56,39 @@ def register_institution():
     inst_password = request.form.get("ipassword")
     inst_address = request.form.get("iaddress")
     inst_cause = request.form.get("cause")
+    inst_pic = "/static/images/inst_pic.png"
+    geolocator = Nominatim(user_agent='inst-register')
+    
+    # using geocode to get the address, lat and lng
+    iaddress = geolocator.geocode(inst_address).address
+    inst_lat = geolocator.geocode(iaddress).latitude
+    inst_lng = geolocator.geocode(iaddress).longitude
+    
+    # using the lat and lng to get the city and state
+    location = geolocator.reverse((inst_lat,inst_lng), exactly_one=True)
+    inst_city = location.raw['address'].get('city', '')
+    inst_state = location.raw['address'].get('state', '')
 
-    iaddress = Nominatim(user_agent='inst-register').geocode(inst_address).address
-    i_lat = Nominatim(user_agent='inst-register').geocode(iaddress).latitude
-    i_long = Nominatim(user_agent='inst-register').geocode(iaddress).longitude
-
+    
     user = crud.get_inst_by_email(inst_email)
 
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
         inst_pic = "stactic/img/ngopic.jpg"
-        user = crud.create_institution(inst_name, inst_email, inst_password, iaddress, inst_pic, inst_cause)
+        user = crud.create_institution(
+            inst_name, 
+            inst_email, 
+            inst_password, 
+            iaddress, 
+            inst_city, 
+            inst_state, 
+            inst_lat,
+            inst_lng, 
+            inst_pic,
+            inst_cause
+            )
+
         db.session.add(user)    
         db.session.commit()
         flash('Account created! Please, log in.')
@@ -238,12 +259,18 @@ def create_event():
     evt_end_time = request.form.get("evt_end_time")
     evt_address = request.form.get("evt_address") 
     evt_description = request.form.get("evt_description")
-
     evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
+    geolocator = Nominatim(user_agent='inst-event')
+    
+    # using geocode to get the address, lat and lng
+    evt_address = geolocator.geocode(evt_address).address
+    evt_lat = geolocator.geocode(evt_address).latitude
+    evt_lng = geolocator.geocode(evt_address).longitude
 
-    evt_address = Nominatim(user_agent='inst-event').geocode(evt_address).address
-    evt_lat = Nominatim(user_agent='inst-event').geocode(evt_address).latitude
-    evt_long = Nominatim(user_agent='inst-event').geocode(evt_address).longitude
+    # using the lat and lng to get the city and state
+    location = geolocator.reverse((evt_lat,evt_lng), exactly_one=True)
+    evt_city = location.raw['address'].get('city', '')
+    evt_state = location.raw['address'].get('state', '')
 
     # Still need to create an ELSE for when inst_id is NOT in session?
     if "inst" in session:
@@ -255,14 +282,15 @@ def create_event():
         evt_date, 
         evt_start_time, 
         evt_end_time, 
-        evt_address, 
+        evt_address,
+        evt_city,
+        evt_state, 
         evt_lat, 
-        evt_long, 
+        evt_lng, 
         inst_id, 
         evt_description
         )
 
-   
     db.session.add(new_event) 
     db.session.commit()
     return redirect('/inst_profile')
@@ -316,23 +344,64 @@ def volunteer_signup_evt(event_id):
     return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
 
 
-# ################################
+# ########################## REACT #############################
 
 @app.route('/events_search')
-def events_search():
-    """ Redirect to the page of events of corresponded cause """
+# def events_search():
+#     """ Redirect to the page of events of corresponded cause """
 
-    cause_id = request.args.get("type") #get the cause_id
+#     cause_id = request.args.get("type") #get the cause_id
  
-    inst_by_cause = crud.get_insts_by_cause(int(cause_id)) #cause_id
+#     inst_by_cause = crud.get_insts_by_cause(int(cause_id)) #cause_id
 
-    events_by_cause = crud.get_events_by_cause(cause_id)
-  
+#     events_by_cause = crud.get_events_by_cause(cause_id)
 
-    return redirect('/vol_profile')
+#     return redirect('/vol_profile')
 
 
-    
+@app.route('/search_results.json', methods=['POST'])
+def get_results():
+    """ Return a JSON response with the search results """    
+
+    city = request.form.get("city") 
+    state = request.form.get("state")
+    cause = request.form.get("cause")
+
+    events_by_city_cause = crud.get_event_by_city_state(city, state, cause)
+
+    # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
+
+    for event in events_by_city_cause:
+        search_results = [
+            {
+            "evt_title" : event.evt_title,
+            "inst_name": event.inst.inst_name,
+            "evt_location" : event.evt_address,
+            "cause": event.inst.cause,
+            "evt_date": event.evt_date,
+            "evt_id": event.evt_id    
+            }
+        ]
+
+    return jsonify(search_results)
+
+
+
+# @app.route('/show-events-cards', methods=['POST'])
+# def show_events():
+#     """ Show the events the volunteer filters by location and causes """ 
+
+
+
+# ------------------------ MAP --------------------
+
+@app.route('/getcords.json')
+def get_inst_coords():
+    """ Setting up a queryString with inst location to pass back to db """
+    inst_id = request.args.get("inst_id")
+    inst_coords = crud.get_inst_coords_by_id(inst_id)
+    coords_dict = {"lat": inst_coords[0], "lng": inst_coords[1]}
+    return jsonify(coords_dict)
 
 
 if __name__ == "__main__":

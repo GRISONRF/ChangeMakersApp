@@ -1,7 +1,7 @@
 """CRUD operations."""
 
 from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, VolunteerComment, Cause, connect_to_db
-
+from geopy.geocoders import Nominatim
 
 # -------------- Volunteer functions ---------------
 def create_volunteer(fname, lname, v_email, v_password, v_address, v_pic):
@@ -38,7 +38,7 @@ def get_volunteer_by_email(v_email):
 
 
 # --------------- Institution functions ---------------
-def create_institution(inst_name, inst_email,inst_password, inst_address, inst_pic, cause_id):
+def create_institution(inst_name, inst_email,inst_password, inst_address, inst_city, inst_state, inst_lat, inst_lng, inst_pic, cause_id):
     """ Create and return a new institution """
 
     institution = Institution(
@@ -46,6 +46,10 @@ def create_institution(inst_name, inst_email,inst_password, inst_address, inst_p
         inst_email=inst_email,
         inst_password=inst_password, 
         inst_address=inst_address,
+        inst_city=inst_city,
+        inst_state=inst_state,
+        inst_lat=inst_lat,
+        inst_lng=inst_lng,
         inst_pic=inst_pic,
         cause_id=cause_id
         )
@@ -74,7 +78,19 @@ def get_insts_by_cause(cause_id):
 
     return Institution.query.filter(Institution.cause_id==cause_id).all() #all insts by that cause
 
+# def get_inst_city_by_coords(inst_lat, inst_long):
+#     """ Return the institution city by the address """
 
+#     location = geolocator.reverse((inst_lat, inst_long), exactly_one=True)
+#     city = address.get('city', '')
+#     return city
+
+# def get_inst_coords_by_id(inst_id):
+#     """ Return the institution coordenates by the inst_id """
+
+#     lat = db.session.query(Institution.inst_lat).filter(Institution.inst_id==inst_id).first()
+#     long = db.session.query(Institution.inst_long).filter(Institution.inst_id==inst_id).first()
+#     return (lat, long)
 
 
 # --------------- Comment functions ---------------
@@ -91,7 +107,7 @@ def create_volunteer_comment(comment, event, volunteer):
 # --------------- Event functions ---------------
 
 #Do I need to add volunteer, inst and comments as parameters?
-def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_lat, evt_long, inst_id, evt_description):
+def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_city, evt_state, evt_lat, evt_lng, inst_id, evt_description):
     """ Create and return an event """
 
     new_event = Event(
@@ -99,9 +115,11 @@ def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address,
         evt_date=evt_date, 
         evt_start_time=evt_start_time, 
         evt_end_time=evt_end_time, 
-        evt_address=evt_address, 
+        evt_address=evt_address,
+        evt_city=evt_city,
+        evt_state=evt_state, 
         evt_lat=evt_lat, 
-        evt_long=evt_long, 
+        evt_lng=evt_lng, 
         inst_id=inst_id, 
         evt_description=evt_description
         )
@@ -162,12 +180,41 @@ def get_events_by_cause(cause_id):
     # Getting the institutions by X cause
     institutions = Institution.query.filter(Institution.cause_id==cause_id).all()
 
+    # Getting the events by X institutions
     events = []
     for inst in institutions:
-
         events.append(inst.events)
-    return events
+    return events 
 
+
+def get_event_by_city_state(city, state):
+    """ Return all the events by the city and state """
+
+    return Event.query.filter(Event.evt_city==city, Event.evt_state == state).all()
+
+
+def get_event_by_city_cause(city, state, cause):
+    """ Return all the events by the city, state and cause_id """
+
+    # Getting the institutions by X cause
+    institutions = Institution.query.filter(Institution.cause_id==cause).all()
+
+    # Getting the events by X institutions
+    all_events = []
+    for inst in institutions:
+        all_events.append(inst.events)
+    
+    # Getting the events in specific city and state
+    events = []
+    for event in all_events:
+        if event.evt_city == city and event.evt_state == state:
+            events.append(event)
+
+    return events
+    
+
+
+    
 
 
 
@@ -195,4 +242,6 @@ def get_all_causes():
     """ Return all the causes """
 
     return Cause.query.all()
+
+
     

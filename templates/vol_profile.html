@@ -63,42 +63,8 @@
 {% endfor %}
 
 
+<div id="events-container"></div>
 
-<div>
-  <h2>Find events by location:</h2>
-  <div class="status">
-    <form action="/events" method="POST">
-      <input type="text" name="location">
-      <button type="submit" class="btn-find">Find</button>
-  </div>
-  </form>
-</div>
-
-
-<!-- <div>
-  <h2>Find events by causes:</h2>
-  <form action="/events" method="POST">
-    <input type="text" name="location">
-    <button type="submit">Find</button>
-  </form>
-</div> -->
-
-
-<h2>Find opportunities by causes:</h2>
-
-  <div class="icons-causes">
-
-<!-- I will make a for loop with jinja later -->
-    {% for cause in all_causes %}
-
-    <form action="/events_search">
-      <input name="type" value="{{ cause.cause_id}}" hidden>
-      <button name="{{cause.cause_name}}" type="submit"> 
-        <img src="{{cause.cause_icon}}" height ="50" width="70" />
-      </button>
-      {%endfor%}
-    </form>
-    
-</div>
+<script src="/static/js/cards-react.jsx" type="text/jsx"></script>
 
 {% endblock %} 

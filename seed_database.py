@@ -28,6 +28,7 @@ immigrants = crud.create_cause("immigrants", "Immigrants and Refugees", "static/
 lgbtq = crud.create_cause("lgbqt", "LGBTQ+", "static/images/lgbqt.png")
 race = crud.create_cause("race", "Race and Ethnicity", "static/images/race.png")
 women = crud.create_cause("women", "Women", "static/images/women.png")
+other = crud.create_cause("other", "Other", "static/images/other.png")
 
 db.session.add_all([advocacy, animals, art, children, education, hunger, homeless, immigrants, lgbtq, race, women])
 
