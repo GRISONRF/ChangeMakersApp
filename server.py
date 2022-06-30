@@ -77,7 +77,6 @@ def register_institution():
     if user:
         flash("Cannot create an account with that email. Try again.")
     else:
-        inst_pic = "stactic/img/ngopic.jpg"
         user = crud.create_institution(
             inst_name, 
             inst_email, 
@@ -235,20 +234,36 @@ def volu_uopload_picture():
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
 
-    volunteer_pic = request.files['volunteer-pic']
-    result = cloudinary.uploader.upload(volunteer_pic,
-                                        api_key=CLOUDINARY_KEY,
-                                        api_secret=CLOUDINARY_SECRET,
-                                        cloud_name=CLOUD_NAME)
-    vpic_url = result['secure_url']
+        volunteer_pic = request.files['volunteer-pic']
+        result = cloudinary.uploader.upload(volunteer_pic,
+                                            api_key=CLOUDINARY_KEY,
+                                            api_secret=CLOUDINARY_SECRET,
+                                            cloud_name=CLOUD_NAME)
+        vpic_url = result['secure_url']
 
-    db.session.query(Volunteer).filter(Volunteer.volunteer_id==volunteer_id).update({"v_pic":vpic_url})
-    db.session.commit()
-    flash('Profile picture updated!')
+        db.session.query(Volunteer).filter(Volunteer.volunteer_id==volunteer_id).update({"v_pic":vpic_url})
+        db.session.commit()
+        flash('Profile picture updated!')
 
-    return redirect("/vol_profile")
+        return redirect("/vol_profile")
+    
+    elif "inst" in session:
+        inst_id = session["inst"]
 
- 
+        inst_pic = request.files['inst-pic']
+        result = cloudinary.uploader.upload(inst_pic,
+                                            api_key=CLOUDINARY_KEY,
+                                            api_secret=CLOUDINARY_SECRET,
+                                            cloud_name=CLOUD_NAME)
+        ipic_url = result['secure_url']
+
+        db.session.query(Institution).filter(Institution.inst_id==inst_id).update({"inst_pic":ipic_url})
+        db.session.commit()
+        flash('Profile picture updated!')
+
+        return redirect("/inst_profile")
+
+
 # ---------------- INSTITUTION CREATE A NEW EVENT ----------------
 @app.route('/new_event', methods=['POST'])
 def create_event():

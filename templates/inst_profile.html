@@ -11,15 +11,18 @@
   <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
 
     <br>
-    <h2>*photo that institution can upload*</h2>
+    <div class="inst_pic">
+      <img id="inst_pic" src="{{ inst.inst_pic }}">
+    </div>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="inst-pic">
+      <button  class="button" type="submit"> Submit</button>
+    </form>
+
     <br>
     <h2>WHO WE ARE
-      {{inst.inst_address}}
-      <br>
-      Latitude: {{inst.inst_lat}}
-      <br>
-      Longitude: {{inst.inst_lng}}
-    </h2>
+     </h2>
     <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
     <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
