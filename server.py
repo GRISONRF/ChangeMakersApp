@@ -411,7 +411,7 @@ def get_results():
 
 # ------------------------ MAP --------------------
 
-@app.route('/geocoords.json')
+@app.route('/instgeocoords.json')
 def get_inst_coords():
     """ Setting up a queryString with inst location to pass back to db """
 
@@ -419,9 +419,24 @@ def get_inst_coords():
     inst_id = request.args.get("inst_id")
     inst = crud.get_inst_by_id(inst_id)
     
-    coords_dict = {"lat": inst.inst_lat, "lng": inst.inst_lng}
+    icoords_dict = {"lat": inst.inst_lat, "lng": inst.inst_lng}
 
-    return jsonify(coords_dict)
+    return jsonify(icoords_dict)
+
+
+@app.route('/eventgeocoords.json')
+def get_event_coords():
+    """ Setting up a queryString with event location to pass back to db """
+
+    #inst_id is the parameter in the queryString
+    event_id = request.args.get("event_id")
+    event = crud.get_event_by_id(event_id)
+    
+    ecoords_dict = {"lat": event.evt_lat, "lng": event.evt_lng}
+
+    return jsonify(ecoords_dict)
+
+
 
 
 if __name__ == "__main__":

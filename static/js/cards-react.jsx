@@ -95,7 +95,6 @@ function EventCard(props) {
     );
 }
 
-// console.log(all_causes);
 
 function EventCardContainer() {
     const [city, setCity] = React.useState('');

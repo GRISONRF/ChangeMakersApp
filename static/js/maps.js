@@ -8,7 +8,7 @@ function initMap() {
     //pass the inst_id to the db to get the location for that inst 
     const queryString = new URLSearchParams({inst_id: inst_id});
 
-    fetch(`/geocoords.json?${queryString}`)
+    fetch(`/instgeocoords.json?${queryString}`)
         .then(response => response.json())
         .then(jsonData => {
             console.log(jsonData);
@@ -25,6 +25,43 @@ function initMap() {
             });
     });
 }
+
+
+function eventMap() {
+    
+    // Need to get the event_id from div in html
+    const event_id = document.querySelector(".mapss").id;
+
+    //pass the event_id to the db to get the location for that inst 
+    const queryString = new URLSearchParams({event_id: event_id});
+
+    fetch(`/eventgeocoords.json?${queryString}`)
+        .then(response => response.json())
+        console.log(response)
+        .then(jsonData => {
+            console.log(jsonData);
+
+            const basicMap = new google.maps.Map(document.querySelector('#event-map'), {
+                center:jsonData,
+                zoom: 12,
+            });
+
+            const coordMarker = new google.maps.Marker({
+                position: jsonData,
+                title: 'Event location',
+                map: basicMap,
+            });
+    });
+}
+
+
+
+
+
+
+
+
+
 
 
 /////////////////////////////////////////////////////////**DEMO 2 TEST */

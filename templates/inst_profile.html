@@ -17,10 +17,12 @@
       <img id="inst_pic" src="{{ inst.inst_pic }}">
     </div>
 
+    {% if 'inst' in session %}
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <input type="file" name="inst-pic">
-      <button  class="button" type="submit"> Submit</button>
+      <button  class="button" type="submit">Submit</button>
     </form>
+    {% endif %}
 
     <br>
     <h2>WHO WE ARE
@@ -33,7 +35,7 @@
 
   <div class="container">
     <div class="inst-container" id ="{{ inst.inst_id }}"> 
-    <h1>MY EVENTS</h1>
+    <h1>{{inst.inst_name}} active events</h1>
 
     {% for event in all_events %}
       {% if event.inst_id == inst.inst_id %}
@@ -53,10 +55,14 @@
         </a>
         </div>
       </div>
+    
       {% endif %}
     {%endfor%}
+    </div>
+  </div>
 
 
+  {% if 'inst' in session %}
     <!-- button to create a new event -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
 
@@ -106,9 +112,9 @@
         </div>
       </div>
     </div>
-
-  </div>
-</div> 
+  {% endif %}
+  
+ 
 
         
 
