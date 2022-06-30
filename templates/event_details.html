@@ -14,7 +14,7 @@
 
 
 <p>Map should he here:</p>
-<div id="{{ event.event_id }}" class="mapss col-lg-4 col-12">
+<div id="{{ event.event_id }}" class="maps col-lg-4 col-12">
     <div id="event-map"></div>
 </div>
 
@@ -46,9 +46,10 @@
 </div>
 
 
+<script src="/static/js/maps.js"></script>
 <script
-async
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClU-Mhv9qzGPyKT4nFvI8MWkOvTuijj9k&callback=initMap">
+    async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClU-Mhv9qzGPyKT4nFvI8MWkOvTuijj9k&callback=eventMap">
 </script>
 
 {% endblock %}

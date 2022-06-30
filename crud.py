@@ -163,7 +163,7 @@ def get_events_by_volunteer_id(volunteer_id):
 
 
 def event_is_saved(volunteer_id, event_id):
-    """ Return true if volunteer alrady has this event signed up """
+    """ Return true if volunteer already has this event signed up """
 
     # All the events entries by the volunteer.
     events_volunteer_id = VolunteerEvt.query.filter_by(volunteer_id=volunteer_id).all()
@@ -221,10 +221,6 @@ def get_event_by_city_cause(city, state, cause_name):
     
 
 
-    
-
-
-
 # --------------- Ulpload pictures functions ---------------
 
 def update_profile_pic():
@@ -248,4 +244,10 @@ def create_cause(cause_name, cause_title, cause_icon):
 def get_all_causes():
     """ Return all the causes """
 
-    return Cause.query.all()   
+    return Cause.query.all()  
+
+
+# ------------------------ Skill functions ----------------------------
+
+
+# def create 

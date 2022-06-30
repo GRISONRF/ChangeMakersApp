@@ -19,11 +19,12 @@
     <img id="v_pic" src="{{ volunteer.v_pic }}">
   </div>
 
-
+  {% if 'volunteer' in session %}
   <form action="/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="volunteer-pic">
     <button  class="button" type="submit"> Submit</button>
   </form>
+  {% endif %}
     <ul>
       <li>Name: {{ volunteer.fname}}</li>
       <li>Email: {{ volunteer.v_email}}</li>
@@ -50,7 +51,7 @@
 
 </form> -->
 
-<h2> Events I Signed Up </h2>
+<h2> Events {{volunteer.fname}} Signed Up </h2>
 
 {% for event in my_events %}
 <div class="card">

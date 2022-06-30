@@ -431,7 +431,7 @@ def get_event_coords():
     #inst_id is the parameter in the queryString
     event_id = request.args.get("event_id")
     event = crud.get_event_by_id(event_id)
-    
+
     ecoords_dict = {"lat": event.evt_lat, "lng": event.evt_lng}
 
     return jsonify(ecoords_dict)

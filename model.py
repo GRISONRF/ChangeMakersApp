@@ -24,6 +24,7 @@ class Volunteer(db.Model):
     favorites = db.relationship("Institution", secondary="favorites", backref="volunteers")  #
     events = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")   
     comments = db.relationship("VolunteerComment", back_populates="volunteer")
+    skills = db.relationship("Skill", secondary="volunteer_skill", backref="volunteers")
 
     def __repr__(self):
         return f'<< Volunteer volunteer_id={self.volunteer_id} fname={self.fname} lname={self.lname} v_email={self.v_email} v_password={self.v_password} v_address={self.v_address} v_pic={self.v_pic} >>'
@@ -102,7 +103,7 @@ class VolunteerEvt(db.Model):
     volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
 
-    # volunteer_evt = db.relationship("Event", secondary="volunteer_evt", backref="volun  teers")
+    # volunteer_evt = db.relationship("Event", secondary="volunteer_evt", backref="volunteers")
 
 
     def __repr__(self):
@@ -128,8 +129,8 @@ class Event(db.Model):
     evt_lng = db.Column(db.Float)
     evt_description = db.Column(db.Text)
     inst_id = db.Column(db.Integer, db.ForeignKey('institutions.inst_id'))
-    # volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
-
+    
+    skills = db.relationship("Skill", secondary="event_skill", backref="events")
     inst = db.relationship("Institution", back_populates="events")
     # volunteers for free  
     comments = db.relationship("VolunteerComment", back_populates="event")
@@ -158,7 +159,57 @@ class VolunteerComment(db.Model):
     def __repr__(self):
         return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} event_id={self.event_id} volunteer_id={self.volunteer_id} >>'
 
- 
+
+class Skill(db.Model):
+    """ A Skill """
+
+    __tablename__ = 'skills'
+
+    skill_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    skill_name = db.Column(db.String(30), nullable=False)
+    skill_title = db.Column(db.String(100), nullable=False)
+
+    #volunteers for free:
+    #skills = db.relationship("Skill", secondary="volunteer_skill", backref="volunteers")
+    #events for free:
+    #skills = db.relationship("Skill", secondary="event_skill", backref="events")
+
+    def __repr__(self):
+        return f'<< Skill skill_id={self.skill_id} skill_name={self.skill_name} skill_title={self.skill_title} >>'
+
+
+class VolunteerSkill(db.Model):
+    """ a volunteer skill """
+
+    __tablename__ = 'volunteer_skill'
+
+    volunteer_skill_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.skill_id'))
+
+    def __repr__(self):
+        return f'<< VolunteerSkill volunteer_skill_id={self.volunteer_skill_id} volunteer_id={self.volunteer_id} skill_id={self.skill_id} >>'
+
+
+
+class EventSkill(db.Model):
+    """ A Event Skill """
+
+    __tablename__ = 'event_skill'
+
+    event_skill_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.skill_id'))
+
+    def __repr__(self):
+        return f'<< EventSkill event_skill_id={self.event_skill_id} event_id={self.event_id} skill_id={self.skill_id} >>'
+
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///project", echo=True):
