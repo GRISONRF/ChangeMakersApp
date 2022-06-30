@@ -57,12 +57,14 @@ def register_institution():
     inst_address = request.form.get("iaddress")
     inst_cause = request.form.get("cause")
     inst_pic = "/static/images/inst_pic.png"
-    geolocator = Nominatim(user_agent='inst-register')
+    geolocator = Nominatim(user_agent='project')
     
     # using geocode to get the address, lat and lng
-    iaddress = geolocator.geocode(inst_address).address
-    inst_lat = geolocator.geocode(iaddress).latitude
-    inst_lng = geolocator.geocode(iaddress).longitude
+    iaddress = geolocator.geocode(inst_address)
+    inst_lat = iaddress.latitude
+    inst_lng = iaddress.longitude
+    iaddress = iaddress.address
+
     
     # using the lat and lng to get the city and state
     location = geolocator.reverse((inst_lat,inst_lng), exactly_one=True)
@@ -363,26 +365,25 @@ def volunteer_signup_evt(event_id):
 def get_results():
     """ Return a JSON response with the search results """    
 
-    city = request.form.get("city") 
-    state = request.form.get("state")
-    cause = request.form.get("cause")
+    city = request.json.get("city") 
+    state = request.json.get("state")
+    cause = request.json.get("cause")
 
-    events_by_city_cause = crud.get_event_by_city_state(city, state, cause)
+    events_by_city_cause = crud.get_event_by_city_cause(city, state, cause)
 
     # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
-
+    search_results = []
     for event in events_by_city_cause:
-        search_results = [
+        search_results.append( 
             {
             "evt_title" : event.evt_title,
             "inst_name": event.inst.inst_name,
             "evt_location" : event.evt_address,
-            "cause": event.inst.cause,
+            "cause": event.inst.cause.cause_name,
             "evt_date": event.evt_date,
-            "evt_id": event.evt_id    
+            "event_id": event.event_id    
             }
-        ]
-
+        )
     return jsonify(search_results)
 
 
@@ -395,12 +396,16 @@ def get_results():
 
 # ------------------------ MAP --------------------
 
-@app.route('/getcords.json')
+@app.route('/geocoords.json')
 def get_inst_coords():
     """ Setting up a queryString with inst location to pass back to db """
+
+    #inst_id is the parameter in the queryString
     inst_id = request.args.get("inst_id")
-    inst_coords = crud.get_inst_coords_by_id(inst_id)
-    coords_dict = {"lat": inst_coords[0], "lng": inst_coords[1]}
+    inst = crud.get_inst_by_id(inst_id)
+    
+    coords_dict = {"lat": inst.inst_lat, "lng": inst.inst_lng}
+
     return jsonify(coords_dict)
 
 

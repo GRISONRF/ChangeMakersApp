@@ -193,17 +193,24 @@ def get_event_by_city_state(city, state):
     return Event.query.filter(Event.evt_city==city, Event.evt_state == state).all()
 
 
-def get_event_by_city_cause(city, state, cause):
-    """ Return all the events by the city, state and cause_id """
+def get_event_by_city_cause(city, state, cause_name):
+    """ Return all the events by the city, state and cause_name """
+
+    #getting cause_id by the cause_name
+    cause = Cause.query.filter(Cause.cause_name==cause_name).first()
 
     # Getting the institutions by X cause
-    institutions = Institution.query.filter(Institution.cause_id==cause).all()
+    institutions = Institution.query.filter(Institution.cause_id==cause.cause_id).all() #probably doesnt work
+    print(institutions)
 
     # Getting the events by X institutions
     all_events = []
     for inst in institutions:
-        all_events.append(inst.events)
-    
+        for event in inst.events:        
+            all_events.append(event)
+
+    print(all_events)
+    print("\n" * 5)
     # Getting the events in specific city and state
     events = []
     for event in all_events:
@@ -241,7 +248,4 @@ def create_cause(cause_name, cause_title, cause_icon):
 def get_all_causes():
     """ Return all the causes """
 
-    return Cause.query.all()
-
-
-    
+    return Cause.query.all()   

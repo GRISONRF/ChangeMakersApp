@@ -78,8 +78,8 @@ class Institution(db.Model):
     inst_address = db.Column(db.String(500), nullable=False)
     inst_city = db.Column(db.String(60), nullable=False)
     inst_state = db.Column(db.String(60), nullable=False)
-    inst_lat = db.Column(db.Integer)
-    inst_lng = db.Column(db.Integer)
+    inst_lat = db.Column(db.Float)
+    inst_lng = db.Column(db.Float)
     inst_pic = db.Column(db.String, nullable=True)
     cause_id = db.Column(db.Integer, db.ForeignKey('causes.cause_id'))
  
@@ -136,7 +136,7 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_start_time={self.evt_start_time} evt_end_time={self.evt_end_time} evt_address={self.evt_address} evt_city={self.evT_city} evt_state={self.evt_state} evt_lat={self.evt_lat} evt_long={self.evt_lng} evt_description={self.evt_description} inst_id={self.inst_id} >>'
+        return f'<< Event event_id={self.event_id} evt_title={self.evt_title} evt_date={self.evt_date} evt_start_time={self.evt_start_time} evt_end_time={self.evt_end_time} evt_address={self.evt_address} evt_city={self.evt_city} evt_state={self.evt_state} evt_lat={self.evt_lat} evt_long={self.evt_lng} evt_description={self.evt_description} inst_id={self.inst_id} >>'
 
 
 class VolunteerComment(db.Model):

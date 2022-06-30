@@ -4,22 +4,26 @@
 
 {% block body %}
 
-    <h1>{{inst.inst_name}}</h1>
-    <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
-    <p>{{inst.cause.cause_title}}</p> 
-    <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
+
+  <h1>{{inst.inst_name}}</h1>
+  <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
+  <p>{{inst.cause.cause_title}}</p> 
+  <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
 
     <br>
     <h2>*photo that institution can upload*</h2>
     <br>
-    <h2>WHO WE ARE</h2>
+    <h2>WHO WE ARE
+      {{inst.inst_address}}
+      <br>
+      Latitude: {{inst.inst_lat}}
+      <br>
+      Longitude: {{inst.inst_lng}}
+    </h2>
     <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 
-    <div class="map col-lg-4 col-12">
-     
-      <p>map should be here:</p>
+    <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
       <div id="inst-map"></div>
-    
     </div>
 
   <div class="container">
@@ -29,10 +33,10 @@
     {% for event in all_events %}
       {% if event.inst_id == inst.inst_id %}
     <div class="card">
-        <div class="image">
+      <div class="image">
         <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
-        </div>
-        <div class="title">
+      </div>
+      <div class="title">
         <h1>{{ event.evt_title }}</h1>
         </div>
         <div class="des">
@@ -98,9 +102,10 @@
       </div>
     </div>
 
-  <!-- </div>
-</div> -->
+  </div>
+</div> 
 
+        
 
   <script src="/static/js/maps.js"></script>
   <script
