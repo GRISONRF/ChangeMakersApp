@@ -151,7 +151,7 @@ function EventCardContainer() {
         <React.Fragment>
 
             <label htmlFor="cityInput">
-                City
+                City:
                 <input
                 value={city}
                 onChange={(event) => setCity(event.target.value)}
@@ -161,7 +161,7 @@ function EventCardContainer() {
             </label>
 
             <label htmlFor="stateInput">
-                State
+                State: 
                 <input
                 value={state}
                 onChange={(event) => setState(event.target.value)}
@@ -170,6 +170,7 @@ function EventCardContainer() {
                 />
             </label>
 
+            <p>Cause:</p>
             {causeButtons}
         
             

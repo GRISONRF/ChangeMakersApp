@@ -83,6 +83,7 @@ class Institution(db.Model):
     inst_lng = db.Column(db.Float)
     inst_pic = db.Column(db.String, nullable=True)
     cause_id = db.Column(db.Integer, db.ForeignKey('causes.cause_id'))
+
  
     events = db.relationship("Event", back_populates="inst")
     #free at. volunteers

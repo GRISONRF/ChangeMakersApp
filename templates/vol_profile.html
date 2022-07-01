@@ -101,8 +101,10 @@
     <button class="button" type="submit"> Update infos </button>
 
 </form> -->
+<div>
+  <h2> Events {{volunteer.fname}} Signed Up </h2>
 
-<h2> Events {{volunteer.fname}} Signed Up </h2>
+
 
 {% for event in my_events %}
 <div class="card">
@@ -121,8 +123,18 @@
     </div>
   </div>
 {% endfor %}
+</div>
 
 
+<div>
+  <h2>Recommended events:</h2>
+
+</div>
+
+
+
+
+<h2> Search for events by:</h2>
 <div id="events-container"></div>
 
 <script src="/static/js/cards-react.jsx" type="text/jsx"></script>

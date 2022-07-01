@@ -385,10 +385,22 @@ def event_details(event_id):
 
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
+
         event = crud.get_event_by_id(event_id)
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
+
+
+
+        institution = crud.get_inst_by_event(event_id)
+        print(institution)
+        print("\n" * 5)
+   
+
         
-        return render_template("event_details.html", event=event, event_is_saved=event_is_saved)
+        
+        event_skills = crud.get_skills_by_event(event_id)
+        
+        return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills, institution=institution)
 
     elif "inst" in session:
         inst_id = session["inst"]

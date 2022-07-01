@@ -78,6 +78,26 @@ def get_insts_by_cause(cause_id):
 
     return Institution.query.filter(Institution.cause_id==cause_id).all() #all insts by that cause
 
+
+
+def get_inst_by_event(event_id):
+    """ Return institution by event_id """
+
+
+
+    # institution = Institution.query.join(Event).filter_by(event_id=event_id).all()
+    # return institution
+
+
+
+    institutions = Institution.query.all()
+    
+    for inst in institutions:
+        for event in inst.events:          
+            if event.event_id == event_id:
+                return inst
+
+
 # def get_inst_city_by_coords(inst_lat, inst_long):
 #     """ Return the institution city by the address """
 
@@ -209,8 +229,6 @@ def get_event_by_city_cause(city, state, cause_name):
         for event in inst.events:        
             all_events.append(event)
 
-    print(all_events)
-    print("\n" * 5)
     # Getting the events in specific city and state
     events = []
     for event in all_events:
