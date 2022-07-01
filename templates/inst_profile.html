@@ -101,6 +101,27 @@
                 <label for="evt_description" class="col-form-label">Event Description:</label>
                 <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea> 
               </div>
+
+              <div class="mb-3">
+
+                  <label for="lang-select">Select up to 3 skills: </label>
+                  <select name="skill1" id="lang-select">
+                    {% for skill in all_skills %}
+                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                    {% endfor %}
+                  </select>
+                  <select name="skill2" id="lang-select">
+                    {% for skill in all_skills %}
+                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                    {% endfor %}
+                  </select>
+                  <select name="skill3" id="lang-select">
+                    {% for skill in all_skills %}
+                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                    {% endfor %}
+                  </select>         
+                
+              </div>
             </form>
             
           </div>

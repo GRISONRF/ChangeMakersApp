@@ -43,6 +43,7 @@ def inst_register_page():
     """ Return page for the institution to register """
 
     all_causes = crud.get_all_causes()
+    all_skills = crud.get_all_skills()
 
     return render_template('i_register.html', all_causes=all_causes)
 
@@ -185,6 +186,7 @@ def login():
     if inst_user and inst_user.inst_password == inst_password:
         session['inst'] = inst_user.inst_id
         all_causes
+        all_skills
 
         return redirect('/inst_profile')
 
@@ -211,8 +213,9 @@ def inst_profile():
 
         inst = crud.get_inst_by_id(inst_id)
         all_events = crud.get_events()
+        all_skills = crud.get_all_skills()
 
-        return render_template('inst_profile.html', inst=inst, all_events=all_events)
+        return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills)
 
     else: return render_template('login.html')
 
@@ -230,10 +233,6 @@ def volu_profile():
     all_causes = crud.get_all_causes()
     all_skills = crud.get_all_skills()
     volunteer_skills = crud.get_skills_by_volunteer(volunteer_id)
-    print('\n' * 5)
-    print(all_skills)
-    print('\n' * 5)
-    print(volunteer_skills)
    
     return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events, all_causes=all_causes, all_skills=all_skills, volunteer_skills=volunteer_skills)
 
@@ -279,22 +278,25 @@ def volu_upload_picture():
 def select_skills():
     """ Save the skills the volunteer selected from form """
 
-    skill_id1 = request.form.get("skill1")
-    skill_id2 = request.form.get("skill2")
-    skill_id3 = request.form.get("skill3")
-    
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
+        
+        skill_id1 = request.form.get("skill1")
+        skill_id2 = request.form.get("skill2")
+        skill_id3 = request.form.get("skill3")
     
-        skill1= crud.create_volunteer_skill(volunteer_id, skill_id1)
-        skill2= crud.create_volunteer_skill(volunteer_id, skill_id2)
-        skill3= crud.create_volunteer_skill(volunteer_id, skill_id3)
+    
+        skill1 = crud.create_volunteer_skill(volunteer_id, skill_id1)
+        skill2 = crud.create_volunteer_skill(volunteer_id, skill_id2)
+        skill3 = crud.create_volunteer_skill(volunteer_id, skill_id3)
         db.session.add(skill1)
         db.session.add(skill2)
         db.session.add(skill3)
         db.session.commit()
      
-        return redirect("/vol_profile")
+        return redirect("/vol_profile")     
+
+
 
 # ---------------- INSTITUTION CREATE A NEW EVENT ----------------
 @app.route('/new_event', methods=['POST'])
@@ -310,6 +312,9 @@ def create_event():
     evt_description = request.form.get("evt_description")
     evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
     geolocator = Nominatim(user_agent='inst-event')
+    skill1 = request.form.get("skill1")
+    skill2 = request.form.get("skill2")
+    skill3 = request.form.get("skill3")
     
     # using geocode to get the address, lat and lng
     evt_address = geolocator.geocode(evt_address).address
@@ -326,22 +331,38 @@ def create_event():
         inst_id = session["inst"]
         inst = crud.get_inst_by_id(inst_id)
 
-    new_event = crud.create_event(
-        evt_title, 
-        evt_date, 
-        evt_start_time, 
-        evt_end_time, 
-        evt_address,
-        evt_city,
-        evt_state, 
-        evt_lat, 
-        evt_lng, 
-        inst_id, 
-        evt_description
-        )
+        new_event = crud.create_event(
+            evt_title, 
+            evt_date, 
+            evt_start_time, 
+            evt_end_time, 
+            evt_address,
+            evt_city,
+            evt_state, 
+            evt_lat, 
+            evt_lng, 
+            inst_id, 
+            evt_description
+            )
+        
+        db.session.add(new_event)
+        db.session.commit() 
 
-    db.session.add(new_event) 
-    db.session.commit()
+        all_skills = crud.get_all_skills()
+        event_skill1 = crud.create_event_skill(new_event.event_id, skill1)
+        event_skill2 = crud.create_event_skill(new_event.event_id, skill2)
+        event_skill3 = crud.create_event_skill(new_event.event_id, skill3)
+
+        db.session.add(event_skill1)
+        db.session.add(event_skill2)
+        db.session.add(event_skill3) 
+        db.session.commit()
+
+        print(all_skills)
+        print('\n' * 5)
+        print(event_skill3)
+        print('\n' * 5)
+        
     return redirect('/inst_profile')
 
 
@@ -366,12 +387,17 @@ def event_details(event_id):
         volunteer_id = session["volunteer"]
         event = crud.get_event_by_id(event_id)
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
+        
         return render_template("event_details.html", event=event, event_is_saved=event_is_saved)
 
     elif "inst" in session:
         inst_id = session["inst"]
+        institution = crud.get_inst_by_id(inst_id)
+
         event = crud.get_event_by_id(event_id)
-        return render_template("event_details.html", event=event)
+        event_skills = crud.get_skills_by_event(event_id)
+
+        return render_template("event_details.html", event=event,event_skills=event_skills, institution=institution)
 
 
 @app.route('/events/<event_id>/sign_up')

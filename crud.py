@@ -290,3 +290,9 @@ def create_event_skill(event_id, skill_id):
             skill_id=skill_id
         )
     return event_skill
+
+def get_skills_by_event(event_id):
+    """ Get the skills by given event """
+
+    skills_event = Skill.query.join(EventSkill).filter_by(event_id=event_id).all()
+    return skills_event

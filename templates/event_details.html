@@ -7,10 +7,15 @@
 <p>
     {{ event.evt_description }}
 </p>
-<p>Cause:</p>
+<p>Cause: {{institution.cause.cause_title}}</p>
 <p>When: {{event.evt_date}}</p>
 <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
 <p>Where: {{event.evt_address}}</p>
+<p>Skills:</p>
+{% for skill in event_skills %}
+<p>{{skill.skill_title}}</p>
+  {% endfor %} 
+
 
 
 <p>Map should he here:</p>
