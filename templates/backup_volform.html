@@ -47,3 +47,45 @@
       </form>
       
   </div>
+
+
+
+
+
+
+
+
+
+  {% if volunteer in session %} 
+  <!-- IF VOLUNTEER SELECTED SKILLS BEFORE, 
+  SHOW THE SKILLS THEY HAVE -->
+    <!-- SHOW  -->
+    <p>Skills:</p>
+    {% for skill in all_skills %}
+      <p>{{skill.skill_title}}</p>
+    {% endfor %}
+
+    <!-- IF VOLUNTEER DOESNT HAVE SKILLS SELECTED
+          SHOW THE FORM SO THEY CAN SELECT THE SKILLS -->    
+  {% else %}  
+    <form action="/select_skills" method="POST">
+      <label for="lang-select">Select up to 3 skills: </label>
+      <select name="skill1" id="lang-select">
+        {% for skill in all_skills %}
+        <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+        {% endfor %}
+      </select>
+      <select name="skill2" id="lang-select">
+        {% for skill in all_skills %}
+        <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+        {% endfor %}
+      </select>
+      <select name="skill3" id="lang-select">
+        {% for skill in all_skills %}
+        <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+        {% endfor %}
+      </select>
+      <button  class="button" type="submit"> Select skills</button>
+      
+    </form>
+{ % endif %}

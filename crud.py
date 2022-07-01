@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, VolunteerComment, Cause, connect_to_db
+from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, VolunteerComment, Cause, Skill, VolunteerSkill, EventSkill, connect_to_db
 from geopy.geocoders import Nominatim
 
 # -------------- Volunteer functions ---------------
@@ -233,12 +233,12 @@ def update_profile_pic():
 def create_cause(cause_name, cause_title, cause_icon):
     """ Create and return a cause """
 
-    new_cause = Cause(
+    cause = Cause(
                     cause_name=cause_name,
                     cause_title=cause_title,
                     cause_icon=cause_icon
                     ) 
-    return new_cause
+    return cause
 
 
 def get_all_causes():
@@ -250,4 +250,43 @@ def get_all_causes():
 # ------------------------ Skill functions ----------------------------
 
 
-# def create 
+def create_skill(skill_name, skill_title):
+    """ Create and return a new skill """
+
+    skill = Skill(
+                skill_name=skill_name,
+                skill_title=skill_title
+                )
+    return skill
+
+
+def get_all_skills():
+    """ Return all the skills """
+
+    return Skill.query.all()
+
+
+def create_volunteer_skill(volunteer_id, skill_id):
+    """ Create and return a new skill assigned to volunteer """
+
+    volunteer_skill = VolunteerSkill(
+            volunteer_id=volunteer_id,
+            skill_id=skill_id
+            )
+    return volunteer_skill
+
+def get_skills_by_volunteer(volunteer_id):
+    """ Get the skills by given volunteer_id """
+
+    skills_volunteer = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
+    return skills_volunteer
+
+
+def create_event_skill(event_id, skill_id):
+    """ Create and return a new skill assigned to event """
+
+    event_skill = EventSkill(
+            event_id=event_id,
+            skill_id=skill_id
+        )
+    return event_skill

@@ -146,6 +146,8 @@ def register_volunteer():
 # ---------------- LOGIN ----------------
 @app.route('/login_page')
 def login_page():
+
+    
     return render_template('login.html')
 
 
@@ -165,10 +167,14 @@ def login():
     inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
 
     all_causes = crud.get_all_causes()
+    all_skills = crud.get_all_skills()
+
 
     # volunteer
     if volu_user and volu_user.v_password == volu_password:
         session['volunteer'] = volu_user.volunteer_id
+        all_skills
+
         return redirect('/vol_profile')
 
     else:
@@ -222,13 +228,18 @@ def volu_profile():
     volunteer = crud.get_volunter_by_id(volunteer_id)
     my_events = crud.get_events_by_volunteer_id(volunteer_id)
     all_causes = crud.get_all_causes()
-
+    all_skills = crud.get_all_skills()
+    volunteer_skills = crud.get_skills_by_volunteer(volunteer_id)
+    print('\n' * 5)
+    print(all_skills)
+    print('\n' * 5)
+    print(volunteer_skills)
    
-    return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events, all_causes=all_causes)
+    return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events, all_causes=all_causes, all_skills=all_skills, volunteer_skills=volunteer_skills)
 
 
 @app.route('/upload', methods=["POST"])
-def volu_uopload_picture():
+def volu_upload_picture():
     """ Upload a new profile picture and add it to the database"""
 
     if "volunteer" in session:
@@ -263,6 +274,27 @@ def volu_uopload_picture():
 
         return redirect("/inst_profile")
 
+
+@app.route('/select_skills', methods=['POST'])
+def select_skills():
+    """ Save the skills the volunteer selected from form """
+
+    skill_id1 = request.form.get("skill1")
+    skill_id2 = request.form.get("skill2")
+    skill_id3 = request.form.get("skill3")
+    
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+    
+        skill1= crud.create_volunteer_skill(volunteer_id, skill_id1)
+        skill2= crud.create_volunteer_skill(volunteer_id, skill_id2)
+        skill3= crud.create_volunteer_skill(volunteer_id, skill_id3)
+        db.session.add(skill1)
+        db.session.add(skill2)
+        db.session.add(skill3)
+        db.session.commit()
+     
+        return redirect("/vol_profile")
 
 # ---------------- INSTITUTION CREATE A NEW EVENT ----------------
 @app.route('/new_event', methods=['POST'])
@@ -358,7 +390,8 @@ def volunteer_signup_evt(event_id):
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
         all_causes = crud.get_all_causes()
 
-    return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
+    # return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
+    return redirect("vol_profile.html")
 
 
 # ########################## REACT #############################

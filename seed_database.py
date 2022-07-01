@@ -15,6 +15,7 @@ os.system('createdb project')
 connect_to_db(server.app)
 db.create_all()
 
+# --------------------- causes --------------------
 
 advocacy = crud.create_cause("humans", "Advocacy and Human Rights", "static/images/humansrights.png")
 animals = crud.create_cause("animals", "Animals", "static/images/animals.png")
@@ -31,5 +32,24 @@ women = crud.create_cause("women", "Women", "static/images/women.png")
 other = crud.create_cause("other", "Other", "static/images/other.png")
 
 db.session.add_all([advocacy, animals, art, children, education, hunger, homeless, immigrants, lgbtq, race, women])
+
+db.session.commit()
+
+
+# ------------------ skills ------------------
+
+acc = crud.create_skill("accounting", "Accounting")
+adu = crud.create_skill("adult_education", "Adult Education")
+adv = crud.create_skill("advocacy","Adult Education")
+agr = crud.create_skill("agronomy", "Advocacy")
+ame = crud.create_skill("asl", "American Sign Language")
+ani = crud.create_skill("animal_care", "Animal Care / Handling")
+arc = crud.create_skill("architecture", "Architecture")
+bot = crud.create_skill("botany", "Botany")
+bus = crud.create_skill("business", "Business Development & Management")
+chia = crud.create_skill("child_adv", "Child Advocacy")   #10
+
+
+db.session.add_all([acc, adu, adv, agr, ame, ani, arc, bot, bus, chia])
 
 db.session.commit()

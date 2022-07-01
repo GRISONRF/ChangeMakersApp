@@ -19,17 +19,68 @@
     <img id="v_pic" src="{{ volunteer.v_pic }}">
   </div>
 
-  {% if 'volunteer' in session %}
   <form action="/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="volunteer-pic">
     <button  class="button" type="submit"> Submit</button>
   </form>
-  {% endif %}
+
     <ul>
       <li>Name: {{ volunteer.fname}}</li>
       <li>Email: {{ volunteer.v_email}}</li>
-      <li>Address: {{volunteer.v_address}}</li>
+      <li>Location: {{volunteer.v_address}}</li>
     </ul>
+
+      
+    <!-- IF VOLUNTEER SELECTES SKILLS BEFORE, 
+    SHOW THE SKILLS THEY HAVE -->
+      <!-- SHOW  -->
+      
+      <!-- IF VOLUNTEER DOESNT HAVE SKILLS SELECTED
+            SHOW THE FORM SO THEY CAN SELECT THE SKILLS -->
+
+
+      {% if 'volunteer' in session %} 
+        {% if volunteer_skills %}
+
+        <p>Skills:</p>
+          {% for skill in volunteer_skills %}
+        <p>{{skill.skill_title}}</p>
+          {% endfor %}
+        
+        {% else %}
+
+        <form action="/select_skills" method="POST">
+          <label for="lang-select">Select up to 3 skills: </label>
+          <select name="skill1" id="lang-select">
+            {% for skill in all_skills %}
+            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+            {% endfor %}
+          </select>
+          <select name="skill2" id="lang-select">
+            {% for skill in all_skills %}
+            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+            {% endfor %}
+          </select>
+          <select name="skill3" id="lang-select">
+            {% for skill in all_skills %}
+            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+            {% endfor %}
+          </select>
+          <button  class="button" type="submit"> Select skills</button>
+          
+        </form>
+        {% endif %}
+      {% endif %}
+
+
+
+
+
+
+
+
+
+
 </div>
 <br>
 <br>
