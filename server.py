@@ -305,12 +305,12 @@ def create_event():
 
     # Get info from the form
     evt_title = request.form.get("evt_title")
-    evt_date = request.form.get("evt_date") 
+    form_date = request.form.get("evt_date") 
     evt_start_time = request.form.get("evt_start_time")
     evt_end_time = request.form.get("evt_end_time")
     evt_address = request.form.get("evt_address") 
     evt_description = request.form.get("evt_description")
-    evt_date = datetime.strptime(evt_date, '%d/%m/%Y').date()
+    
     geolocator = Nominatim(user_agent='inst-event')
     skill1 = request.form.get("skill1")
     skill2 = request.form.get("skill2")
@@ -325,6 +325,20 @@ def create_event():
     location = geolocator.reverse((evt_lat,evt_lng), exactly_one=True)
     evt_city = location.raw['address'].get('city', '')
     evt_state = location.raw['address'].get('state', '')
+
+    # format the date
+    edate_not_formated = datetime.strptime(form_date, '%d/%m/%Y').date()
+    month = edate_not_formated.strftime("%m")
+    day = edate_not_formated.strftime("%d")
+    year = edate_not_formated.strftime("%Y")
+    evt_date = f'{month} / {day} / {year}'
+
+    #format the time
+    print("\n" * 5)
+    print(evt_start_time)
+    print(type(evt_start_time))
+    print(evt_end_time)
+
 
     # Still need to create an ELSE for when inst_id is NOT in session?
     if "inst" in session:
@@ -357,11 +371,6 @@ def create_event():
         db.session.add(event_skill2)
         db.session.add(event_skill3) 
         db.session.commit()
-
-        print(all_skills)
-        print('\n' * 5)
-        print(event_skill3)
-        print('\n' * 5)
         
     return redirect('/inst_profile')
 
@@ -391,8 +400,8 @@ def event_details(event_id):
 
 
 
-        institution = crud.get_inst_by_event(event_id)
-        print(institution)
+        # inst_causes = crud.get_cause_by_event(event_id)
+        # print(inst_causes)
         print("\n" * 5)
    
 
@@ -400,7 +409,7 @@ def event_details(event_id):
         
         event_skills = crud.get_skills_by_event(event_id)
         
-        return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills, institution=institution)
+        return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills)
 
     elif "inst" in session:
         inst_id = session["inst"]
@@ -427,9 +436,10 @@ def volunteer_signup_evt(event_id):
         my_events = crud.get_events_by_volunteer_id(volunteer_id)
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
         all_causes = crud.get_all_causes()
+        
 
     # return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
-    return redirect("vol_profile.html")
+    return redirect("/vol_profile")
 
 
 # ########################## REACT #############################

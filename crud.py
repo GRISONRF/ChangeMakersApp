@@ -81,21 +81,21 @@ def get_insts_by_cause(cause_id):
 
 
 def get_inst_by_event(event_id):
-    """ Return institution by event_id """
+    """ Return institutions by event_id """
 
 
-
+ 
     # institution = Institution.query.join(Event).filter_by(event_id=event_id).all()
     # return institution
 
 
 
-    institutions = Institution.query.all()
+    institutions = Institution.query.all() #[<< Institution inst_id=1 inst_name=blabla....>> <<Institution inst_id=2 ....>>]
     
-    for inst in institutions:
+    for inst in institutions: #<< Institution inst_id=1 inst_name=blabla....>>
         for event in inst.events:          
             if event.event_id == event_id:
-                return inst
+                return inst.inst_id
 
 
 # def get_inst_city_by_coords(inst_lat, inst_long):
@@ -220,7 +220,7 @@ def get_event_by_city_cause(city, state, cause_name):
     cause = Cause.query.filter(Cause.cause_name==cause_name).first()
 
     # Getting the institutions by X cause
-    institutions = Institution.query.filter(Institution.cause_id==cause.cause_id).all() #probably doesnt work
+    institutions = Institution.query.filter(Institution.cause_id==cause.cause_id).all()
     print(institutions)
 
     # Getting the events by X institutions
@@ -237,6 +237,15 @@ def get_event_by_city_cause(city, state, cause_name):
 
     return events
     
+def get_event_by_skill(event_id):
+    """ Return the events by given skill_id """
+
+    pass
+    #return Event.query.filter(Event.skill.skill_id==skill_id).all()
+    #events = Skill.query.join(EventSkill).filter_by(event_id)
+
+    #events_volunteer_id = Event.query.join(VolunteerEvt).filter_by(volunteer_id=volunteer_id).all()
+
 
 
 # --------------- Ulpload pictures functions ---------------
@@ -294,7 +303,7 @@ def create_volunteer_skill(volunteer_id, skill_id):
     return volunteer_skill
 
 def get_skills_by_volunteer(volunteer_id):
-    """ Get the skills by given volunteer_id """
+    """ Return the skills by given volunteer_id """
 
     skills_volunteer = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
     return skills_volunteer
@@ -310,7 +319,33 @@ def create_event_skill(event_id, skill_id):
     return event_skill
 
 def get_skills_by_event(event_id):
-    """ Get the skills by given event """
+    """ Return the skills by given event """
 
     skills_event = Skill.query.join(EventSkill).filter_by(event_id=event_id).all()
     return skills_event
+
+
+def get_cause_by_event(event_id):
+    """ Return the cause of the given event_id """
+
+    #need to access the event cause.
+    institutions = Institution.query.all()
+
+    for inst in institutions:
+        if inst.events.event_id == event_id:
+            return inst.causes
+
+
+
+
+def get_events_by_cause(cause_id):
+    """ Return events by cause_name """
+
+    # Getting the institutions by X cause
+    institutions = Institution.query.filter(Institution.cause_id==cause_id).all()
+
+    # Getting the events by X institutions
+    events = []
+    for inst in institutions:
+        events.append(inst.events)
+    return events 

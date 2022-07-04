@@ -7,7 +7,12 @@
 <p>
     {{ event.evt_description }}
 </p>
+{% if 'volunteer' in session %}
+<P>Cause: </P>
+{% elif 'inst' in session %}
 <p>Cause: {{institution.cause.cause_title}}</p>
+{% endif %}
+
 <p>When: {{event.evt_date}}</p>
 <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
 <p>Where: {{event.evt_address}}</p>

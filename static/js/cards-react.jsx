@@ -129,7 +129,7 @@ function EventCardContainer() {
                     <img key={ causeButton.cause_name } src= { causeButton.cause_icon } height ="30" width="50" />
                 </button>
             );
-        } 
+        }  
 
         const eventCards = [];
 
