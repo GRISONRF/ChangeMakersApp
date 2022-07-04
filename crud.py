@@ -4,7 +4,7 @@ from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, Vol
 from geopy.geocoders import Nominatim
 
 # -------------- Volunteer functions ---------------
-def create_volunteer(fname, lname, v_email, v_password, v_address, v_pic):
+def create_volunteer(fname, lname, v_email, v_password, v_city, v_state, v_pic):
     """ Create and return a new user (volunteer) """
 
     volunteer = Volunteer(
@@ -12,7 +12,8 @@ def create_volunteer(fname, lname, v_email, v_password, v_address, v_pic):
         lname=lname, 
         v_email=v_email, 
         v_password=v_password,
-        v_address=v_address,
+        v_city=v_city,
+        v_state=v_state,
         v_pic=v_pic
         )
     return volunteer

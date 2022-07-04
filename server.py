@@ -118,20 +118,22 @@ def register_volunteer():
     vcity = request.form.get("vcity")
     vstate = request.form.get("vstate")
     
-
     user = crud.get_volunteer_by_email(volu_email)
-
-    
-    v_location = Nominatim(user_agent='v-register').geocode(vlocation).address
-    v_lat = Nominatim(user_agent='v-register').geocode(v_location).latitude
-    v_long = Nominatim(user_agent='v-register').geocode(v_location).longitude
 
 
     if user:
         flash("Cannot create an account with this email. Try a different email.")
     else:
         volunteer_pic = "/static/images/volunteer-icon.PNG"
-        user = crud.create_volunteer(vfname, vlname, volu_email, volu_password, vlocation, volunteer_pic)
+        user = crud.create_volunteer(
+            vfname, 
+            vlname, 
+            volu_email, 
+            volu_password, 
+            vcity, 
+            vstate, 
+            volunteer_pic
+        )
         
         db.session.add(user)
         db.session.commit()    
