@@ -16,9 +16,10 @@ class Volunteer(db.Model):
                             primary_key=True)
     fname = db.Column(db.String(30), nullable=False)
     lname = db.Column(db.String(30), nullable=False)
-    v_email = db.Column(db.String(60), unique=True, nullable=False)
+    v_email = db.Column(db.String(70), unique=True, nullable=False)
     v_password = db.Column(db.String(15), nullable=False)
-    v_address = db.Column(db.String(100), nullable=False)
+    v_city = db.Column(db.String(60), nullable=False)
+    v_state = db.Column(db.String(60), nullable=False)
     v_pic = db.Column(db.String, nullable=True)
 
     favorites = db.relationship("Institution", secondary="favorites", backref="volunteers")  #
@@ -27,7 +28,7 @@ class Volunteer(db.Model):
     skills = db.relationship("Skill", secondary="volunteer_skill", backref="volunteers")
 
     def __repr__(self):
-        return f'<< Volunteer volunteer_id={self.volunteer_id} fname={self.fname} lname={self.lname} v_email={self.v_email} v_password={self.v_password} v_address={self.v_address} v_pic={self.v_pic} >>'
+        return f'<< Volunteer volunteer_id={self.volunteer_id} fname={self.fname} lname={self.lname} v_email={self.v_email} v_password={self.v_password} v_city={self.v_city} v_state={self.v_state} v_pic={self.v_pic} >>'
 
 
 class Favorite(db.Model):

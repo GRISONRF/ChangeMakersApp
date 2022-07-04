@@ -182,3 +182,30 @@ function EventCardContainer() {
 }
 
 ReactDOM.render(<EventCardContainer />, document.getElementById('events-container'));
+
+
+
+function RecommendedCards() {
+    const [city, setCity] = React.useState('');
+    const [state, setState] = React.useState('');
+    const [cause, setCause] = React.useState('');
+    const [skill, setSkill] = React.useState('');
+    const [searchResults, setSearchResults] = React.useState('');
+    
+    function addRecommendedCard(){
+        console.log(cause);
+        fetch("/search_recommended.json", { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify({ city, state, cause}),
+        })
+        .then( (response) => { 
+            console.log(response);
+            return response.json(); })
+        .then((jsonResponse) => {
+            console.log(jsonResponse);                             
+            setSearchResults(jsonResponse);
+        });
+    }

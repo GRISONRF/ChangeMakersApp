@@ -236,6 +236,19 @@ def get_event_by_city_cause(city, state, cause_name):
             events.append(event)
 
     return events
+
+
+def get_event_by_city_skill(city, state, skill, volunteer_id):
+    """ Return all the events by the city, state and cause_name """
+
+    # Getting events in city and state:
+    events = Event.query.filter(Event.city == city and Event.state == state).all()
+
+    # Getting events with matched skills:
+
+
+
+
     
 def get_event_by_skill(event_id):
     """ Return the events by given skill_id """

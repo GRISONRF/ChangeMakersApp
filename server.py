@@ -115,7 +115,8 @@ def register_volunteer():
     volu_password = request.form.get("vpassword")
     vfname = request.form.get("fname")
     vlname = request.form.get("lname")
-    vlocation = request.form.get("vlocation")
+    vcity = request.form.get("vcity")
+    vstate = request.form.get("vstate")
     
 
     user = crud.get_volunteer_by_email(volu_email)
@@ -484,10 +485,36 @@ def get_results():
 
 
 
-# @app.route('/show-events-cards', methods=['POST'])
-# def show_events():
-#     """ Show the events the volunteer filters by location and causes """ 
+# @app.route('/search_recommended.json', methods=['POST'])
+# def get_results():
+#     """ Return a JSON response with the recommended results """    
 
+#     if "volunteer" in session:
+#         volunteer_id = session["volunteer"]
+
+#         city = crud.get_city_by_vol()
+#         state = crud.get_state_by_vol()
+#         skill = crud.get_vol_skills() #list
+
+#         recom_event = crud.get_event_by_city_state_skill()
+    
+
+    
+
+    # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
+    search_results = []
+    for event in events_by_city_cause:
+        search_results.append( 
+            {
+            "evt_title" : event.evt_title,
+            "inst_name": event.inst.inst_name,
+            "evt_location" : event.evt_address,
+            "cause": event.inst.cause.cause_name,
+            "evt_date": event.evt_date,
+            "event_id": event.event_id    
+            }
+        )
+    return jsonify(search_results)
 
 
 # ------------------------ MAP --------------------
