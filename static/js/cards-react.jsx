@@ -185,27 +185,58 @@ ReactDOM.render(<EventCardContainer />, document.getElementById('events-containe
 
 
 
-function RecommendedCards() {
-    const [city, setCity] = React.useState('');
-    const [state, setState] = React.useState('');
-    const [cause, setCause] = React.useState('');
-    const [skill, setSkill] = React.useState('');
-    const [searchResults, setSearchResults] = React.useState('');
+function RecommendedEventsContainer() {
+    const [recommendedResults, setRecommendedResults] = React.useState('');
     
     function addRecommendedCard(){
-        console.log(cause);
+        console.log(rCity);
         fetch("/search_recommended.json", { 
             method: "POST",
             headers: {
                 "Content-Type": "application/json", 
             },
-            body: JSON.stringify({ city, state, cause}),
         })
         .then( (response) => { 
+
             console.log(response);
             return response.json(); })
+
         .then((jsonResponse) => {
+
             console.log(jsonResponse);                             
-            setSearchResults(jsonResponse);
+            setRecommendedResults(jsonResponse);
+
         });
     }
+
+    recommendationCards = [];
+
+    for (const recResult of recommendedResults) {
+        recommendationCards.push(
+            <EventCard
+                key={recResult.event_id}
+                evt_title={recResult.evt_title}
+                inst_name={recResult.inst_name}    
+                evt_location={recResult.evt_location}
+                cause={recResult.cause}
+                evt_date={recResult.evt_date}
+                event_id={recResult.event_id}
+            />
+        )
+    }
+
+    return ( 
+        <React.Fragment>
+
+            <button type="submit" className="btn-recommendation" onClick={addRecommendedCard}>Recommended Events</button>
+            
+            {recommendationCards}
+
+        </React.Fragment>
+
+    )
+
+}
+
+
+ReactDOM.render(<RecommendedEventsContainer />, document.getElementById('recommended-events'));

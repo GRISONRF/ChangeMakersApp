@@ -487,37 +487,45 @@ def get_results():
 
 
 
-# @app.route('/search_recommended.json', methods=['POST'])
-# def get_results():
-#     """ Return a JSON response with the recommended results """    
+@app.route('/search_recommended.json', methods=['POST'])
+def get_recommended_results():
+    """ Return a JSON response with the recommended results """    
 
-#     if "volunteer" in session:
-#         volunteer_id = session["volunteer"]
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
 
-#         city = crud.get_city_by_vol()
-#         state = crud.get_state_by_vol()
-#         skill = crud.get_vol_skills() #list
+        rCity = crud.get_city_by_vol()
+        rState = crud.get_state_by_vol()
+        rSkill = crud.get_vol_skills() #list
 
-#         recom_event = crud.get_event_by_city_state_skill()
-    
+        event_by_c_s_s = crud.get_event_by_city_state_skill(rCity, rState, rSkill, volunteer_id)
+        print("\n" * 5)
+        print("******************************")
+        print(event_by_c_s_s)
+        print(rCity)
+        print(rState)
+        print(rSkill)
+        print("\n" * 5)
+        print("******************************")
 
-    
+        # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
 
-    # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
-    search_results = []
-    for event in events_by_city_cause:
-        search_results.append( 
-            {
-            "evt_title" : event.evt_title,
-            "inst_name": event.inst.inst_name,
-            "evt_location" : event.evt_address,
-            "cause": event.inst.cause.cause_name,
-            "evt_date": event.evt_date,
-            "event_id": event.event_id    
-            }
-        )
-    return jsonify(search_results)
-
+        recommendedResults = []
+        for event in event_by_c_s_s:
+            recommendedResults.append(
+                {
+                "evt_title" : event.evt_title,
+                "inst_name": event.inst.inst_name,
+                "evt_location" : event.evt_address,
+                "cause": event.inst.cause.cause_name,
+                "evt_date": event.evt_date,
+                "event_id": event.event_id  
+                }
+            )
+        print("\n" * 5)
+        print("******************************")
+        print(recommendedResults)
+        return jsonify(recommendedResults)
 
 # ------------------------ MAP --------------------
 

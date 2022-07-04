@@ -99,20 +99,6 @@ def get_inst_by_event(event_id):
                 return inst.inst_id
 
 
-# def get_inst_city_by_coords(inst_lat, inst_long):
-#     """ Return the institution city by the address """
-
-#     location = geolocator.reverse((inst_lat, inst_long), exactly_one=True)
-#     city = address.get('city', '')
-#     return city
-
-# def get_inst_coords_by_id(inst_id):
-#     """ Return the institution coordenates by the inst_id """
-
-#     lat = db.session.query(Institution.inst_lat).filter(Institution.inst_id==inst_id).first()
-#     long = db.session.query(Institution.inst_long).filter(Institution.inst_id==inst_id).first()
-#     return (lat, long)
-
 
 # --------------- Comment functions ---------------
 def create_volunteer_comment(comment, event, volunteer):
@@ -239,26 +225,43 @@ def get_event_by_city_cause(city, state, cause_name):
     return events
 
 
-def get_event_by_city_skill(city, state, skill, volunteer_id):
+def get_event_by_city_state_skill(city, state, skill, volunteer_id):
     """ Return all the events by the city, state and cause_name """
 
     # Getting events in city and state:
     events = Event.query.filter(Event.city == city and Event.state == state).all()
+    #<Event event_id, event_title, event_description>
 
-    # Getting events with matched skills:
+    # Getting the events_id:
+    events_id = [] #[1, 3, 5]
+    for event in events:
+        events_id.append(event.event_id)
 
+    # Find the skills for the events
+    event_skills = [] #[<Skill skill_id, skill_name, skill_title>]
+    for id in events_id:
+        skills = Skill.query.join(EventSkill).filter_by(event_id=id).all()
+        event_skills.append(skills)
+
+    # Check if volunteer skills matches event skill
+    # Find volunteer skills:
+    volunteer_skills = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
+    #[Skill skill_id, skill_name, skill_title]
+
+    # Match event skills and volunteer skills
+    for skill in volunteer_skills:   #skill = <Skill skill_id, skill_name, skill_title>
+        if skill in event_skills:
+            # Want to return events that matched the eventSkill
+            return Event.query.join(EventSkill).filter_by(skill_id=EventSkill.skill_id).all()
 
 
 
     
-def get_event_by_skill(event_id):
+def get_event_by_skill(skill_id):
     """ Return the events by given skill_id """
 
-    pass
-    #return Event.query.filter(Event.skill.skill_id==skill_id).all()
-    #events = Skill.query.join(EventSkill).filter_by(event_id)
+    events = Event.query.join(EventSkill).filter_by(skill_id=skill_id).all()
 
-    #events_volunteer_id = Event.query.join(VolunteerEvt).filter_by(volunteer_id=volunteer_id).all()
 
 
 
