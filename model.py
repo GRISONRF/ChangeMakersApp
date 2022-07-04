@@ -120,9 +120,9 @@ class Event(db.Model):
                         autoincrement=True,
                         primary_key=True)
     evt_title = db.Column(db.String(100), nullable=False)
-    evt_date = db.Column(db.Date)
-    evt_start_time = db.Column(db.Time)
-    evt_end_time = db.Column(db.Time)
+    evt_date = db.Column(db.String)
+    evt_start_time = db.Column(db.String)
+    evt_end_time = db.Column(db.String)
     evt_address = db.Column(db.String, nullable=False)
     evt_city = db.Column(db.String(60), nullable=False)
     evt_state = db.Column(db.String(60), nullable=False)
