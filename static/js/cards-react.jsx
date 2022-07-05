@@ -104,7 +104,6 @@ function EventCardContainer() {
 
     
     function addEventCard(){
-        console.log(cause);
         fetch("/search_results.json", { 
             method: "POST",
             headers: {
@@ -113,10 +112,10 @@ function EventCardContainer() {
             body: JSON.stringify({ city, state, cause}),
         })
         .then( (response) => { 
-            console.log(response);
+           
             return response.json(); })
         .then((jsonResponse) => {
-            console.log(jsonResponse);                             
+                                       
             setSearchResults(jsonResponse);
         });
     }
@@ -187,54 +186,93 @@ ReactDOM.render(<EventCardContainer />, document.getElementById('events-containe
 
 function RecommendedEventsContainer() {
     const [recommendedResults, setRecommendedResults] = React.useState('');
+    const [isShown, setIsShown] = React.useState(false);
     
-    function addRecommendedCard(){
-        console.log(rCity);
-        fetch("/search_recommended.json", { 
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json", 
-            },
-        })
-        .then( (response) => { 
+    
+    const handleClick = event => {
+        // toggle shown state
+        setIsShown(current => !current);
+    };
+    
+    
+    return (
+        <div>
+            <button onClick={handleClick}> Recommended Events </button>
 
-            console.log(response);
-            return response.json(); })
-
-        .then((jsonResponse) => {
-
-            console.log(jsonResponse);                             
-            setRecommendedResults(jsonResponse);
-
-        });
-    }
-
-    recommendationCards = [];
-
-    for (const recResult of recommendedResults) {
-        recommendationCards.push(
-            <EventCard
-                key={recResult.event_id}
-                evt_title={recResult.evt_title}
-                inst_name={recResult.inst_name}    
-                evt_location={recResult.evt_location}
-                cause={recResult.cause}
-                evt_date={recResult.evt_date}
-                event_id={recResult.event_id}
-            />
-        )
-    }
-
-    return ( 
-        <React.Fragment>
-
-            <button type="submit" className="btn-recommendation" onClick={addRecommendedCard}>Recommended Events</button>
-            
-            {recommendationCards}
-
-        </React.Fragment>
-
+            {isShown && (
+                <div>
+                    <h2>
+                        Events Cards
+                    </h2>
+                </div>
+            )}
+        </div>
     )
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // function addRecommendedCard(){
+    //     console.log(rCity);
+    //     fetch("/search_recommended.json", { 
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json", 
+    //         },
+    //     })
+    //     .then( (response) => { 
+
+    //         console.log(response);
+    //         return response.json(); })
+
+    //     .then((jsonResponse) => {
+
+    //         console.log(jsonResponse);                             
+    //         setRecommendedResults(jsonResponse);
+
+    //     });
+    // }
+
+    // recommendationCards = [];
+
+    // for (const recResult of recommendedResults) {
+    //     recommendationCards.push(
+    //         <EventCard
+    //             key={recResult.event_id}
+    //             evt_title={recResult.evt_title}
+    //             inst_name={recResult.inst_name}    
+    //             evt_location={recResult.evt_location}
+    //             cause={recResult.cause}
+    //             evt_date={recResult.evt_date}
+    //             event_id={recResult.event_id}
+    //         />
+    //     )
+    // }
+
+    // return ( 
+    //     <React.Fragment>
+
+    //         <button type="submit" className="btn-recommendation" onClick={addRecommendedCard}>Recommended Events</button>
+            
+    //         {recommendationCards}
+
+    //     </React.Fragment>
+
+    // )
 
 }
 
