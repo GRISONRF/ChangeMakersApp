@@ -225,34 +225,72 @@ def get_event_by_city_cause(city, state, cause_name):
     return events
 
 
-def get_event_by_city_state_skill(city, state, skill, volunteer_id):
+def get_events_by_city_state_skill(city, state, skill, volunteer_id):
     """ Return all the events by the city, state and cause_name """
 
     # Getting events in city and state:
-    events = Event.query.filter(Event.city == city and Event.state == state).all()
-    #<Event event_id, event_title, event_description>
-
+    events = Event.query.filter(Event.evt_city == city and Event.evt_state == state).all() #<Event event_id, event_title, event_description>
+    print(events)
     # Getting the events_id:
     events_id = [] #[1, 3, 5]
     for event in events:
         events_id.append(event.event_id)
+    print("\n" * 5)
+    print("************events_id:******************")
+    print(events_id)
+    print("\n" * 5)
 
     # Find the skills for the events
-    event_skills = [] #[<Skill skill_id, skill_name, skill_title>]
+    event_skills_id = [] #[1, 2, 4, 3, 7, 5, 8, 10]
+
     for id in events_id:
         skills = Skill.query.join(EventSkill).filter_by(event_id=id).all()
-        event_skills.append(skills)
+        for skill in skills:
+            if skill.skill_id not in event_skills_id:
+                event_skills_id.append(skill.skill_id)
 
+    print("\n" * 5)
+    print("************event_skills_id2:******************")
+    print(event_skills_id) 
+    print("\n" * 5)
+    print("************volunteer_skill_id:******************")
     # Check if volunteer skills matches event skill
-    # Find volunteer skills:
-    volunteer_skills = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
-    #[Skill skill_id, skill_name, skill_title]
 
+    # Find volunteer skills:
+    volunteer = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
+    print('VOLUNTEER:')
+    print(volunteer)
+    print('VOLUNTEER')
+    #getting volunteer skills_id:
+    volunteer_skills_id = [] # [1, 2, 4]
+    for v_skill in volunteer:
+        print(v_skill)
+        print('***** v_skill_id*****')
+        volunteer_skills_id.append(v_skill.skill_id)
+
+    print(volunteer_skills_id)
+    print("\n" * 5)
+
+    print("************volunteer_skills id loop: ******************")
     # Match event skills and volunteer skills
-    for skill in volunteer_skills:   #skill = <Skill skill_id, skill_name, skill_title>
-        if skill in event_skills:
-            # Want to return events that matched the eventSkill
-            return Event.query.join(EventSkill).filter_by(skill_id=EventSkill.skill_id).all()
+    matched_skills_events = []
+    for skill in volunteer_skills_id:   #[1, 2, 4]
+        print(skill)
+        print("\n" * 5)
+        print("************matched skills******************")
+        for e_skill in event_skills_id:
+        
+            if skill == e_skill: #[1, 2, 4, 3, 7, 5, 8, 10] 
+                # Want to return events that matched the eventSkill
+                #(return the event that has this skill_id)
+                event_skill = Event.query.join(EventSkill).filter_by(skill_id=skill).all()
+            
+                matched_skills_events.extend(event_skill)
+
+    print(set(matched_skills_events))
+    return set(matched_skills_events)
+
+    
 
 
 
@@ -366,3 +404,20 @@ def get_events_by_cause(cause_id):
     for inst in institutions:
         events.append(inst.events)
     return events 
+
+# ----------------------- location functions ----------------------
+
+
+
+def get_city_by_vol(volunteer_id):
+    """ Return the city of volunteer by volunteer_id """
+
+    volunteer = Volunteer.query.filter_by(volunteer_id=volunteer_id).first()
+    return volunteer.v_city
+
+
+def get_state_by_vol(volunteer_id):
+    """ Return the state of volunteer by volunteer_id """
+    
+    volunteer = Volunteer.query.filter_by(volunteer_id=volunteer_id).first()
+    return volunteer.v_state

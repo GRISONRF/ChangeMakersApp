@@ -1,3 +1,4 @@
+
 const all_causes = [
     {
         cause_id: 1,
@@ -131,7 +132,6 @@ function EventCardContainer() {
         }  
 
         const eventCards = [];
-
         for (const sResult of searchResults) {
             eventCards.push(
                 <EventCard
@@ -189,9 +189,22 @@ function RecommendedEventsContainer() {
     const [isShown, setIsShown] = React.useState(false);
     
     
-    const handleClick = event => {
-        // toggle shown state
-        setIsShown(current => !current);
+    const handleClick = async () => {
+        const data = await fetch('/search_recommended.json', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+        })
+        console.log(data)
+        .then( (response) => { 
+            console.log(response)
+            return response.json(); })
+
+        .then((jsonResponse) => {                                    
+            console.log(jsonResponse)
+            setSearchResults(jsonResponse);
+        });
     };
     
     
@@ -208,20 +221,6 @@ function RecommendedEventsContainer() {
             )}
         </div>
     )
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -275,6 +274,5 @@ function RecommendedEventsContainer() {
     // )
 
 }
-
 
 ReactDOM.render(<RecommendedEventsContainer />, document.getElementById('recommended-events'));
