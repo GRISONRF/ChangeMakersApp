@@ -498,20 +498,20 @@ def get_recommended_results():
         rState = crud.get_state_by_vol(volunteer_id)
         rSkill = crud.get_skills_by_volunteer(volunteer_id) #list
 
-        event_by_c_s_s = crud.get_events_by_city_state_skill(rCity, rState, rSkill, volunteer_id)
-        print("\n" * 5)
-        print("*************SERVER event_by_c_s_s*****************")
-        print(list(event_by_c_s_s))
-        print(rCity)
-        print(rState)
-        print(rSkill)
-        print("\n" * 5)
-        print("************end******************")
+        events_by_location_skill = crud.get_events_by_city_state_skill(rCity, rState, rSkill, volunteer_id)
+        # print("\n" * 5)
+        # print("*************SERVER events_by_location_skill*****************")
+        # print(list(events_by_location_skill))
+        # print(rCity)
+        # print(rState)
+        # print(rSkill)
+        # print("\n" * 5)
+        # print("************end******************")
 
         # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
 
         recommendedResults = []
-        for event in list(event_by_c_s_s):
+        for event in list(events_by_location_skill):
             recommendedResults.append(
                 {
                 "evt_title" : event.evt_title,
@@ -522,7 +522,7 @@ def get_recommended_results():
                 "event_id": event.event_id  
                 }
             )
-        print("\n" * 5)
+        # print("\n" * 5)
         print("*************recommendedResults*****************")
         print(recommendedResults)
         return jsonify(recommendedResults)

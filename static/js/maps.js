@@ -13,7 +13,7 @@ function initMap() {
         .then(jsonData => {
 
             const basicMap = new google.maps.Map(document.querySelector('#inst-map'), {
-                center:jsonData,
+                center: jsonData,
                 zoom: 12,
             });
 
@@ -31,16 +31,15 @@ function eventMap() {
     // Need to get the event_id from div in html
     const event_id = document.querySelector(".maps").id;
 
-    //pass the event_id to the db to get the location for that inst 
+    //pass the event_id to the db to get the location for that event 
     const queryString = new URLSearchParams({event_id: event_id});
 
     fetch(`/eventgeocoords.json?${queryString}`)
         .then(response => response.json())
         .then(jsonData => {
-            console.log(jsonData);
 
             const basicMap = new google.maps.Map(document.querySelector('#event-map'), {
-                center:jsonData,
+                center: jsonData,
                 zoom: 12,
             });
 
