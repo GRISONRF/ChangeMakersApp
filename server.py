@@ -400,19 +400,11 @@ def event_details(event_id):
 
         event = crud.get_event_by_id(event_id)
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
-
-
-
-        # inst_causes = crud.get_cause_by_event(event_id)
-        # print(inst_causes)
-        print("\n" * 5)
-   
-
-        
-        
+        cause_id = crud.get_cause_by_event(event_id)
+        cause = crud.get_cause_by_cause_id(cause_id)
         event_skills = crud.get_skills_by_event(event_id)
         
-        return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills)
+        return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills, cause=cause)
 
     elif "inst" in session:
         inst_id = session["inst"]
@@ -446,18 +438,6 @@ def volunteer_signup_evt(event_id):
 
 
 # ########################## REACT #############################
-
-@app.route('/events_search')
-# def events_search():
-#     """ Redirect to the page of events of corresponded cause """
-
-#     cause_id = request.args.get("type") #get the cause_id
- 
-#     inst_by_cause = crud.get_insts_by_cause(int(cause_id)) #cause_id
-
-#     events_by_cause = crud.get_events_by_cause(cause_id)
-
-#     return redirect('/vol_profile')
 
 
 @app.route('/search_results.json', methods=['POST'])

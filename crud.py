@@ -384,13 +384,11 @@ def get_cause_by_event(event_id):
     """ Return the cause of the given event_id """
 
     #need to access the event cause.
-    institutions = Institution.query.all()
-
-    for inst in institutions:
-        if inst.events.event_id == event_id:
-            return inst.causes
-
-
+    institutions_events = Institution.query.join(Event).filter_by(event_id=event_id).first()
+    print('\n' * 8)
+    print(institutions_events.cause_id)
+    return institutions_events.cause_id
+ 
 
 
 def get_events_by_cause(cause_id):
@@ -404,6 +402,13 @@ def get_events_by_cause(cause_id):
     for inst in institutions:
         events.append(inst.events)
     return events 
+
+
+def get_cause_by_cause_id(cause_id):
+    """ Return the cause by the cause_id """
+
+    return Cause.query.get(cause_id)
+
 
 # ----------------------- location functions ----------------------
 

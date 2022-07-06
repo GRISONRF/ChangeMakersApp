@@ -8,7 +8,7 @@
     {{ event.evt_description }}
 </p>
 {% if 'volunteer' in session %}
-<P>Cause: </P>
+<P>Cause: {{cause.cause_title}}</P>
 {% elif 'inst' in session %}
 <p>Cause: {{institution.cause.cause_title}}</p>
 {% endif %}
