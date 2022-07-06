@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} All Institutions {% endblock %}
+
+{% block body %}
+<div>
+    {% for inst in institutions %}
+    <h1> {{inst.inst_name}}</h1>
+    <p> City: {{inst.inst_city}}</p>
+    <p> Cause: {{inst.cause.cause_title}}</p>
+    <a href="inst_profile/{{inst.inst_id}}">
+        <button>More about this institution</button>
+    </a>
+    {% endfor %}
+
+
+
+</div>
+{% endblock %}

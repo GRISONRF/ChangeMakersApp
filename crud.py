@@ -57,7 +57,7 @@ def create_institution(inst_name, inst_email,inst_password, inst_address, inst_c
     return institution
 
 
-def get_institutions():
+def get_all_institutions():
     """ Return all institutions """
     return Institution.query.all()
 
@@ -133,7 +133,7 @@ def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address,
     return new_event
 
 
-def get_events():
+def get_all_events():
     """ Return all the events """
 
     events = Event.query.all()

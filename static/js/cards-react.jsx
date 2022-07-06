@@ -97,90 +97,90 @@ function EventCard(props) {
 }
 
 
-// function EventCardContainer() {
-//     const [city, setCity] = React.useState('');
-//     const [state, setState] = React.useState('');
-//     const [cause, setCause] = React.useState('');
-//     const [searchResults, setSearchResults] = React.useState('');
+function EventCardContainer() {
+    const [city, setCity] = React.useState('');
+    const [state, setState] = React.useState('');
+    const [cause, setCause] = React.useState('');
+    const [searchResults, setSearchResults] = React.useState('');
 
     
-//     function addEventCard(){
-//         fetch("/search_results.json", { 
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json", 
-//             },
-//             body: JSON.stringify({ city, state, cause}),
-//         })
-//         .then( (response) => { 
+    function addEventCard(){
+        fetch("/search_results.json", { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify({ city, state, cause}),
+        })
+        .then( (response) => { 
            
-//             return response.json(); })
-//         .then((jsonResponse) => {
+            return response.json(); })
+        .then((jsonResponse) => {
                                        
-//             setSearchResults(jsonResponse);
-//         });
-//     }
+            setSearchResults(jsonResponse);
+        });
+    }
         
-//         const causeButtons = [];
+        const causeButtons = [];
         
-//         for (const causeButton of all_causes) {     
-//             causeButtons.push(
-//                 <button key={ causeButton.cause_id } name= { causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
-//                     <img key={ causeButton.cause_name } src= { causeButton.cause_icon } height ="30" width="50" />
-//                 </button>
-//             );
-//         }  
+        for (const causeButton of all_causes) {     
+            causeButtons.push(
+                <button key={ causeButton.cause_id } name= { causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
+                    <img key={ causeButton.cause_name } src= { causeButton.cause_icon } height ="30" width="50" />
+                </button>
+            );
+        }  
 
-//         const eventCards = [];
-//         for (const sResult of searchResults) {
-//             eventCards.push(
-//                 <EventCard
-//                     key={sResult.event_id}
-//                     evt_title={sResult.evt_title}
-//                     inst_name={sResult.inst_name}    
-//                     evt_location={sResult.evt_location}
-//                     cause={sResult.cause}
-//                     evt_date={sResult.evt_date}
-//                     event_id={sResult.event_id}
-//                 />
-//             )
-//         }
+        const eventCards = [];
+        for (const sResult of searchResults) {
+            eventCards.push(
+                <EventCard
+                    key={sResult.event_id}
+                    evt_title={sResult.evt_title}
+                    inst_name={sResult.inst_name}    
+                    evt_location={sResult.evt_location}
+                    cause={sResult.cause}
+                    evt_date={sResult.evt_date}
+                    event_id={sResult.event_id}
+                />
+            )
+        }
 
-//     return (
-//         <React.Fragment>
+    return (
+        <React.Fragment>
 
-//             <label htmlFor="cityInput">
-//                 City:
-//                 <input
-//                 value={city}
-//                 onChange={(event) => setCity(event.target.value)}
-//                 id="cityInput"
-//                 style={{ marginLeft: '5px' }}
-//                 />
-//             </label>
+            <label htmlFor="cityInput">
+                City:
+                <input
+                value={city}
+                onChange={(event) => setCity(event.target.value)}
+                id="cityInput"
+                style={{ marginLeft: '5px' }}
+                />
+            </label>
 
-//             <label htmlFor="stateInput">
-//                 State: 
-//                 <input
-//                 value={state}
-//                 onChange={(event) => setState(event.target.value)}
-//                 id="stateInput"
-//                 style={{ marginLeft: '5px' }}
-//                 />
-//             </label>
+            <label htmlFor="stateInput">
+                State: 
+                <input
+                value={state}
+                onChange={(event) => setState(event.target.value)}
+                id="stateInput"
+                style={{ marginLeft: '5px' }}
+                />
+            </label>
 
-//             <p>Cause:</p>
-//             {causeButtons}
+            <p>Cause:</p>
+            {causeButtons}
         
             
-//             <button type="submit" className="btn-find" onClick={addEventCard}>Find</button>
+            <button type="submit" className="btn-find" onClick={addEventCard}>Find</button>
 
-//             {eventCards}                
-//         </React.Fragment>
-//     )
-// }
+            {eventCards}                
+        </React.Fragment>
+    )
+}
 
-// ReactDOM.render(<EventCardContainer />, document.getElementById('events-container'));
+ReactDOM.render(<EventCardContainer />, document.getElementById('events-container'));
 
 
 

@@ -190,6 +190,7 @@ def login():
         session['inst'] = inst_user.inst_id
         all_causes
         all_skills
+        inst_id = session["inst"]
 
         return redirect('/inst_profile')
 
@@ -207,20 +208,31 @@ def logout():
  
 
 # ---------------- INSTITUTION PROFILE ----------------
-@app.route('/inst_profile')
-def inst_profile():
+@app.route('/inst_profile/<inst_id>')
+def inst_profile(inst_id):
     """ Institution profile page """
 
     if "inst" in session:
         inst_id = session["inst"] 
 
-        inst = crud.get_inst_by_id(inst_id)
-        all_events = crud.get_events()
-        all_skills = crud.get_all_skills()
+    inst = crud.get_inst_by_id(inst_id)
+    all_events = crud.get_all_events()
+    all_skills = crud.get_all_skills()
 
-        return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills)
+    return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills)
 
-    else: return render_template('login.html')
+
+
+
+
+
+@app.route('/all_inst')
+def all_institutions():
+    """ Show all the institutions """
+
+    institutions = crud.get_all_institutions()
+
+    return render_template('all_inst.html', institutions=institutions)
 
 
 # ---------------- VOLUNTEER PROFILE ----------------
@@ -432,10 +444,17 @@ def volunteer_signup_evt(event_id):
         event_is_saved = crud.event_is_saved(volunteer_id, event_id)
         all_causes = crud.get_all_causes()
         
-
-    # return render_template("vol_profile.html", sign_up_evt=sign_up_evt, my_events=my_events, volunteer=volunteer, event_is_saved=event_is_saved, all_causes=all_causes)
     return redirect("/vol_profile")
 
+
+
+@app.route('/all_events')
+def show_all_events():
+    """ Show all the events """
+
+    events = crud.get_all_events()
+
+    return render_template('all_events.html', events=events)
 
 # ########################## REACT #############################
 
