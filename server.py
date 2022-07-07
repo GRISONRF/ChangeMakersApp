@@ -192,7 +192,7 @@ def login():
         all_skills
         inst_id = session["inst"]
 
-        return redirect('/inst_profile')
+        return redirect(f'/inst_profile/{inst_id}')
 
     else:
         flash("User email or password don't match. Try again.")
@@ -387,7 +387,7 @@ def create_event():
         db.session.add(event_skill3) 
         db.session.commit()
         
-    return redirect('/inst_profile')
+    return redirect(f'/inst_profile/{inst_id}')
 
 
 # ---------------- VOLUNTEER SIGN UP TO EVENTS ----------------
@@ -496,16 +496,9 @@ def get_recommended_results():
         rCity = crud.get_city_by_vol(volunteer_id)
         rState = crud.get_state_by_vol(volunteer_id)
         rSkill = crud.get_skills_by_volunteer(volunteer_id) #list
+        skills_id = crud.get_skills_id_by_skill_obj(rSkill)
 
-        events_by_location_skill = crud.get_events_by_city_state_skill(rCity, rState, rSkill, volunteer_id)
-        # print("\n" * 5)
-        # print("*************SERVER events_by_location_skill*****************")
-        # print(list(events_by_location_skill))
-        # print(rCity)
-        # print(rState)
-        # print(rSkill)
-        # print("\n" * 5)
-        # print("************end******************")
+        events_by_location_skill = crud.get_events_by_city_state_skill(rCity, rState, skills_id)
 
         # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
 
@@ -521,9 +514,7 @@ def get_recommended_results():
                 "event_id": event.event_id  
                 }
             )
-        # print("\n" * 5)
-        print("*************recommendedResults*****************")
-        print(recommendedResults)
+
         return jsonify(recommendedResults)
 
 # ------------------------ MAP --------------------
