@@ -223,6 +223,24 @@ def inst_profile(inst_id):
 
 
 
+# @app.route('/inst_profile/<inst_id>/review')
+# def inst_ratings(inst_id):
+#     """ Review and comments institution profile """
+
+#     if "volunteer" in session:
+#         volunteer_id = session["volunteer"]
+
+#         volunteer_comment = 
+#         volunteer_review = 
+#         institution_reviewd = 
+#         db.session.add()
+#         db.session.commit()
+
+
+
+
+#     return redirect('/inst_profile')
+
 
 
 
@@ -233,6 +251,11 @@ def all_institutions():
     institutions = crud.get_all_institutions()
 
     return render_template('all_inst.html', institutions=institutions)
+
+
+
+
+
 
 
 # ---------------- VOLUNTEER PROFILE ----------------
@@ -390,6 +413,7 @@ def create_event():
     return redirect(f'/inst_profile/{inst_id}')
 
 
+
 # ---------------- VOLUNTEER SIGN UP TO EVENTS ----------------
 @app.route('/events', methods=['POST'])
 def show_events_by_location():
@@ -415,6 +439,7 @@ def event_details(event_id):
         cause_id = crud.get_cause_by_event(event_id)
         cause = crud.get_cause_by_cause_id(cause_id)
         event_skills = crud.get_skills_by_event(event_id)
+      
         
         return render_template("event_details.html", event=event, event_is_saved=event_is_saved, event_skills=event_skills, cause=cause)
 

@@ -84,13 +84,6 @@ def get_insts_by_cause(cause_id):
 def get_inst_by_event(event_id):
     """ Return institutions by event_id """
 
-
- 
-    # institution = Institution.query.join(Event).filter_by(event_id=event_id).all()
-    # return institution
-
-
-
     institutions = Institution.query.all() #[<< Institution inst_id=1 inst_name=blabla....>> <<Institution inst_id=2 ....>>]
     
     for inst in institutions: #<< Institution inst_id=1 inst_name=blabla....>>
@@ -100,16 +93,6 @@ def get_inst_by_event(event_id):
 
 
 
-# --------------- Comment functions ---------------
-def create_volunteer_comment(comment, event, volunteer):
-    """ Create a volunteer comment """
-
-    vlt_comment = VolunteerComment(
-        comment=comment, 
-        event=event, 
-        volunteer=volunteer
-        )
-    return vlt_comment
 
 # --------------- Event functions ---------------
 
@@ -133,6 +116,15 @@ def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address,
     return new_event
 
 
+def create_volunteer_evt(volunteer_id, event_id):
+    """ Create and return a new event that volunteer signed up """
+
+    volunteer_evt = VolunteerEvt(
+        volunteer_id=volunteer_id,
+        event_id=event_id
+    )
+    return volunteer_evt 
+
 def get_all_events():
     """ Return all the events """
 
@@ -152,14 +144,6 @@ def get_event_by_id(event_id):
     return Event.query.get(event_id)
 
 
-def create_volunteer_evt(volunteer_id, event_id):
-    """ Create and return a new event that volunteer signed up """
-
-    volunteer_evt = VolunteerEvt(
-        volunteer_id=volunteer_id,
-        event_id=event_id
-    )
-    return volunteer_evt 
 
 
 def get_events_by_volunteer_id(volunteer_id):
@@ -329,6 +313,23 @@ def get_all_causes():
     return Cause.query.all()  
 
 
+def get_cause_by_event(event_id):
+    """ Return the cause of the given event_id """
+
+    #need to access the event cause.
+    institutions_events = Institution.query.join(Event).filter_by(event_id=event_id).first()
+    print('\n' * 8)
+    print(institutions_events.cause_id)
+    return institutions_events.cause_id
+
+
+
+def get_cause_by_cause_id(cause_id):
+    """ Return the cause by the cause_id """
+
+    return Cause.query.get(cause_id)
+
+
 # ------------------------ Skill functions ----------------------------
 
 
@@ -390,35 +391,6 @@ def get_skills_by_event(event_id):
     return skills_event
 
 
-def get_cause_by_event(event_id):
-    """ Return the cause of the given event_id """
-
-    #need to access the event cause.
-    institutions_events = Institution.query.join(Event).filter_by(event_id=event_id).first()
-    print('\n' * 8)
-    print(institutions_events.cause_id)
-    return institutions_events.cause_id
- 
-
-
-def get_events_by_cause(cause_id):
-    """ Return events by cause_name """
-
-    # Getting the institutions by X cause
-    institutions = Institution.query.filter(Institution.cause_id==cause_id).all()
-
-    # Getting the events by X institutions
-    events = []
-    for inst in institutions:
-        events.append(inst.events)
-    return events 
-
-
-def get_cause_by_cause_id(cause_id):
-    """ Return the cause by the cause_id """
-
-    return Cause.query.get(cause_id)
-
 
 # ----------------------- location functions ----------------------
 
@@ -436,3 +408,31 @@ def get_state_by_vol(volunteer_id):
     
     volunteer = Volunteer.query.filter_by(volunteer_id=volunteer_id).first()
     return volunteer.v_state
+
+
+
+
+
+# -------------------------- Comment and Review functions --------------------------
+
+
+def create_volunteer_comment(comment, review, inst_id, volunteer_id):
+    """ Create a comment/review in institution page by volunteer """
+
+    new_comment = VolunteerComment(
+        comment=comment, 
+        review=review,
+        inst_id=inst_id, 
+        volunteer_id=volunteer_id
+        )
+
+    return new_comment
+
+
+def get_comment_by_volunteer_id_and_inst(volunteer_id, inst_id):
+    """ Get the comment and review made by volunteer in institution """
+
+
+
+    #events = Event.query.join(EventSkill).filter_by(skill_id=skill_id).all()
+    volunteer_comment = VolunteerComment.query.join().filter_by()

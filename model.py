@@ -89,6 +89,7 @@ class Institution(db.Model):
     events = db.relationship("Event", back_populates="inst")
     #free at. volunteers
     cause = db.relationship("Cause", back_populates="insts")
+    comments = db.relationship("VolunteerComment", back_populates="inst")
 
     def __repr__(self):
         return f'<< Institution inst_id={self.inst_id} inst_name={self.inst_name} inst_email={self.inst_email} inst_password={self.inst_password} inst_address={self.inst_address} inst_city={self.inst_city} inst_state={self.inst_state} inst_lat={self.inst_lat} inst_lng={self.inst_lng} inst_pic={self.inst_pic} cause_id={self.cause_id} >>'
@@ -135,7 +136,7 @@ class Event(db.Model):
     skills = db.relationship("Skill", secondary="event_skill", backref="events")
     inst = db.relationship("Institution", back_populates="events")
     # volunteers for free  
-    comments = db.relationship("VolunteerComment", back_populates="event")
+    
 
 
     def __repr__(self):
@@ -151,15 +152,16 @@ class VolunteerComment(db.Model):
                         autoincrement=True,
                         primary_key=True)
     comment = db.Column(db.Text)
-    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
-    volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'))
+    review = db.Column(db.Integer)
+    inst_id = db.Column(db.Integer, db.ForeignKey('institutions.inst_id'))
+    volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.volunteer_id'), nullable=False)
 
 
-    event = db.relationship("Event", back_populates="comments")
+    inst = db.relationship("Institution", back_populates="comments")
     volunteer = db.relationship("Volunteer", back_populates="comments")
 
     def __repr__(self):
-        return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} event_id={self.event_id} volunteer_id={self.volunteer_id} >>'
+        return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
 
 
 class Skill(db.Model):
