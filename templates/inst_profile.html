@@ -40,6 +40,7 @@
   <div class="container">
     <div class="inst-container" id ="{{ inst.inst_id }}"> 
     <h1>{{inst.inst_name}} active events</h1>
+    <p hidden id="inst-id">{{inst.inst_id}}</p>
 
     {% for event in all_events %}
       {% if event.inst_id == inst.inst_id %}
@@ -147,26 +148,27 @@
 <div class="comment-area">
 
   <!-- Button trigger modal to comment and rate a media -->
-  <label for="comment-inst-btn">Rate this institution</label>
+  <label for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
   {%if 'volunteer' in session %}
   <button type="button" class="btn btn-primary" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Drop your comment here
+  <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
+      Review this institution
   </button>
 
   {%endif%}
 
 
-          
+<!-- review and comment modal form -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Review {inst.inst_name}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Review {{inst.inst_name}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="comment-form">
-                    <label for="rate-inst">Rate ({inst.inst_name}):</label>
+                    <label for="rate-inst">Rate {{inst.inst_name}}:</label>
                     <select name="rate-inst" id="rate-inst">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -186,27 +188,36 @@
 </div>
 
 <!-- Comments session -->
-<h3>Latest comments</h3>
-{%if 'user_email' in session%}
-<p hidden id="session-user-email">{{session['user_email']}}</p>
-{%endif%}
+<div id="inst-comments-div">
+  <h3>Latest comments</h3>
+
+  <div id="comment-container" class="comment-block comment-div">
+    {% if all_comments != None %}
+    {% for item in all_comments %}
+    <div id="{{item.comment_id}}" class="comment-block">
+      <p id="comment-volunteer-name">{{item.volunteer.fname}}</p>
+      <p id="inst-review">Rate: {{item.review}}</p>
+      <p id="inst-comment">{{item.comment}}</p>
+    </div>
 
 
+    <!-- Delete button for comment -->
+    {%if 'volunteer' in session %}
+
+    {%if item.volunteer_id == volunteer.volunteer_id%}
+    <button type="button" id="delete{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    
 
 </div>
-<h2> Rate Movie </h2> 
-<form action="/inst_profile/{{ inst.inst_id }}/review" method="POST">
-  {% for num in range(0,6) %}
-    <input type="radio" name="rating" value="{{ num }}">
-    <label>{{ num }}</label> 
-    <br>
-  {% endfor %}
-  <input type="submit">
-</form>
 
 
-
-
+  
+</div>
+  <script src="/static/js/comments.js"></script>
   <script src="/static/js/maps.js"></script>
   <script
       async

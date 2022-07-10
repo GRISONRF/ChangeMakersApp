@@ -161,7 +161,7 @@ class VolunteerComment(db.Model):
     volunteer = db.relationship("Volunteer", back_populates="comments")
 
     def __repr__(self):
-        return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
+        return f'<< VolunteerComment comment_id={self.comment_id} comment={self.comment} rate={self.review} inst_id={self.inst_id} volunteer_id={self.volunteer_id} >>'
 
 
 class Skill(db.Model):

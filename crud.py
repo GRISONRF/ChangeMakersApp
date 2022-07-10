@@ -77,16 +77,16 @@ def get_inst_by_email(inst_email):
 def get_insts_by_cause(cause_id):
     """ Return institution by cause_name """
 
-    return Institution.query.filter(Institution.cause_id==cause_id).all() #all insts by that cause
+    return Institution.query.filter(Institution.cause_id==cause_id).all() 
 
 
 
 def get_inst_by_event(event_id):
     """ Return institutions by event_id """
 
-    institutions = Institution.query.all() #[<< Institution inst_id=1 inst_name=blabla....>> <<Institution inst_id=2 ....>>]
+    institutions = Institution.query.all() 
     
-    for inst in institutions: #<< Institution inst_id=1 inst_name=blabla....>>
+    for inst in institutions: 
         for event in inst.events:          
             if event.event_id == event_id:
                 return inst.inst_id
@@ -215,68 +215,6 @@ def get_events_by_city_state_skill(city, state, skill):
     events = Event.query.join(EventSkill).filter(Event.evt_city == city and Event.evt_state == state and EventSkill.skill_id.in_(skill)).all() 
    
     return events
-
-
-
-    # Getting the events_id:
-    # events_id = [] #[1, 3, 5]
-    # for event in events:
-    #     events_id.append(event.event_id)
-    # # print("\n" * 5)
-    # # print("************events_id:******************")
-    # # print(events_id)
-    # # print("\n" * 5)
-
-    # # Find the skills for the events
-    # event_skills_id = [] #[1, 2, 4, 3, 7, 5, 8, 10]
-
-    # for id in events_id:
-    #     skills = Skill.query.join(EventSkill).filter_by(event_id=id).all()
-    #     for skill in skills:
-    #         if skill.skill_id not in event_skills_id:
-    #             event_skills_id.append(skill.skill_id)
-
-    # # print("\n" * 5)
-    # # print("************event_skills_id2:******************")
-    # # print(event_skills_id) 
-    # # print("\n" * 5)
-    # # print("************volunteer_skill_id:******************")
-    # # Check if volunteer skills matches event skill
-
-    # # Find volunteer skills:
-    # volunteer = Skill.query.join(VolunteerSkill).filter_by(volunteer_id=volunteer_id).all()
-    # # print('VOLUNTEER:')
-    # # print(volunteer)
-    # # print('VOLUNTEER')
-    # #getting volunteer skills_id:
-    # volunteer_skills_id = [] # [1, 2, 4]
-    # for v_skill in volunteer:
-    #     # print(v_skill)
-    #     # print('***** v_skill_id*****')
-    #     volunteer_skills_id.append(v_skill.skill_id)
-
-    # # print(volunteer_skills_id)
-    # # print("\n" * 5)
-
-    # # print("************volunteer_skills id loop: ******************")
-    # # Match event skills and volunteer skills
-    # matched_skills_events = []
-    # for skill in volunteer_skills_id:   #[1, 2, 4]
-    #     # print(skill)
-    #     # print("\n" * 5)
-    #     # print("************matched skills******************")
-    #     for e_skill in event_skills_id:
-        
-    #         if skill == e_skill: #[1, 2, 4, 3, 7, 5, 8, 10] 
-    #             # Want to return events that matched the eventSkill
-    #             #(return the event that has this skill_id)
-    #             event_skill = Event.query.join(EventSkill).filter_by(skill_id=skill).all()
-            
-    #             matched_skills_events.extend(event_skill)
-
-    # # print(set(matched_skills_events))
-    # return set(matched_skills_events)
-
 
     
 def get_event_by_skill(skill_id):
@@ -416,7 +354,7 @@ def get_state_by_vol(volunteer_id):
 # -------------------------- Comment and Review functions --------------------------
 
 
-def create_volunteer_comment(comment, review, inst_id, volunteer_id):
+def create_inst_comment(comment, review, inst_id, volunteer_id):
     """ Create a comment/review in institution page by volunteer """
 
     new_comment = VolunteerComment(
@@ -425,8 +363,19 @@ def create_volunteer_comment(comment, review, inst_id, volunteer_id):
         inst_id=inst_id, 
         volunteer_id=volunteer_id
         )
-
+    print('NEW COMMENT:')
+    print('\n' * 5)
+    print(new_comment)
     return new_comment
+
+
+def get_reviews_by_inst(inst_id):
+    """ Get the reviews of X institution """
+
+    comments = VolunteerComment.query.filter(VolunteerComment.inst_id==inst_id).all()
+    print('$$$$$$$$$$$$$$$$$$$ COMMENTS:')
+    print(comments)
+    return comments
 
 
 def get_comment_by_volunteer_id_and_inst(volunteer_id, inst_id):

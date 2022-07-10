@@ -171,7 +171,6 @@ function EventCardContainer() {
 
             <p>Cause:</p>
             {causeButtons}
-        
             
             <button type="submit" className="btn-find" onClick={addEventCard}>Find</button>
 

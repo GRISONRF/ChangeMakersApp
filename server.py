@@ -172,6 +172,7 @@ def login():
 
     all_causes = crud.get_all_causes()
     all_skills = crud.get_all_skills()
+    
 
 
     # volunteer
@@ -191,6 +192,7 @@ def login():
         all_causes
         all_skills
         inst_id = session["inst"]
+        inst_comments = crud.get_reviews_by_inst(inst_id)
 
         return redirect(f'/inst_profile/{inst_id}')
 
@@ -218,28 +220,61 @@ def inst_profile(inst_id):
     inst = crud.get_inst_by_id(inst_id)
     all_events = crud.get_all_events()
     all_skills = crud.get_all_skills()
+    all_comments = crud.get_reviews_by_inst(inst_id)
 
-    return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills)
+    print('*********review info*********')
+    print('\n'*5)
+    print(all_comments)
+    print('******************')
 
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+        volunteer = crud.get_volunter_by_id(volunteer_id)
 
+        return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments, volunteer=volunteer)
 
-# @app.route('/inst_profile/<inst_id>/review')
-# def inst_ratings(inst_id):
-#     """ Review and comments institution profile """
-
-#     if "volunteer" in session:
-#         volunteer_id = session["volunteer"]
-
-#         volunteer_comment = 
-#         volunteer_review = 
-#         institution_reviewd = 
-#         db.session.add()
-#         db.session.commit()
+    return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments, volunteer=volunteer)
 
 
 
+@app.route('/inst_profile/<inst_id>/review', methods=['POST'])
+def inst_ratings(inst_id):
+    """ Review and comments institution profile """
 
-#     return redirect('/inst_profile')
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+
+        inst_comment = request.json.get('comment')
+        inst_review = request.json.get('review')
+        volunteer = crud.get_volunter_by_id(volunteer_id)
+        volunteer_fname = volunteer.fname
+        all_comments = crud.get_reviews_by_inst(inst_id)
+        print(all_comments)
+        print('\n'*5)
+
+        volunteer_comment = crud.create_inst_comment(
+                                inst_comment, 
+                                inst_review, 
+                                inst_id, 
+                                volunteer_id
+                            )
+        db.session.add(volunteer_comment)
+        db.session.commit()
+
+        inst_comment = {
+            "comment": inst_comment,
+            "comment_id": volunteer_comment.comment_id,
+            "review" : inst_review,
+            "inst_id": int(inst_id),
+            "volunteer_id": volunteer_id,
+            "volunteer_fname": volunteer_fname,
+        }
+
+        print('/n'*5)
+        print(volunteer_comment)
+       
+        # what do I need to return???!!
+        return inst_comment
 
 
 
