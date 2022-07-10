@@ -230,6 +230,10 @@ def inst_profile(inst_id):
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
         volunteer = crud.get_volunter_by_id(volunteer_id)
+        all_comments = crud.get_reviews_by_inst(inst_id)
+
+
+
 
         return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments, volunteer=volunteer)
 

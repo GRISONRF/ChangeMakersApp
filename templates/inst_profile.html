@@ -152,7 +152,10 @@
   {%if 'volunteer' in session %}
   <button type="button" class="btn btn-primary" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
   <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
-      Review this institution
+  <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
+
+
+       Review this institution
   </button>
 
   {%endif%}
@@ -203,7 +206,7 @@
 
     <!-- Delete button for comment -->
     {%if 'volunteer' in session %}
-    {%if item.volunteer_id == volunteer.volunteer_id%}
+    {%if item.volunteer_id == session['volunteer'] %}
     <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
     {% endif %}
     {% endif %}
