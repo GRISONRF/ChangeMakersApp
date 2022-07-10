@@ -378,10 +378,16 @@ def get_reviews_by_inst(inst_id):
     return comments
 
 
-def get_comment_by_volunteer_id_and_inst(volunteer_id, inst_id):
-    """ Get the comment and review made by volunteer in institution """
+def get_review_by_id(comment_id):
+    """ Get the review by comment_id """
+
+    review = VolunteerComment.query.filter_by(comment_id=comment_id).first()
+    return review
 
 
+def delete_comment_by_id(comment_id):
+    """ Delete from the db comment by comment_id """
 
-    #events = Event.query.join(EventSkill).filter_by(skill_id=skill_id).all()
-    volunteer_comment = VolunteerComment.query.join().filter_by()
+    comment = VolunteerComment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()

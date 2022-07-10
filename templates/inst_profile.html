@@ -203,17 +203,20 @@
 
     <!-- Delete button for comment -->
     {%if 'volunteer' in session %}
-
     {%if item.volunteer_id == volunteer.volunteer_id%}
-    <button type="button" id="delete{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+    <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
     {% endif %}
     {% endif %}
     {% endfor %}
     {% endif %}
-    
-
+  </div>  
 </div>
 
+<!-- If there is no comment yet -->
+
+{% if all_comments == None %}
+<p id="no-review">Be the first one to review {{inst.inst_name}}.</p>
+{% endif %}
 
   
 </div>

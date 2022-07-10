@@ -277,6 +277,21 @@ def inst_ratings(inst_id):
         return inst_comment
 
 
+@app.route('/inst_profile/<comment_id>/delete', methods=['POST'])
+def delete_comment(comment_id):
+    """ Delete the comment from the db """
+
+    comment = crud.get_review_by_id(comment_id)
+    print('\n'*3)
+    print(comment)
+    volunteer_id = comment.volunteer_id
+    crud.delete_comment_by_id(comment_id)
+
+
+    return str(volunteer_id)
+
+
+
 
 
 @app.route('/all_inst')

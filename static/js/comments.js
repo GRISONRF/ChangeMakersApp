@@ -69,11 +69,66 @@ commentForm.addEventListener('submit', (evt) => {
                 <p>${comment.comment}</p> `
             );
 
+            no_comment = document.querySelector('#no-comment');
+            if (no_comment) {
+                no_comment.style.display = 'none';
+            };   
+
+            const newDeleteBtn = document.getElementById(
+                `delete-${comment.comment_id}`,
+            );
+
+            console.log(newDeleteBtn.value);
+            newDeleteBtn.addEventListener('click', saveDelete)
+
         });
-
-
-
-
-
-
 });
+
+
+
+function deleteComment() {
+    const deleteCommentBtn = document.querySelectorAll('.delete-comment-btn');
+    for (const deleteBtn of deleteCommentBtn) {
+      deleteBtn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        saveDelete(evt);
+      });
+    }
+}
+
+
+function saveDelete(evt) {
+    evt.preventDefault();
+
+    const deleteComment = evt.target.value;
+  
+    fetch(`/inst_profile/${deleteComment}/delete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(deleteComment),
+    })
+      .then((response) => response.text())
+      .then((volunteer_id) => {
+        console.log(deleteComment)
+        comment = document.getElementById(`${deleteComment}`);
+        comment.remove();
+        deleteBtn = document.getElementById(`delete-${deleteComment}`);
+        deleteBtn.remove();
+
+
+        commentBlock = document.querySelector('#comment-container');
+  
+        if (commentBlock.innerText === '') {
+          commentBlock.insertAdjacentHTML(
+            'afterend',
+            '<p id="no-comment"><i>Be the first one to comment</i></p>',
+          );
+        }
+      });
+};
+
+
+    
+deleteComment();
