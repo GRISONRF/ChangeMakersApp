@@ -173,8 +173,6 @@ def login():
     all_causes = crud.get_all_causes()
     all_skills = crud.get_all_skills()
     
-
-
     # volunteer
     if volu_user and volu_user.v_password == volu_password:
         session['volunteer'] = volu_user.volunteer_id
@@ -185,7 +183,6 @@ def login():
     else:
         flash("User email or password don't match. Try again.")
 
-
     # institution
     if inst_user and inst_user.inst_password == inst_password:
         session['inst'] = inst_user.inst_id
@@ -195,7 +192,6 @@ def login():
         inst_comments = crud.get_reviews_by_inst(inst_id)
 
         return redirect(f'/inst_profile/{inst_id}')
-
     else:
         flash("User email or password don't match. Try again.")
         
@@ -222,22 +218,14 @@ def inst_profile(inst_id):
     all_skills = crud.get_all_skills()
     all_comments = crud.get_reviews_by_inst(inst_id)
 
-    print('*********review info*********')
-    print('\n'*5)
-    print(all_comments)
-    print('******************')
-
     if "volunteer" in session:
         volunteer_id = session["volunteer"]
         volunteer = crud.get_volunter_by_id(volunteer_id)
         all_comments = crud.get_reviews_by_inst(inst_id)
 
-
-
-
         return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments, volunteer=volunteer)
 
-    return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments, volunteer=volunteer)
+    return render_template('inst_profile.html', inst=inst, all_events=all_events, all_skills=all_skills, all_comments=all_comments)
 
 
 
@@ -295,9 +283,6 @@ def delete_comment(comment_id):
     return str(volunteer_id)
 
 
-
-
-
 @app.route('/all_inst')
 def all_institutions():
     """ Show all the institutions """
@@ -305,11 +290,6 @@ def all_institutions():
     institutions = crud.get_all_institutions()
 
     return render_template('all_inst.html', institutions=institutions)
-
-
-
-
-
 
 
 # ---------------- VOLUNTEER PROFILE ----------------
@@ -327,6 +307,7 @@ def volu_profile():
     volunteer_skills = crud.get_skills_by_volunteer(volunteer_id)
    
     return render_template('vol_profile.html', volunteer=volunteer, my_events=my_events, all_causes=all_causes, all_skills=all_skills, volunteer_skills=volunteer_skills)
+
 
 
 @app.route('/upload', methods=["POST"])
@@ -363,7 +344,7 @@ def volu_upload_picture():
         db.session.commit()
         flash('Profile picture updated!')
 
-        return redirect("/inst_profile")
+        return redirect(f'/inst_profile/{inst_id}')
 
 
 @app.route('/select_skills', methods=['POST'])
