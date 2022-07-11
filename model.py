@@ -112,7 +112,7 @@ class VolunteerEvt(db.Model):
     def __repr__(self):
         return f'<< VolunteerEvt vol_evt_id={self.vol_evt_id} volunteer_id={self.volunteer_id} event_id={self.event_id} >>'
 
-
+ 
 class Event(db.Model):
     """ An Event """
 
@@ -213,6 +213,36 @@ class EventSkill(db.Model):
 
     def __repr__(self):
         return f'<< EventSkill event_skill_id={self.event_skill_id} event_id={self.event_id} skill_id={self.skill_id} >>'
+
+
+
+# ----------------------- testing -----------------------
+
+def example_data():
+    """ Create some sample data """
+
+    # In case this is run more than once, empty out existing data
+    Volunteer.query.delete()
+    Institution.query.delete()
+    Cause.query.delete()
+
+    #Add sample volunteers and institutions
+    #volunteer
+    ana = Volunteer(fname='Ana', lname='Costa', v_email='ana_costa@gmail.com', v_password='test123', v_city='Sacramento', v_state='California', v_pic='/static/images/volunteer-icon.PNG')
+    bianca = Volunteer(fname='Bianca', lname='Gobeti', v_email='b_gobe@gmail.com', v_password='test321', v_city='Denver', v_state='Colorado', v_pic='/static/images/volunteer-icon.PNG')
+
+    #institution
+    drm = Institution(inst_name='Denver Rescue Mission', inst_email='drm@gmail.com', inst_password='test123', inst_address='6100 Smith Rd, Denver, CO 80216', inst_city='Denver', inst_state='Colorado', inst_lat=39.773578, inst_lng=-104.917346, inst_pic='/static/images/volunteer-icon.PNG')
+    cp = Institution(inst_name='Empowering Child Protection', inst_email='ecprot@email.com', inst_password='123test', inst_address='3680 Crocker Dr, Sacramento, CA 95818', inst_city='Denver', inst_state='Colorado', inst_lat=38.540750, inst_lng=-121.483180, inst_pic='/static/images/volunteer-icon.PNG')
+
+    #cause
+    animal = Cause(cause_name='animal', cause_title='Animals', cause_icon='/static/images/animals.png')
+    child = Cause(cause_name='child', cause_title='Children and Youth', cause_icon='/static/images/children.png')
+
+    db.session.add_all([ana, bianca, drm, cp, animal, child])
+    db.session.commit()
+
+
 
 
 
