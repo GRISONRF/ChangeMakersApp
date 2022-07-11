@@ -169,11 +169,8 @@ def login():
     # Get user's password to check if the entered password is correct.
     volu_user = crud.Volunteer.query.filter_by(v_email=volu_email).first()
     inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
-    print('\n'*5)
-    print(volu_user)
-    print(volu_email)
-    print(volu_password)
-    print(volu_user.v_password)
+
+
     # volunteer
     if volu_user and volu_user.v_password == volu_password:
         session['volunteer'] = volu_user.volunteer_id
@@ -188,6 +185,12 @@ def login():
         session['inst'] = inst_user.inst_id
         inst_id = session["inst"]
         inst_comments = crud.get_reviews_by_inst(inst_id)
+
+        print('\n'*5)
+        print(inst_email)
+        print(inst_password)
+        print(inst_user.inst_password)
+        print(inst_user.cause)
 
         return redirect(f'/inst_profile/{inst_id}')
     else:

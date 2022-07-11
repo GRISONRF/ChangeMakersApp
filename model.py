@@ -232,8 +232,8 @@ def example_data():
     bianca = Volunteer(fname='Bianca', lname='Gobeti', v_email='b_gobe@gmail.com', v_password='test321', v_city='Denver', v_state='Colorado', v_pic='/static/images/volunteer-icon.PNG')
 
     #institution
-    drm = Institution(inst_name='Denver Rescue Mission', inst_email='drm@gmail.com', inst_password='test123', inst_address='6100 Smith Rd, Denver, CO 80216', inst_city='Denver', inst_state='Colorado', inst_lat=39.773578, inst_lng=-104.917346, inst_pic='/static/images/volunteer-icon.PNG')
-    cp = Institution(inst_name='Empowering Child Protection', inst_email='ecprot@email.com', inst_password='123test', inst_address='3680 Crocker Dr, Sacramento, CA 95818', inst_city='Denver', inst_state='Colorado', inst_lat=38.540750, inst_lng=-121.483180, inst_pic='/static/images/volunteer-icon.PNG')
+    drm = Institution(inst_name='Denver Rescue Mission', inst_email='drm@gmail.com', inst_password='test123', inst_address='6100 Smith Rd, Denver, CO 80216', inst_city='Denver', inst_state='Colorado', inst_lat=39.773578, inst_lng=-104.917346, inst_pic='/static/images/volunteer-icon.PNG', cause_id=1)
+    cp = Institution(inst_name='Empowering Child Protection', inst_email='ecprot@email.com', inst_password='123test', inst_address='3680 Crocker Dr, Sacramento, CA 95818', inst_city='Denver', inst_state='Colorado', inst_lat=38.540750, inst_lng=-121.483180, inst_pic='/static/images/volunteer-icon.PNG', cause_id=2)
 
     #cause
     animal = Cause(cause_name='animal', cause_title='Animals', cause_icon='/static/images/animals.png')

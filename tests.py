@@ -32,14 +32,22 @@ class FlaskTestsDatabase(TestCase):
         db.engine.dispose()
 
    
-    def test_volunteer_page(self):
-        """Test volunteer page after login."""
+    def test_volunteer_login(self):
+        """Test volunteer login."""
 
         result = self.client.post("/login",
                                   data={"vemail": "ana_costa@gmail.com", "vpassword": "test123"},
                                   follow_redirects=True)
         self.assertIn(b"Your Information", result.data)
 
+
+    def test_institution_login(self):
+        """Test volunteer login."""
+
+        result = self.client.post("/login",
+                                  data={"iemail": 'drm@gmail.com', "ipassword": "test123"},
+                                  follow_redirects=True)
+        self.assertIn(b"Create a new event", result.data)
 
 
 
