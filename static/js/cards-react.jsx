@@ -87,7 +87,6 @@ function EventCard(props) {
                 <h1>{props.evt_title}</h1>
             </div>
             <p>{props.inst_name}</p>
-            <p>{props.evt_location}</p>
             <p>{props.evt_city}, {props.evt_state}</p>
             <p>{props.cause}</p>
             <a href={`/events/${props.event_id}`}> 
@@ -141,7 +140,6 @@ function EventCardContainer() {
                     inst_name={sResult.inst_name}
                     evt_city={sResult.evt_city}
                     evt_state={sResult.evt_state}    
-                    evt_location={sResult.evt_location}
                     cause={sResult.cause}
                     evt_date={sResult.evt_date}
                     event_id={sResult.event_id}
@@ -201,14 +199,13 @@ function RecommendedEventsContainer() {
                     inst_name={recResult.inst_name}    
                     evt_city={recResult.evt_city}
                     evt_state={recResult.evt_state}    
-                    evt_location={recResult.evt_location}
                     cause={recResult.cause}
                     evt_date={recResult.evt_date}
                     event_id={recResult.event_id}
                 />
             )
         }
-
+ 
     
     const handleClick =  () => {
         fetch('/search_recommended.json', {

@@ -562,7 +562,6 @@ def get_recommended_results():
                 {
                 "evt_title" : event.evt_title,
                 "inst_name": event.inst.inst_name,
-                "evt_location" : event.evt_address,
                 "evt_city" : event.evt_city,
                 "evt_state" : event.evt_state,
                 "cause": event.inst.cause.cause_name,
@@ -570,7 +569,7 @@ def get_recommended_results():
                 "event_id": event.event_id  
                 }
             )
-         
+          
         return jsonify(recommendedResults)
 
 # ------------------------ MAP --------------------
