@@ -88,6 +88,7 @@ function EventCard(props) {
             </div>
             <p>{props.inst_name}</p>
             <p>{props.evt_location}</p>
+            <p>{props.evt_city}, {props.evt_state}</p>
             <p>{props.cause}</p>
             <a href={`/events/${props.event_id}`}> 
                 <button>More details</button>
@@ -137,7 +138,9 @@ function EventCardContainer() {
                 <EventCard
                     key={sResult.event_id}
                     evt_title={sResult.evt_title}
-                    inst_name={sResult.inst_name}    
+                    inst_name={sResult.inst_name}
+                    evt_city={sResult.evt_city}
+                    evt_state={sResult.evt_state}    
                     evt_location={sResult.evt_location}
                     cause={sResult.cause}
                     evt_date={sResult.evt_date}
@@ -196,6 +199,8 @@ function RecommendedEventsContainer() {
                     key={recResult.event_id}
                     evt_title={recResult.evt_title}
                     inst_name={recResult.inst_name}    
+                    evt_city={recResult.evt_city}
+                    evt_state={recResult.evt_state}    
                     evt_location={recResult.evt_location}
                     cause={recResult.cause}
                     evt_date={recResult.evt_date}
@@ -230,7 +235,7 @@ function RecommendedEventsContainer() {
 
          
                 <div>
-                        {recommendationCards}               
+                {recommendationCards}               
                 </div>
     
         </div>
