@@ -11,6 +11,7 @@ from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import cloudinary.uploader
 import os
+from passlib.hash import argon2
 
 CLOUDINARY_KEY= os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
@@ -66,6 +67,9 @@ def register_institution():
     inst_lng = iaddress.longitude
     iaddress = iaddress.address
 
+    # using PasswordHash
+    hashed_pw = argon2.hash(inst_password)
+
     
     # using the lat and lng to get the city and state
     location = geolocator.reverse((inst_lat,inst_lng), exactly_one=True)
@@ -81,7 +85,7 @@ def register_institution():
         user = crud.create_institution(
             inst_name, 
             inst_email, 
-            inst_password, 
+            hashed_pw, 
             iaddress, 
             inst_city, 
             inst_state, 
@@ -120,16 +124,18 @@ def register_volunteer():
     
     user = crud.get_volunteer_by_email(volu_email)
 
+    # Hashing password
+    volu_hashed = argon2.hash(volu_password)
 
     if user:
-        flash("Cannot create an account with this email. Try a different email.")
+        flash("User email already exists.")
     else:
         volunteer_pic = "/static/images/volunteer-icon.PNG"
         user = crud.create_volunteer(
             vfname, 
             vlname, 
             volu_email, 
-            volu_password, 
+            volu_hashed, 
             vcity, 
             vstate, 
             volunteer_pic
@@ -161,42 +167,40 @@ def login():
 
     # Get data from the form
     volu_email = request.form.get("vemail")
-    volu_password = request.form.get("vpassword")
-
+    vattemped_pw = request.form.get("vpassword")
+    
     inst_email = request.form.get("iemail")
-    inst_password = request.form.get("ipassword")
+    iattemped_pw = request.form.get("ipassword")
 
-    # Get user's password to check if the entered password is correct.
+
+    # Get user's email to check if the entered email is correct.
     volu_user = crud.Volunteer.query.filter_by(v_email=volu_email).first()
     inst_user = crud.Institution.query.filter_by(inst_email=inst_email).first()
-
+    
 
     # volunteer
-    if volu_user and volu_user.v_password == volu_password:
-        session['volunteer'] = volu_user.volunteer_id
+    if volu_user:
+        vhashed_pw = volu_user.v_password
+        if argon2.verify(vattemped_pw, vhashed_pw):
 
-        return redirect('/vol_profile')
+            session['volunteer'] = volu_user.volunteer_id
 
-    else:
-        flash("User email or password don't match. Try again.")
+            return redirect('/vol_profile')
 
-    # institution
-    if inst_user and inst_user.inst_password == inst_password:
-        session['inst'] = inst_user.inst_id
-        inst_id = session["inst"]
-        inst_comments = crud.get_reviews_by_inst(inst_id)
 
-        print('\n'*5)
-        print(inst_email)
-        print(inst_password)
-        print(inst_user.inst_password)
-        print(inst_user.cause)
+    #institution
+    elif inst_user:
+        ihashed_pw = inst_user.inst_password
+        if argon2.verify(iattemped_pw, ihashed_pw):
+            session['inst'] = inst_user.inst_id
+            inst_id = session["inst"]
+            inst_comments = crud.get_reviews_by_inst(inst_id)
 
-        return redirect(f'/inst_profile/{inst_id}')
+            return redirect(f'/inst_profile/{inst_id}')
     else:
         flash("User email or password don't match. Try again.")
         
-    return redirect('/')
+    return redirect('/login_page')
 
 
 # ---------------- LOGOUT ----------------
@@ -243,8 +247,6 @@ def inst_ratings(inst_id):
         volunteer = crud.get_volunter_by_id(volunteer_id)
         volunteer_fname = volunteer.fname
         all_comments = crud.get_reviews_by_inst(inst_id)
-        print(all_comments)
-        print('\n'*5)
 
         volunteer_comment = crud.create_inst_comment(
                                 inst_comment, 
@@ -263,11 +265,8 @@ def inst_ratings(inst_id):
             "volunteer_id": volunteer_id,
             "volunteer_fname": volunteer_fname,
         }
-
-        print('/n'*5)
-        print(volunteer_comment)
        
-        # what do I need to return???!!
+
         return inst_comment
 
 
@@ -276,8 +275,6 @@ def delete_comment(comment_id):
     """ Delete the comment from the db """
 
     comment = crud.get_review_by_id(comment_id)
-    print('\n'*3)
-    print(comment)
     volunteer_id = comment.volunteer_id
     crud.delete_comment_by_id(comment_id)
 
@@ -407,13 +404,6 @@ def create_event():
     day = edate_not_formated.strftime("%d")
     year = edate_not_formated.strftime("%Y")
     evt_date = f'{month} / {day} / {year}'
-
-    #format the time
-    print("\n" * 5)
-    print(evt_start_time)
-    print(type(evt_start_time))
-    print(evt_end_time)
-
 
     # Still need to create an ELSE for when inst_id is NOT in session?
     if "inst" in session:

@@ -192,7 +192,6 @@ def get_event_by_city_cause(city, state, cause_name):
 
     # Getting the institutions by X cause
     institutions = Institution.query.filter(Institution.cause_id==cause.cause_id).all()
-    print(institutions)
 
     # Getting the events by X institutions
     all_events = []
@@ -256,8 +255,6 @@ def get_cause_by_event(event_id):
 
     #need to access the event cause.
     institutions_events = Institution.query.join(Event).filter_by(event_id=event_id).first()
-    print('\n' * 8)
-    print(institutions_events.cause_id)
     return institutions_events.cause_id
 
 
@@ -363,9 +360,6 @@ def create_inst_comment(comment, review, inst_id, volunteer_id):
         inst_id=inst_id, 
         volunteer_id=volunteer_id
         )
-    print('NEW COMMENT:')
-    print('\n' * 5)
-    print(new_comment)
     return new_comment
 
 
@@ -373,8 +367,6 @@ def get_reviews_by_inst(inst_id):
     """ Get the reviews of X institution """
 
     comments = VolunteerComment.query.filter(VolunteerComment.inst_id==inst_id).all()
-    print('$$$$$$$$$$$$$$$$$$$ COMMENTS:')
-    print(comments)
     return comments
 
 

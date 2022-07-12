@@ -32,7 +32,6 @@ commentForm.addEventListener('submit', (evt) => {
 
             return response.json(); })
         .then((comment) => {
-            alert('Your comment was submitted!');
 
             let commentDiv;
 
