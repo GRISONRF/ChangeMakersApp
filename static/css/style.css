@@ -89,15 +89,15 @@ height: 100%;
 
 .map,
 #inst-map {
-width: 55%;
-height: 60%;
+width: 500px;
+height: 500px;
 }
 
   
 .maps,
 #event-map {
-width: 55%;
-height: 60%;
+width: 500px;
+height: 500px;
 }
 
 /* About us box / tab / container */
@@ -229,19 +229,38 @@ height: 60%;
 
 .pic-container {
   background-color: #bb9c36;
+  padding-left: 50px;
+  padding-top: 50px;
 }
 
 .profile-info {
   background-color: #cd91ce;
 }
 
-.skills {
-  background-color: #77b6f1;
+.pic-div {
+  justify-content: center;
 }
 
 img #pic {
   border-radius: 50%
 }
+
+.name {
+  background-color: #6a80b7;
+  margin: 20px;
+}
+
+
+.skills {
+  background-color: #77b6f1;
+  display: flex;
+  margin: 20px;
+}
+
+#skill-btn {
+  display: flex;
+}
+
 
 /* inst profile page */
 
@@ -253,3 +272,9 @@ img #pic {
 .events {
   background-color: #9daf4b;
 }
+
+
+.signed-up-events {
+  background-color: #d884da;
+}
+

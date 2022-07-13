@@ -13,9 +13,8 @@
 <h1 id="name"> Hi {{ volunteer.fname }}.</h1>
 
 <h3>Your Information:</h3>
-<div class="profile-container">
-
-  <div class="pic-container">
+<div class="profile-container row"> 
+  <div class="pic-container col ">      
     <div class="pic-div">
       <img id="pic" src="{{ volunteer.v_pic }}">
     </div>
@@ -25,65 +24,58 @@
         <button  class="button" type="submit"> Submit</button>
       </form>
     </div>
-  </div>
-
-  <div class="name">
-    <ul>
-      <li>Name: {{ volunteer.fname}}</li>
-      <li>Email: {{ volunteer.v_email}}</li>
-      <li>Location: {{volunteer.v_city}}, {{volunteer.v_state}}</li>
-    </ul>
-  </div>
-    
-  <div class="skills">
-    {% if 'volunteer' in session %} 
-      {% if volunteer_skills %}
-  
-    <p>Skills:</p>
+  </div>  
+  <div class="col">
+    <div class="name">
       <ul>
-      {% for skill in volunteer_skills %}
-      <li>{{skill.skill_title}}</li>
-      {% endfor %}
+        <li>Name: {{ volunteer.fname}}</li>
+        <li>Email: {{ volunteer.v_email}}</li>
+        <li>Location: {{volunteer.v_city}}, {{volunteer.v_state}}</li>
       </ul>
-    {% else %}
+    </div>
   </div>
-  <div class="skill-form">
-      <form action="/select_skills" method="POST">
-        <label for="lang-select">Select up to 3 skills: </label>
-        <select name="skill1" id="lang-select">
-          {% for skill in all_skills %}
-          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+  <div class="col">
+    <div class="skills"> 
+      <div class="skills-info">
+        {% if 'volunteer' in session %} 
+          {% if volunteer_skills %}
+      
+        <p>Skills:</p>
+          <ul>
+          {% for skill in volunteer_skills %}
+          <li>{{skill.skill_title}}</li>
           {% endfor %}
-        </select>
-        <select name="skill2" id="lang-select">
-          {% for skill in all_skills %}
-          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-          {% endfor %}
-        </select>
-        <select name="skill3" id="lang-select">
-          {% for skill in all_skills %}
-          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-          {% endfor %}
-        </select>
-        <button  class="button" type="submit"> Select skills</button>         
-      </form>
-      {% endif %}
-    {% endif %}
-  </div>     
-  
+          </ul>
+        {% else %}
+      </div>
+
+      <div class="skill-form">
+          <form action="/select_skills" method="POST">
+            <label for="lang-select">Select up to 3 skills: </label>
+            <br>
+            <select name="skill1" id="lang-select">
+              {% for skill in all_skills %}
+              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+              {% endfor %}
+            </select>
+            <select name="skill2" id="lang-select">
+              {% for skill in all_skills %}
+              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+              {% endfor %}
+            </select>
+            <select name="skill3" id="lang-select">
+              {% for skill in all_skills %}
+              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+              {% endfor %}
+            </select>
+            <button id="skill-btn" class="button" type="submit"> Select skills</button>         
+          </form>
+          {% endif %}
+        {% endif %}
+      </div>     
+    </div> 
+  </div>
 </div>
-
-
-<!--
-
-
-  https://alvarotrigo.com/blog/html-css-tabs/
-
-  -->
-
-
-<br>
-<br>
 <!-- <form action="/update_volunteer">
     <h4>Update your Information</h4>
       <p>
@@ -99,30 +91,30 @@
         Causes <input type="text" name="causes">
       </p>
     <button class="button" type="submit"> Update infos </button>
-
 </form> -->
-<div>
+<!-- https://alvarotrigo.com/blog/html-css-tabs/ -->
+<div class="signed-up-events">
   <h2> Events {{volunteer.fname}} Signed Up </h2>
-</div>
 
 
-{% for event in my_events %}
-<div class="card">
-    <div class="image">
-    <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+
+  {% for event in my_events %}
+    <div class="card">
+      <div class="image">
+      <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+      </div>
+      <div class="title">
+      <h1>{{ event.evt_title}}</h1>
+      </div>
+      <div class="des">
+      <p> When: {{ event.evt_date }} </p>
+      <p> Where: {{ event.evt_city }}</p>
+      <a href="/events/{{event.event_id}}">
+        <button>More details</button>
+      </a>
+      </div>
     </div>
-    <div class="title">
-    <h1>{{ event.evt_title}}</h1>
-    </div>
-    <div class="des">
-    <p> When: {{ event.evt_date }} </p>
-    <p> Where: {{ event.evt_city }}</p>
-    <a href="/events/{{event.event_id}}">
-      <button>More details</button>
-    </a>
-    </div>
-  </div>
-{% endfor %}
+  {% endfor %}
 </div>
 
 <div class="events">
