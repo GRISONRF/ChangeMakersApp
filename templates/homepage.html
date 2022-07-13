@@ -5,26 +5,17 @@
 {% block body %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
 <!-- photo -->
-
-<a href="/register">I WANT TO HELP!</a>
-
-<dev class="" id="homepage-vid">
-
-    <video width="900" height="740" autoplay>
+<div class="" id="homepage-vid">
+    <video id="background-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
         <source src="/static/images/backgorund/pexels-anthony-shkraba-7475249.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-
-</dev>
+    </video>
+    <button class="text-video btn">Find opportunities near you</button>
+</div>
 
 <section class="fwh-slide cover-main">
-
-<p>Pictures, maybe in a carrossel</p>
-
-
+<!-- <p>Pictures, maybe in a carrossel</p>
 <p>Find institutions near me button</p>
-<p>use google maps to select a location?</p>
+<p>use google maps to select a location?</p> -->
 </section>
 <!----------------------- ABOUT THE APP SECTION ----------------------->
 <section class="fwh-slide cover-main">
@@ -32,22 +23,22 @@
         <h1>ABOUT</h1>
             <p>Since 1998, VolunteerMatch has put the power of technology to good use by enabling the social sector to unlock over $14 billion worth of volunteer time. The award-winning nonprofit service has complemented and co-existed with commercial technologies to become the web's largest and most popular volunteer recruiting platform. It serves thousands of nonprofits, a million interested volunteers a month, and has generated over $40 million in mission-related revenue from its legacy corporate volunteering product YourMatch.</p>
             
-        <div class="container col-12 col-md-3 ">
-            <div class="box">
+        <div class="container col-12 col-md-4 col-sm-4 ">
+            <div class="box col-4">
                 <div class="icon"><i class="bi bi-heart" aria-hidden="true"></i></div>
                 <div class="content">
                     <h3>Mission</h3>
                     <p> Create better ways to put time and talent to good use. </p>
                 </div>
             </div>
-            <div class="box">
+            <div class="box col-4">
                 <div class="icon"><i class="bi bi-heart" aria-hidden="true"></i></div>
                 <div class="content">
                     <h3>Purpose </h3>
                     <p> Bring people and communities together through service. </p>
                 </div>
             </div>
-            <div class="box">
+            <div class="box col-4">
                 <div class="icon"><i class="bi bi-heart" aria-hidden="true"></i></div>
                 <div class="content">
                     <h3>Vision </h3>
@@ -64,43 +55,122 @@
 
 <section class="fwh-slide cover-main">
 
-<div class="contact-us">
-    <h1>CONTACT US<h1>
+    <section id="contact">
+
+    <h1 class="section-header">Contact</h1>
+
+    <div class="contact-wrapper">
+
+    <!-- Left contact page --> 
         
-    <div id="contact-us" class="contact-us small-12 columns no-padding inline">
-
-        <div class="global-page-container">
-            <div class="section-title small-12 columns no-padding">
-            <h3>Contact</h3>
-            <hr></hr>
+        <form id="contact-form" class="form-horizontal" role="form">
+            
+        <div class="form-group">
+            <div class="col-sm-12">
+            <input type="text" class="form-control" id="name" placeholder="NAME" name="name" value="" required>
             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+            <input type="email" class="form-control" id="email" placeholder="EMAIL" name="email" value="" required>
+            </div>
+        </div>
+
+        <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
+        
+        <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
+            <div class="alt-send-button">
+            <i class="fa fa-paper-plane"></i><span class="send-text">SEND</span>
+            </div>
+        
+        </button>
+        
+        </form>
+        
+    <!-- Left contact page --> 
+        
+        <div class="direct-contact-container">
+
+            <ul class="contact-list">
+            <li class="list-item"><i class="fa fa-map-marker fa-2x"><span class="contact-text place">City, State</span></i></li>
             
-           
-            <div class="contact-form small-12 medium-10 large-6 columns no-padding small-centered">
-
-                <form action="https://postmail.invotes.com/send"
-                method="post" id="email_form">
+            <li class="list-item"><i class="fa fa-phone fa-2x"><span class="contact-text phone"><a href="tel:1-212-555-5555" title="Give me a call">(212) 555-2368</a></span></i></li>
             
-              
-                <input type="text" name="extra_fullName"
-                            placeholder="Name" />
-                <input type="text" name="extra_email"
-                placeholder="E-mail" />
-                <input type="text" name="subject" placeholder="Subject" />
-                <textarea name="text" placeholder="Type your text here."></textarea>
-                <input type="hidden" name="access_token" value="s93oy4m075w7dqa0plvtr2f1" />
-                <input type="hidden" name="success_url" value="https://www.google.com" />
-                <input type="hidden" name="error_url" value="https://www.google.com" />
-               
-               
-                <input id="submit_form" type="submit" value="Send" />
+            <li class="list-item"><i class="fa fa-envelope fa-2x"><span class="contact-text gmail"><a href="mailto:#" title="Send me an email">hitmeup@gmail.com</a></span></i></li>
+            
+            </ul>
 
-            </form>
+            <hr>
+            <ul class="social-media-list">
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fa fa-github" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fa fa-codepen" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li><a href="#" target="_blank" class="contact-icon">
+                <i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </li>       
+            </ul>
+            <hr>
+
+            <div class="copyright">&copy; ALL OF THE RIGHTS RESERVED</div>
+
+        </div>
+        
+    </div>
+
+    </section>  
 
 
 
-</div>
+
+
+
+
+
+
+
+
+
+        <!-- <div id="contact-us" class="contact-us small-12 columns no-padding inline">
+
+            <div class="global-page-container">
+                <div class="section-title small-12 columns no-padding">
+                    <h3>Contact</h3>
+                    <hr></hr>
+                </div> 
+            
+                <div class="contact-form small-12 medium-10 large-6 columns no-padding small-centered">
+
+                    <form action="https://postmail.invotes.com/send" method="post" id="email_form">
+                
+                
+                    <input type="text" name="extra_fullName" placeholder="Name" />
+                    <input type="text" name="extra_email" placeholder="E-mail" />
+                    <input type="text" name="subject" placeholder="Subject" />
+
+                    <textarea name="text" placeholder="Type your text here."></textarea>
+                    <input type="hidden" name="access_token" value="s93oy4m075w7dqa0plvtr2f1" />
+                    <input type="hidden" name="success_url" value="https://www.google.com" />
+
+                    <input type="hidden" name="error_url" value="https://www.google.com" />
+                
+                
+                    <input id="submit_form" type="submit" value="Send" />
+
+                    </form>
+                </div>
+            </div>
+
+        </div>  -->
+    <!-- </div> -->
 </section>
 
+<scrip src="/static/js/contact-form.js"></scrip>
 
 {% endblock %}
