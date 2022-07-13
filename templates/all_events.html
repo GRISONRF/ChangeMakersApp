@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
+{% block head %}
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+{% endblock %}
 
 {% block title %} All Events {% endblock %}
 
+
 {% block body %}
+
+<div id="all-events"></div>
 <div>
-    {% for event in events %}
+    <!-- {% for event in events %}
     <h1> {{event.evt_title}}</h1>
     <p>By: {{event.inst.inst_name}}</p>
     <p> City: {{event.evt_city}}</p>
@@ -12,12 +20,14 @@
     <a href="events/{{event.event_id}}">
         <button>More about this Event</button>
     </a>
-    {% endfor %}
+    {% endfor %} -->
 
     <form action="/vol_profile">
         <button>Go back to your profile</button>
     </form>
 
-
+ 
 </div>
+
+<script src="/static/js/all-events-react.jsx" type="text/jsx"></script>
 {% endblock %}

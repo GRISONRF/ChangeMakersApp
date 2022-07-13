@@ -132,10 +132,10 @@ def get_all_events():
     return events
 
 
-def get_events_by_location(search_address):
+def get_events_by_city(city):
     """ Return all the events by given location """
 
-    return Event.query.filter(Event.evt_address==search_address).all()
+    return Event.query.filter(Event.evt_city==city).all()
 
 
 def get_event_by_id(event_id):

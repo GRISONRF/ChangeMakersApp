@@ -1,4 +1,3 @@
-
 const all_causes = [
     {
         cause_id: 1,
@@ -122,7 +121,6 @@ function EventCardContainer() {
     }
         
         const causeButtons = [];
-        
         for (const causeButton of all_causes) {     
             causeButtons.push(
                 <button key={ causeButton.cause_id } name= { causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
@@ -182,18 +180,37 @@ function EventCardContainer() {
 
 ReactDOM.render(<EventCardContainer />, document.getElementById('events-container'));
 
+// ------------------------------- recommended events by city, state and skills ---------------------------- \\
+
+
+function RecommendedEventsCards(props) {
+    return (
+        <div className="card">          
+            <div className="title">
+                <h1>{props.evt_title}</h1>
+            </div>
+            <p>{props.inst_name}</p>
+            <p>{props.evt_city}, {props.evt_state}</p>
+            <p>{props.cause}</p>
+            {/* <p>{props.skills}</p> */}
+            <a href={`/events/${props.event_id}`}> 
+                <button>More details</button>
+            </a>            
+        </div>
+    );
+}
+
 
 
 function RecommendedEventsContainer() {
     const [recommendedResults, setRecommendedResults] = React.useState('');
-    const [isShown, setIsShown] = React.useState(false);
     
 
-    // Information I want displayed in the event cards, using the recommendedResults.
+    console.log(recommendedResults)
     const recommendationCards = []
     for (const recResult of recommendedResults) {
             recommendationCards.push(
-                <EventCard
+                <RecommendedEventsCards
                     key={recResult.event_id}
                     evt_title={recResult.evt_title}
                     inst_name={recResult.inst_name}    
@@ -202,6 +219,7 @@ function RecommendedEventsContainer() {
                     cause={recResult.cause}
                     evt_date={recResult.evt_date}
                     event_id={recResult.event_id}
+                    // skills={recResult.skills}
                 />
             )
         }
@@ -220,7 +238,6 @@ function RecommendedEventsContainer() {
             return response.json(); })
 
         .then((jsonResponse) => {                                    
-            console.log(jsonResponse)
             setRecommendedResults(jsonResponse);
         });
     };
@@ -231,9 +248,9 @@ function RecommendedEventsContainer() {
             <button onClick={handleClick}> Recommended Events </button>
 
          
-                <div>
-                {recommendationCards}               
-                </div>
+            <div>
+            {recommendationCards}               
+            </div>
     
         </div>
     )

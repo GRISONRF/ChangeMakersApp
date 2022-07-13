@@ -3,6 +3,10 @@
 {% block title %} All Institutions {% endblock %}
 
 {% block body %}
+
+
+<div class="search-bar" id="search-bar"></div>
+
 <div>
     {% for inst in institutions %}
     <h1> {{inst.inst_name}}</h1>
@@ -18,4 +22,5 @@
 </form>
 
 </div>
+
 {% endblock %}

@@ -7,225 +7,230 @@
 {% endblock %}
 
 {% block body %}
+<div class="inst-profile">
+  <div class="inst-name">
+    <h1>{{inst.inst_name}}</h1>
+    <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
+    <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"> {{inst.cause.cause_title}}</p> 
+  </div>  
 
 
-  <h1>{{inst.inst_name}}</h1>
-  <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
-  <p>{{inst.cause.cause_title}}</p> 
-  <div>
-    <img id="inst_icon" src="{{inst.cause.cause_icon}}"></p> 
+      
+  <div class="pic-container">
+    <div class="pic-div">
+      <img id="pic" src="{{ inst.inst_pic }}">
+    </div>
+    <div class="upload-pic">
+      {% if 'inst' in session %}
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="inst-pic">
+        <button  class="button" type="submit">Submit</button>
+      </form>
+      {% endif %}
+    </div>
   </div>
-    
-    <br>
-    <div class="inst_pic">
-      <img id="inst_pic" src="{{ inst.inst_pic }}">
-    </div>
+  <div class="inst-desciption">
+      <br>
+      <h2>WHO WE ARE
+      </h2>
+      <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  </div>
+  
+  <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
+    <div id="inst-map"></div>
+  </div>
+  
 
-    {% if 'inst' in session %}
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="inst-pic">
-      <button  class="button" type="submit">Submit</button>
-    </form>
-    {% endif %}
+  <div class="events">
 
-    <br>
-    <h2>WHO WE ARE
-     </h2>
-    <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-
-    <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
-      <div id="inst-map"></div>
-    </div>
-
-  <div class="container">
-    <div class="inst-container" id ="{{ inst.inst_id }}"> 
     <h1>{{inst.inst_name}} active events</h1>
     <p hidden id="inst-id">{{inst.inst_id}}</p>
 
-    {% for event in all_events %}
-      {% if event.inst_id == inst.inst_id %}
-    <div class="card">
-      <div class="image">
-        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
-      </div>
-      <div class="title">
-        <h1>{{ event.evt_title }}</h1>
-        </div>
-        <div class="des">
-          <p>{{ event.evt_date }}</p>
-          <p>{{ event.evt_start_time }} - {{ event.evt_end_time }}</p>
-          <p>{{ event.evt_address }}</p>
-          <a href="/events/{{event.event_id}}">
-          <button>More details</button>
-        </a>
-        </div>
-      </div>
-    
-      {% endif %}
-    {%endfor%}
-    </div>
-  </div>
-
-
-  {% if 'inst' in session %}
-    <!-- button to create a new event -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
-
-    <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="active-events">
+      {% for event in all_events %}
+        {% if event.inst_id == inst.inst_id %}
+      <div class="card">
+        <div class="title">
+          <h1>{{ event.evt_title }}</h1>
           </div>
-          <div class="modal-body">
-
-            <form action="/new_event" method='POST' id="form-new-evt">
-              <div class="mb-3">
-                <label for="evt_title" class="col-form-label">Event Title:</label>
-                <input name="evt_title" id="evt_title"></input>
-        
-              </div>
-              <div class="mb-3">
-                <label for="evt_date" class="col-form-label">Date:</label>
-                <input name="evt_date" id="evt_date" class="" placeholder="dd/mm/yyyy"></input>            
-              </div>
-            
-              <div class="mb-3">
-                <label for="evt_time" class="col-form-label">Event duration:</label>
-                From: <input type="time" id="evt_start_time" name="evt_start_time" min="00:00" max="24:00" required>
-                To: <input type="time" id="evt_end_time" name="evt_end_time"min="00:00" max="24:00" required>
-              </div>
-              
-              <div class="mb-3">
-                <label for="evt_address" class="col-form-label">Address:</label>
-                <input name="evt_address" id="evt_address"></input>   
-              </div>
-
-              <div class="mb-3">
-                <label for="evt_description" class="col-form-label">Event Description:</label>
-                <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea> 
-              </div>
-
-              <div class="mb-3">
-
-                  <label for="lang-select">Select up to 3 skills: </label>
-                  <select name="skill1" id="lang-select">
-                    {% for skill in all_skills %}
-                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-                    {% endfor %}
-                  </select>
-                  <select name="skill2" id="lang-select">
-                    {% for skill in all_skills %}
-                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-                    {% endfor %}
-                  </select>
-                  <select name="skill3" id="lang-select">
-                    {% for skill in all_skills %}
-                    <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-                    {% endfor %}
-                  </select>         
-                
-              </div>
-            </form>
-            
+          <div class="des">
+            <p>{{ event.evt_date }}</p>
+            <p>{{ event.evt_start_time }} - {{ event.evt_end_time }}</p>
+            <p>{{ event.evt_address }}</p>
+            <a href="/events/{{event.event_id}}">
+            <button>More details</button>
+          </a>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
-          </div>
-
         </div>
+      
+        {% endif %}
+      {%endfor%}
       </div>
     </div>
-  {% endif %}
   
- 
-
-
-<!-- --------------------- modal for review and comments --------------------- -->
-
-<div class="comment-area">
-
-  <!-- Button trigger modal to comment and rate a media -->
-  {%if 'volunteer' in session %}
-  <label for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
-  <button type="button" class="btn btn-primary" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
-  <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
-       Rate your experience
-  </button>
-
-  {%endif%}
-
-
-<!-- review and comment modal form -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class="create-evt-btn">
+    {% if 'inst' in session %}
+      <!-- button to create a new event -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
+</div>
+      <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Review {{inst.inst_name}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="comment-form">
-                    <label for="rate-inst">Rate {{inst.inst_name}}:</label>
-                    <select name="rate-inst" id="rate-inst">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+
+              <form action="/new_event" method='POST' id="form-new-evt">
+                <div class="mb-3">
+                  <label for="evt_title" class="col-form-label">Event Title:</label>
+                  <input name="evt_title" id="evt_title"></input>
+          
+                </div>
+                <div class="mb-3">
+                  <label for="evt_date" class="col-form-label">Date:</label>
+                  <input name="evt_date" id="evt_date" class="" placeholder="dd/mm/yyyy"></input>            
+                </div>
+              
+                <div class="mb-3">
+                  <label for="evt_time" class="col-form-label">Event duration:</label>
+                  From: <input type="time" id="evt_start_time" name="evt_start_time" min="00:00" max="24:00" required>
+                  To: <input type="time" id="evt_end_time" name="evt_end_time"min="00:00" max="24:00" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="evt_address" class="col-form-label">Address:</label>
+                  <input name="evt_address" id="evt_address"></input>   
+                </div>
+
+                <div class="mb-3">
+                  <label for="evt_description" class="col-form-label">Event Description:</label>
+                  <textarea name="evt_description" id="evt_description" placeholder="Write your event description."></textarea> 
+                </div>
+
+                <div class="mb-3">
+
+                    <label for="lang-select">Select up to 3 skills: </label>
+                    <select name="skill1" id="lang-select">
+                      {% for skill in all_skills %}
+                      <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                      {% endfor %}
                     </select>
-                    <label for="comment-inst">Leave a comment:</label>
-                    <input type="text" id="comment-inst" name="comment-inst">
-                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
-                </form>
+                    <select name="skill2" id="lang-select">
+                      {% for skill in all_skills %}
+                      <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                      {% endfor %}
+                    </select>
+                    <select name="skill3" id="lang-select">
+                      {% for skill in all_skills %}
+                      <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                      {% endfor %}
+                    </select>         
+                  
+                </div>
+              </form>
+              
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
+            </div>
+
+          </div>
         </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Comments session -->
-<div id="inst-comments-div">
-  <h3>Latest comments</h3>
-
-  <div id="comment-container" class="comment-block comment-div">
-    {% if all_comments != None %}
-    {% for item in all_comments %}
-    <div id="{{item.comment_id}}" class="comment-block">
-      <p id="comment-volunteer-name">{{item.volunteer.fname}}</p>
-      <p id="inst-review">Rate: {{item.review}}</p>
-      <p id="inst-comment">{{item.comment}}</p>
-    </div>
-
-
-    <!-- Delete button for comment -->
-    {%if 'volunteer' in session %}
-    {%if item.volunteer_id == session['volunteer'] %}
-    <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+      </div>
     {% endif %}
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-  </div>  
-</div>
+    
 
-<!-- If there is no comment yet -->
-
-{% if all_comments == None %}
-<p id="no-review">Be the first one to review {{inst.inst_name}}.</p>
-{% endif %}
 
   
-</div>
-  <script src="/static/js/comments.js"></script>
-  <script src="/static/js/maps.js"></script>
-  <script
-      async
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClU-Mhv9qzGPyKT4nFvI8MWkOvTuijj9k&callback=initMap">
-  </script>
+  
 
+
+  <!-- --------------------- modal for review and comments --------------------- -->
+
+  <div class="comment-area">
+
+    <!-- Button trigger modal to comment and rate a media -->
+    {%if 'volunteer' in session %}
+    <label for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
+    <button type="button" class="btn btn-primary" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
+    <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
+        Rate your experience
+    </button>
+
+    {%endif%}
+
+
+    <!-- review and comment modal form -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Review {{inst.inst_name}}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="comment-form">
+                      <label for="rate-inst">Rate {{inst.inst_name}}:</label>
+                      <select name="rate-inst" id="rate-inst">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                      </select>
+                      <label for="comment-inst">Leave a comment:</label>
+                      <input type="text" id="comment-inst" name="comment-inst">
+                      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comments session -->
+  <div id="inst-comments-div">
+    <h3>Latest comments</h3>
+
+    <div id="comment-container" class="comment-block comment-div">
+      {% if all_comments != None %}
+      {% for item in all_comments %}
+      <div id="{{item.comment_id}}" class="comment-block">
+        <p id="comment-volunteer-name">{{item.volunteer.fname}}</p>
+        <p id="inst-review">Rate: {{item.review}}</p>
+        <p id="inst-comment">{{item.comment}}</p>
+      </div>
+
+
+      <!-- Delete button for comment -->
+      {%if 'volunteer' in session %}
+      {%if item.volunteer_id == session['volunteer'] %}
+      <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>  
+  </div>
+
+  <!-- If there is no comment yet -->
+
+  {% if all_comments != None %}
+  <p id="no-review">Be the first one to review {{inst.inst_name}}.</p>
+  {% endif %}
+
+    
+  </div>
+    <script src="/static/js/comments.js"></script>
+    <script src="/static/js/maps.js"></script>
+    <script
+        async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClU-Mhv9qzGPyKT4nFvI8MWkOvTuijj9k&callback=initMap">
+    </script>
+</div>
 {% endblock %}

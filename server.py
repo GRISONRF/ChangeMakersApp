@@ -558,7 +558,7 @@ def get_recommended_results():
 
         recommendedResults = []
         for event in list(events_by_location_skill):
-            recommendedResults.append(
+             recommendedResults.append(
                 {
                 "evt_title" : event.evt_title,
                 "inst_name": event.inst.inst_name,
@@ -566,11 +566,93 @@ def get_recommended_results():
                 "evt_state" : event.evt_state,
                 "cause": event.inst.cause.cause_name,
                 "evt_date": event.evt_date,
-                "event_id": event.event_id  
+                "event_id": event.event_id,  
                 }
             )
           
         return jsonify(recommendedResults)
+
+
+
+# @app.route('/search_recommended.json', methods=['POST'])
+# def get_recommended_results():
+#     """ Return a JSON response with the recommended results """    
+
+#     if "volunteer" in session:
+#         volunteer_id = session["volunteer"]
+
+#         city = request.json.get("city") 
+#         state = request.json.get("state")
+#         rSkill = crud.get_skills_by_volunteer(volunteer_id) #list
+#         skills_id = crud.get_skills_id_by_skill_obj(rSkill)
+
+#         events_by_location_skill = crud.get_events_by_city_state_skill(city, state, skills_id)
+
+#         # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
+
+#         recommendedResults = []
+#         for event in list(events_by_location_skill):
+#             skills_lst = []
+#             for skill in event.skills:
+#                 skills_lst.append( 
+#                     {"skill": skill.skill_title}
+#                 )
+#             print('\n'*5)
+#             print(skills_lst)
+
+#             recommendedResults.append(
+#                 {
+#                 "evt_title" : event.evt_title,
+#                 "inst_name": event.inst.inst_name,
+#                 "evt_city" : event.evt_city,
+#                 "evt_state" : event.evt_state,
+#                 "cause": event.inst.cause.cause_name,
+#                 "evt_date": event.evt_date,
+#                 "event_id": event.event_id,
+#                 "event_skills": skills_lst  
+#                 }
+#             )
+#             print(recommendedResults)
+          
+#         return jsonify(recommendedResults)
+
+
+
+@app.route('/search_bar.json', methods=['POST'])
+def get_search_results():
+    """ Return a JSON response with the search results """    
+
+    if "volunteer" in session:
+        volunteer_id = session["volunteer"]
+        city = crud.get_city_by_vol(volunteer_id)
+
+        events_by_city = crud.get_events_by_city(city)
+
+        print(events_by_city)
+
+        # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
+        search_results_bar = []
+        for event in events_by_city:
+            search_results_bar.append( 
+                {
+                "evt_title" : event.evt_title,
+                "inst_name": event.inst.inst_name,
+                "evt_location" : event.evt_address,
+                "evt_city" : event.evt_city,
+                "evt_state" : event.evt_state,
+                "cause": event.inst.cause.cause_name,
+                "evt_date": event.evt_date,
+                "event_id": event.event_id    
+                }
+            )
+
+        return jsonify(search_results_bar)
+
+
+
+
+
+
 
 # ------------------------ MAP --------------------
 

@@ -11,69 +11,67 @@
 
     
 <h1 id="name"> Hi {{ volunteer.fname }}.</h1>
-<div class="profile">
 
-  <h3 id="info">Your Information</h3>
+<h3>Your Information:</h3>
+<div class="profile-container">
 
-  <div class="v_pic">
-    <img id="v_pic" src="{{ volunteer.v_pic }}">
+  <div class="pic-container">
+    <div class="pic-div">
+      <img id="pic" src="{{ volunteer.v_pic }}">
+    </div>
+    <div class="upload-pic">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="volunteer-pic">
+        <button  class="button" type="submit"> Submit</button>
+      </form>
+    </div>
   </div>
 
-  <form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="volunteer-pic">
-    <button  class="button" type="submit"> Submit</button>
-  </form>
-
+  <div class="name">
     <ul>
       <li>Name: {{ volunteer.fname}}</li>
       <li>Email: {{ volunteer.v_email}}</li>
       <li>Location: {{volunteer.v_city}}, {{volunteer.v_state}}</li>
     </ul>
-
-      
-    <!-- IF VOLUNTEER SELECTES SKILLS BEFORE, 
-    SHOW THE SKILLS THEY HAVE -->
-      <!-- SHOW  -->
-      
-      <!-- IF VOLUNTEER DOESNT HAVE SKILLS SELECTED
-            SHOW THE FORM SO THEY CAN SELECT THE SKILLS -->
-
-
-      {% if 'volunteer' in session %} 
-        {% if volunteer_skills %}
-
-        <p>Skills:</p>
-          {% for skill in volunteer_skills %}
-        <p>{{skill.skill_title}}</p>
+  </div>
+    
+  <div class="skills">
+    {% if 'volunteer' in session %} 
+      {% if volunteer_skills %}
+  
+    <p>Skills:</p>
+      <ul>
+      {% for skill in volunteer_skills %}
+      <li>{{skill.skill_title}}</li>
+      {% endfor %}
+      </ul>
+    {% else %}
+  </div>
+  <div class="skill-form">
+      <form action="/select_skills" method="POST">
+        <label for="lang-select">Select up to 3 skills: </label>
+        <select name="skill1" id="lang-select">
+          {% for skill in all_skills %}
+          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
           {% endfor %}
-        
-        {% else %}
-
-        <form action="/select_skills" method="POST">
-          <label for="lang-select">Select up to 3 skills: </label>
-          <select name="skill1" id="lang-select">
-            {% for skill in all_skills %}
-            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-            {% endfor %}
-          </select>
-          <select name="skill2" id="lang-select">
-            {% for skill in all_skills %}
-            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-            {% endfor %}
-          </select>
-          <select name="skill3" id="lang-select">
-            {% for skill in all_skills %}
-            <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-            {% endfor %}
-          </select>
-          <button  class="button" type="submit"> Select skills</button>
-          
-        </form>
-        {% endif %}
+        </select>
+        <select name="skill2" id="lang-select">
+          {% for skill in all_skills %}
+          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+          {% endfor %}
+        </select>
+        <select name="skill3" id="lang-select">
+          {% for skill in all_skills %}
+          <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+          {% endfor %}
+        </select>
+        <button  class="button" type="submit"> Select skills</button>         
+      </form>
       {% endif %}
-
+    {% endif %}
+  </div>     
+  
 </div>
-
 
 
 <!--
@@ -105,7 +103,7 @@
 </form> -->
 <div>
   <h2> Events {{volunteer.fname}} Signed Up </h2>
-
+</div>
 
 
 {% for event in my_events %}
@@ -127,11 +125,12 @@
 {% endfor %}
 </div>
 
+<div class="events">
 
-<h2>Recommended events:</h2>
-<div id="recommended-events">
+  <h2>Recommended events:</h2>
+  <div id="recommended-events">
 
-</div>
+  </div>
 
 
 
@@ -139,6 +138,7 @@
 <h2> Search for events by:</h2>
 <div id="events-container"></div>
 
+</div>
 <script src="/static/js/cards-react.jsx" type="text/jsx"></script>
 
 {% endblock %} 
