@@ -4,7 +4,7 @@ from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 import crud
-from model import connect_to_db, db, Volunteer, Institution
+from model import connect_to_db, db, Volunteer, Institution, Event
 from jinja2 import StrictUndefined
 from datetime import datetime
 from geopy.geocoders import Nominatim
@@ -21,6 +21,8 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+
+evt_pic = "/static/images/background/hands.back.png"
 
 # ---------------- HOMEPAGE ----------------
 @app.route('/')
@@ -346,6 +348,34 @@ def volu_upload_picture():
         return redirect(f'/inst_profile/{inst_id}')
 
 
+
+
+# I have the event_id
+# If inst in session, get the inst_id
+
+        
+
+@app.route('/upload/<event_id>', methods=['POST'])
+def evt_upload_pic(event_id):
+    """ Inst can upload a pic for event """
+    if "inst" in session:
+        inst_id = session["inst"]
+
+        evt_pic = request.files['evt-pic']
+        result = cloudinary.uploader.upload(evt_pic,
+                                            api_key=CLOUDINARY_KEY,
+                                            api_secret=CLOUDINARY_SECRET,
+                                            cloud_name=CLOUD_NAME)
+        evt_url = result['secure_url']
+
+        db.session.query(Event).filter(Event.event_id==event_id).update({"evt_pic":evt_url})
+        db.session.commit()
+        flash('Event picture updated!')
+
+        return redirect(f'/events/{event_id}')
+
+
+
 @app.route('/select_skills', methods=['POST'])
 def select_skills():
     """ Save the skills the volunteer selected from form """
@@ -421,7 +451,8 @@ def create_event():
             evt_lat, 
             evt_lng, 
             inst_id, 
-            evt_description
+            evt_description,
+            evt_pic,
             )
         
         db.session.add(new_event)

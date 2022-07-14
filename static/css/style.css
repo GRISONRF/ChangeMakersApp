@@ -806,7 +806,24 @@ textarea {
 
 .evt-description {
   background-color: #9e8686;
-  padding-top: 57px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.evt-pic {
+
+}
+
+#evt-pic {
+  display: block;
+  width: 34vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.pic-div-evt {
+
 }
 
 .evt-map {

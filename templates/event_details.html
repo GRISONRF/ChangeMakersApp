@@ -29,6 +29,19 @@
             <p> {{ event.evt_description }} </p>
         </div>
 
+        <div class="evt-pic">
+            <div class="pic-div-evt">
+                <img id="evt-pic" src="{{ event.evt_pic }}">
+            </div>
+
+            <div class="upload-pic">
+                <form action="/upload/{{event.event_id}}" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="evt-pic">
+                    <button  class="button" type="submit"> Submit</button>
+                </form>
+            </div>
+        </div>
+
     </div>    
 
     <div class="evt-map row col-6">
@@ -37,6 +50,12 @@
             <div id="event-map"></div>
         </div>
     </div>
+
+
+
+
+
+
 </section>
 
 <section class="evt-btns">    
@@ -57,7 +76,7 @@
 
             {% endif %}
         {% elif 'inst' in session %}
-        <form action="/inst_profile">
+        <form action="/inst_profile/session[inst]">
             <button>Go back to your profile</button>
         </form>
         {% else %}

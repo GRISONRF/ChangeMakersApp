@@ -97,7 +97,7 @@ def get_inst_by_event(event_id):
 # --------------- Event functions ---------------
 
 #Do I need to add volunteer, inst and comments as parameters?
-def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_city, evt_state, evt_lat, evt_lng, inst_id, evt_description):
+def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_city, evt_state, evt_lat, evt_lng, inst_id, evt_description, evt_pic):
     """ Create and return an event """
 
     new_event = Event(
@@ -111,7 +111,8 @@ def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address,
         evt_lat=evt_lat, 
         evt_lng=evt_lng, 
         inst_id=inst_id, 
-        evt_description=evt_description
+        evt_description=evt_description,
+        evt_pic=evt_pic
         )
     return new_event
 
