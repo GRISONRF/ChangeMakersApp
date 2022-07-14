@@ -607,6 +607,7 @@ img #pic {
 #pic {
   display: block;
   width: 80vw;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -720,4 +721,47 @@ textarea {
   margin: 10px;
   padding: 4px;;
 }
+
+.rate-btn {
+
+}
+
+.comment-inst-btn {
+  
+}
+
+#comment-inst-btn {
+  padding: 10px;
+  margin: 40px;
+}
+
+#inst-comments-div {
+  background-color: gray;
+}
+
+#comment-container {
+
+}
+
+.comment-block {
+  margin-bottom: 30px;
+
+}
+
+.delete-btn {
+  margin-top: -16px;
+  margin-bottom: 36px;
+}
+
+#comment-volunteer-name {
+  margin-bottom: 2px;
+}
+
+#inst-review {
+
+}
+
+#inst-comment {
+  margin-left: 10px;
+} 
 

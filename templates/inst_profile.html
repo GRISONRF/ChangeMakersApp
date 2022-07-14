@@ -162,18 +162,18 @@
   <!-- --------------------- modal for review and comments --------------------- -->
   <section class="inst-rate">
   <div class="comment-area">
+    <div class="rate-btn">
+      <!-- Button trigger modal to comment and rate a media -->
+      {%if 'volunteer' in session %}
+      <label class="comment-inst-btn row" for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
+      <button type="button" class="btn btn-primary col-3 row" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
+      <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
+          Rate your experience
+      </button>
 
-    <!-- Button trigger modal to comment and rate a media -->
-    {%if 'volunteer' in session %}
-    <label for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
-    <button type="button" class="btn btn-primary" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
-    <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
-        Rate your experience
-    </button>
-
-    {%endif%}
-
+      {%endif%}
+    </div>
 
     <!-- review and comment modal form -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -225,7 +225,7 @@
       <!-- Delete button for comment -->
       {%if 'volunteer' in session %}
       {%if item.volunteer_id == session['volunteer'] %}
-      <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+      <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="delete-btn btn btn-outline-danger">Delete</button>
       {% endif %}
       {% endif %}
       {% endfor %}
