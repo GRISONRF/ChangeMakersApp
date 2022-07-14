@@ -12,12 +12,15 @@
         {% endif %}
     </div>    
 </section>
+
 <section class="evt-details">
-    <div class="evt-details-div row col-6">
-        <p>When: {{event.evt_date}}</p>
-        <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
-        <p>Where: {{event.evt_address}}</p>
-        <div class="evt-skills">
+    <div class="evt-details-div row col-8">
+        <div class="evt-dates col-6">
+            <p>When: {{event.evt_date}}</p>
+            <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
+        </div>
+            
+        <div class="evt-skills col-6">
             <p>Skills:
                 {% for skill in event_skills %}
                 <li>{{skill.skill_title}}</li>
@@ -35,26 +38,27 @@
             </div>
 
             <div class="upload-pic">
+                {% if 'inst' in session %}
                 <form action="/upload/{{event.event_id}}" method="POST" enctype="multipart/form-data">
+                    <div class="input">
                     <input type="file" name="evt-pic">
-                    <button  class="button" type="submit"> Submit</button>
+                    </div>
+                    <div class="upload-button">
+                    <button class="button" type="submit"> Submit</button>
+                    </div>
                 </form>
+                {% endif %}
             </div>
         </div>
 
     </div>    
 
-    <div class="evt-map row col-6">
-        <p>Map should he here:</p>
+    <div class="evt-map row col-4">
+        <p>Event Address: {{event.evt_address}}</p>
         <div id="{{ event.event_id }}" class="maps">
             <div id="event-map"></div>
         </div>
     </div>
-
-
-
-
-
 
 </section>
 

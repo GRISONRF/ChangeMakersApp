@@ -7,48 +7,54 @@
 {% endblock %}
 
 {% block body %}
-<div class="inst-profile">
-  <div class="inst-name">
-    <h1>{{inst.inst_name}}</h1>
-    <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
-    <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"> {{inst.cause.cause_title}}</p> 
-  </div>  
 
 
-  
-  <div class="pic-container-inst">
-    <div class="pic-div-inst">
-      <img id="pic" src="{{ inst.inst_pic }}">
-    </div>
+<div class="inst-name">
+  <h1>{{inst.inst_name}}</h1>
+  <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
+  <p><img id="inst_icon" src="{{inst.cause.cause_icon}}"> {{inst.cause.cause_title}}</p> 
+</div>  
 
-    <div class="upload-pic">
-      {% if 'inst' in session %}
-      <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="inst-pic">
-        <button  class="button" type="submit">Submit</button>
-      </form>
-      {% endif %}
-    </div>
-  </div>
+<section  class="iprofile-container row">
 
-
-  <section class="about-inst">
-    <div class="about-map row" >
-      <div class="inst-desciption col">
+    <div class="left-col col">
+     
+      <div class="inst-desciption">
         <br>
-        <h2>WHO WE ARE
-        </h2>
-        <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-      </div>
-      <!-- ---------- map ------------
-      -->
-      <div class="class-map col">
-        <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
-          <div id="inst-map"></div>
+        <h2>WHO WE ARE</h2>
+        <div class="pic-container-inst">
+          <div class="pic-div-inst">
+            <img id="pic" src="{{ inst.inst_pic }}">
+          </div>
+  
+          <div class="upload-pic">
+            {% if 'inst' in session %}
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+              <input type="file" name="inst-pic">
+              <button  class="button" type="submit">Submit</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="inst-description">
+          <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
         </div>
       </div>
+      
     </div>
-  </section>
+
+        <!-- ---------- map ------------
+        -->
+    <div class="inst-map row col-6">
+      <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
+        <div id="inst-map"></div>
+      </div>
+    </div>
+      
+    
+
+</section>
 
   <section class="events" >
     <div>
@@ -62,23 +68,29 @@
 
         <!-- CARD -->
         <div class="card">
+          <div class="image">
+          <img src=" {{event.evt_pic}}">
+          </div>
           <div class="title">
-            <h1>{{ event.evt_title }}</h1>
-            </div>
-            <div class="des">
-              <p>{{ event.evt_date }}</p>
-              <p>From: {{ event.evt_start_time }} <p>
-              </p>To: {{ event.evt_end_time }}</p>
-              <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
-              <a href="/events/{{event.event_id}}">
-              <button>More details</button>
+          <h1>{{ event.evt_title }}</h1>
+          </div>
+          <div class="des">
+            <p>{{ event.evt_date }}</p>
+            <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
+            <a href="/events/{{event.event_id}}">
+            <button>More details</button>
             </a>
-            </div>
+          </div>
           </div>
           {% endif %}
           {%endfor%}
         </div>
+
         <!-- CARD -->
+
+
+
+
       </div>
     
       <div class="create-evt-btn">
@@ -235,9 +247,9 @@
 
   <!-- If there is no comment yet -->
 
-  {% if all_comments != None %}
+  <!-- {% if all_comments != None %}
   <p id="no-review">Be the first one to review {{inst.inst_name}}.</p>
-  {% endif %}
+  {% endif %} -->
   </section> 
     
   </div>

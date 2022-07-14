@@ -6,12 +6,16 @@
 
 
 /* ---------- events cards ---------- */
+
 .card{
   width: 20%;
   display: inline-block;
   box-shadow: 1px 1px 5px rgb(97, 90, 90);
   border-radius: 5px; 
   margin: 2%;
+  max-width: 272px;
+  min-width: 257px;
+  max-height: 417px;
   }
 
 .image img{
@@ -48,7 +52,7 @@
 }
 
 button{
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 10px;
   background-color: white;
   border: 1px solid black;
@@ -62,6 +66,127 @@ button:hover{
   transition: .5s;
   cursor: pointer;
 }
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+}
+
+/* NEW CARDS */
+
+/* .evt-env {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.card {
+  display: grid;
+  max-width: 306px;
+  height: 483px;;
+  grid-template-columns: 275px;
+  grid-template-rows: 182px 250px;
+  grid-template-areas: "image" "text";
+
+  border-radius: 18px;
+  background: white;
+  box-shadow: 5px 5px 10px rgb(0 0 0 / 39%);
+  text-align: center;
+
+  transition: 0.5s ease;
+  margin:30px;
+  justify-content: center;
+}
+
+.card-image {
+  grid-area: image;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-size: cover;
+}
+
+#evt-img-card {
+  grid-area: image;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-size: cover;
+}
+
+.card-text {
+  grid-area: text;
+  margin: 25px;
+  overflow-wrap: break-word
+}
+.card-text .date {
+  color: rgb(255, 7, 110);
+  font-size:13px;
+}
+.card-text p {
+  color: grey;
+  font-size:15px;
+  font-weight: 300;
+}
+.card-text h2 {
+  margin-top:0px;
+  font-size:28px;
+}
+.card-stats {
+  grid-area: stats; 
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background: rgb(255, 7, 110);
+}
+.card-stats .stat {
+  padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+.card-stats .border {
+  border-left: 1px solid rgb(172, 26, 87);
+  border-right: 1px solid rgb(172, 26, 87);
+}
+.card-stats .value{
+  font-size:15px;
+  font-weight: 500;
+}
+.card-stats .value sup{
+  font-size:12px;
+}
+.card-stats .type{
+  font-size:11px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+}
+
+
+button{
+  margin-top: 40px;
+  margin-bottom: 10px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding:10px;
+}
+
+button:hover{
+  background-color: black;
+  color: white;
+  transition: .5s;
+  cursor: pointer;
+} */
+
 
 /* ---------- End of event cards ---------- */
 
@@ -95,17 +220,21 @@ height: 100%;
 
 .map,
 #inst-map {
-width: 436px;
-height: 749px;
-float: left;
-padding: 50px;
+  width: 388px;
+  height: 749px;
+  float: left;
+  padding: 50px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 }
 
   
 .maps,
 #event-map {
-  width: 436px;
+  width: 388px;
   height: 749px;
   float: left;
   padding: 50px;
@@ -540,30 +669,33 @@ hr {
 
 
 
-.profile-container {
+.vprofile-container {
   background-color: #e0ebb4;
-  display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 
-.pic-container {
+.vpic-container {
   background-color: #bb9c36;
-  padding-left: 50px;
-  padding-top: 50px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.profile-info {
+.vprofile-info {
   background-color: #cd91ce;
 }
 
-.pic-div {
+.vpic-div {
   justify-content: center;
 }
 
-img #pic {
-  border-radius: 50%
+img#vpic {
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;;
 }
 
 .name {
@@ -583,30 +715,33 @@ img #pic {
 }
 
 
-/* inst profile page */
+/* ------------------------ inst profile page ------------- */
 
 .inst-name {
   padding: 30px;
 
 }
 
+.iprofile-container {
+  background-color: #a74eca;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
 
 .pic-container-inst {
-  background-color: #bb9c36;
-  padding-top: 60px;
-}
-
-.inst-desciption p {
-  padding: 50px;
+  display: block;
+  width: 46vw;
 }
 
 
-/* .pic-div-inst {
+.pic-div-inst {
   justify-content: center;
   display: flex;
-  padding: 50px;
+  padding: 30px;
   height: auto;
-} */
+}
 
 #pic {
   display: block;
@@ -616,10 +751,31 @@ img #pic {
   margin-right: auto;
 }
 
+
 .upload-pic {
   text-align: center;
-  padding-bottom: 40px;
-  padding-top:20px;
+  /* padding-bottom: 40px;
+  padding-top:20px; */
+}
+
+.input {
+
+}
+
+.upload-button {
+
+}
+
+.inst-description {
+  background-color: #cd91ce;
+  width: 45vw;
+  float: left;
+  height: 300px;
+  text-align: justify;
+}
+
+.inst-desciption p {
+  padding: 30px;
 }
 
 .about-inst {
@@ -633,20 +789,14 @@ img #pic {
   width: 100vw;
 }
 
-.inst-description {
-  background-color: #cd91ce;
-  width: 500px;
-  float: left;
-  height: 300px;
-
-}
-/* 
-.class-map {
-  width: 500px;
-  float: left;
-  height: 300px;
+.inst-map {
   background-color: #555;
-} */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
 
 .events {
   background-color: #9daf4b;
@@ -656,6 +806,8 @@ img #pic {
 .active-events {
   background-color: #a77171;
   margin-top: 20px;
+  display: flex;
+  flex-direction: row;
 }
 
 /* modal create a new event */
@@ -671,6 +823,7 @@ img #pic {
 
 .form-control, textarea {
   background-color: white;
+  color: black;
   max-width: 700px;
 }
 
@@ -708,6 +861,7 @@ textarea {
 
 .signed-up-events {
   background-color: #d884da;
+  padding: 30px;
 }
 
 .inst-rate {
@@ -744,7 +898,7 @@ textarea {
 }
 
 #comment-container {
-
+  padding-top: 20px;
 }
 
 .comment-block {
@@ -780,6 +934,11 @@ textarea {
   margin-bottom: 0;
 }
 
+.evt-dates {
+
+}
+
+
 .evt-details {
   background-color: #a74eca;
   padding-left: 30px;
@@ -808,6 +967,7 @@ textarea {
   background-color: #9e8686;
   padding-top: 20px;
   padding-bottom: 20px;
+  width: 61vw;
 }
 
 .evt-pic {
@@ -816,14 +976,14 @@ textarea {
 
 #evt-pic {
   display: block;
-  width: 34vw;
+  width: 41vw;
   margin-left: auto;
   margin-right: auto;
   margin-top: 30px;
 }
 
 .pic-div-evt {
-
+  width: 63vw;
 }
 
 .evt-map {
@@ -831,10 +991,12 @@ textarea {
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-top: 30px;
 }
 
 .evt-btns {
   background-color: #bb9c36;
+  padding: 30px;
 }
 
 

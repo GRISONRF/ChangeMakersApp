@@ -81,16 +81,21 @@ const all_causes = [
 
 function EventCard(props) {
     return (
-        <div className="card">          
+        <div className="card"> 
+            <div className="image">
+                <img src={`${props.evt_pic}`}></img>
+            </div>         
             <div className="title">
                 <h1>{props.evt_title}</h1>
             </div>
-            <p>{props.inst_name}</p>
-            <p>{props.evt_city}, {props.evt_state}</p>
-            <p>{props.cause}</p>
-            <a href={`/events/${props.event_id}`}> 
-                <button>More details</button>
-            </a>            
+            <div className="des">
+                <p>{props.inst_name}</p>
+                <p>{props.evt_city}, {props.evt_state}</p>
+                <p>{props.cause}</p>
+                <a href={`/events/${props.event_id}`}> 
+                    <button>More details</button>
+                </a>   
+            </div>
         </div>
     );
 }
@@ -141,6 +146,7 @@ function EventCardContainer() {
                     cause={sResult.cause}
                     evt_date={sResult.evt_date}
                     event_id={sResult.event_id}
+                    evt_pic={sResult.evt_pic}
                 />
             )
         }
@@ -185,17 +191,21 @@ ReactDOM.render(<EventCardContainer />, document.getElementById('events-containe
 
 function RecommendedEventsCards(props) {
     return (
-        <div className="card">          
+        <div className="card"> 
+            <div className="image">
+                <img src={props.evt_pic}></img>
+            </div>         
             <div className="title">
                 <h1>{props.evt_title}</h1>
             </div>
-            <p>{props.inst_name}</p>
-            <p>{props.evt_city}, {props.evt_state}</p>
-            <p>{props.cause}</p>
-            {/* <p>{props.skills}</p> */}
-            <a href={`/events/${props.event_id}`}> 
-                <button>More details</button>
-            </a>            
+            <div className="des">
+                <p>{props.inst_name}</p>
+                <p>{props.evt_city}, {props.evt_state}</p>
+                <p>{props.cause}</p>
+                <a href={`/events/${props.event_id}`}> 
+                    <button>More details</button>
+                </a>   
+            </div>
         </div>
     );
 }
@@ -219,6 +229,7 @@ function RecommendedEventsContainer() {
                     cause={recResult.cause}
                     evt_date={recResult.evt_date}
                     event_id={recResult.event_id}
+                    evt_pic={recResult.evt_pic}
                     // skills={recResult.skills}
                 />
             )

@@ -13,35 +13,6 @@
   </head>
   <body>
     <header>
-			
-        <!-- <div class="main-header large-12 columns no-padding">
-
-            <div class="global-page-container">
-            
-                <div class="logo small-6 small-offset-3 large-3 large-offset-0 columns no-padding">
-                    <a href="index.html" title="home">
-                        <div class="table">
-                            <div class="table-cell">
-                               <h1> <span class="square"></span>PROJECT NAME / LOGO </h1>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="main-menu show-for-large-up large-9 columns text-right">		
-                    <div class="table">
-                        <div class="table-cell">
-                            <ul class="menu-items">
-                                <li><a href="index.html#about-us">About</a></li>
-                                <li><a href="index.html#contact-us">Contact</a></li>
-                                <li><a href="/login_page">Log In</a></li>
-                                <li><a href="/register">Register</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>         -->
 
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
@@ -70,7 +41,7 @@
                     {% elif 'inst' in session %}
 
                     <div class="navbar-nav ms-auto">
-                        <a href="/inst_profile" class="nav-item nav-link">Profile</a>
+                        <a href="/inst_profile/{{inst.inst_id}}" class="nav-item nav-link">Profile</a>
                         <a href="/logout" class="nav-item nav-link">Logout</a>
                     </div>
 

@@ -358,6 +358,7 @@ def volu_upload_picture():
 @app.route('/upload/<event_id>', methods=['POST'])
 def evt_upload_pic(event_id):
     """ Inst can upload a pic for event """
+    
     if "inst" in session:
         inst_id = session["inst"]
 
@@ -564,7 +565,8 @@ def get_results():
             "evt_state" : event.evt_state,
             "cause": event.inst.cause.cause_name,
             "evt_date": event.evt_date,
-            "event_id": event.event_id    
+            "event_id": event.event_id,
+            "evt_pic" : event.evt_pic    
             }
         )
     return jsonify(search_results)
@@ -597,7 +599,8 @@ def get_recommended_results():
                 "evt_state" : event.evt_state,
                 "cause": event.inst.cause.cause_name,
                 "evt_date": event.evt_date,
-                "event_id": event.event_id,  
+                "event_id": event.event_id, 
+                "evt_pic" : event.evt_pic  
                 }
             )
           
@@ -673,7 +676,8 @@ def get_search_results():
                 "evt_state" : event.evt_state,
                 "cause": event.inst.cause.cause_name,
                 "evt_date": event.evt_date,
-                "event_id": event.event_id    
+                "event_id": event.event_id,  
+                "evt_pic" : event.evt_pic   
                 }
             )
 

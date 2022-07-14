@@ -1,15 +1,20 @@
 function EventCard(props) {
     return (
-        <div className="card">          
+        <div className="card"> 
+            <div className="image">
+                <img src={`${props.evt_pic}`}></img>
+            </div>         
             <div className="title">
                 <h1>{props.evt_title}</h1>
             </div>
-            <p>{props.inst_name}</p>
-            <p>{props.evt_city}, {props.evt_state}</p>
-            <p>{props.cause}</p>
-            <a href={`/events/${props.event_id}`}> 
-                <button>More details</button>
-            </a>            
+            <div className="des">
+                <p>{props.inst_name}</p>
+                <p>{props.evt_city}, {props.evt_state}</p>
+                <p>{props.cause}</p>
+                <a href={`/events/${props.event_id}`}> 
+                    <button>More details</button>
+                </a>   
+            </div>
         </div>
     );
 }
@@ -51,6 +56,7 @@ function EventBarContainer() {
                     cause={barResult.cause}
                     evt_date={barResult.evt_date}
                     event_id={barResult.event_id}
+                    evt_pic={barResult.evt_pic}
                 />
             )
         }

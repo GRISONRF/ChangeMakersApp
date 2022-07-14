@@ -13,14 +13,14 @@
 <h1 id="name"> Hi {{ volunteer.fname }}.</h1>
 
 <h3>Your Information:</h3>
-<div class="profile-container row"> 
-  <div class="pic-container col ">      
-    <div class="pic-div">
-      <img id="pic" src="{{ volunteer.v_pic }}">
+<div class="vprofile-container row"> 
+  <div class="vpic-container col ">      
+    <div class="vpic-div">
+      <img id="vpic" src="{{ volunteer.v_pic }}">
     </div>
     <div class="upload-pic">
       <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="volunteer-pic">
+          <input type="file" name="volunteer-pic">
         <button  class="button" type="submit"> Submit</button>
       </form>
     </div>
@@ -101,7 +101,7 @@
   {% for event in my_events %}
     <div class="card">
       <div class="image">
-      <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg/1199px-Gfp-missouri-st-louis-clubhouse-pond-and-scenery.jpg"> -->
+      <img src=" {{event.evt_pic}}">
       </div>
       <div class="title">
       <h1>{{ event.evt_title}}</h1>
@@ -116,6 +116,32 @@
     </div>
   {% endfor %}
 </div>
+
+  <!-- {% for event in my_events %}
+    <div class="card">
+      <div class="card-image" style="background-image: url({{event.evt_pic}});">
+      </div>
+      <div class="card-text">
+        <h2>{{ event.evt_title }}</h2>
+        <p>{{ event.evt_date }}</p>
+        <p>From: {{ event.evt_start_time }} To: {{ event.evt_end_time }}</p>
+        <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
+        <a href="/events/{{event.event_id}}">
+        <button> More details </button>
+      </div>
+    </div>  
+  {% endfor %} -->
+
+</div>
+
+
+
+
+
+
+
+
+
 
 <div class="events">
 
