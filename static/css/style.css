@@ -5,7 +5,7 @@
 }
 
 
-/* events cards */
+/* ---------- events cards ---------- */
 .card{
   width: 20%;
   display: inline-block;
@@ -24,14 +24,18 @@
 
   text-align: center;
   padding: 10px;
-
 }
 
-h1{
+.card h1 {
   font-family: macho, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
+}
+
+.card p {
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .des{
@@ -42,6 +46,7 @@ h1{
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+
 button{
   margin-top: 40px;
   margin-bottom: 10px;
@@ -50,6 +55,7 @@ button{
   border-radius: 5px;
   padding:10px;
 }
+
 button:hover{
   background-color: black;
   color: white;
@@ -57,7 +63,7 @@ button:hover{
   cursor: pointer;
 }
 
-/* End of event cards */
+/* ---------- End of event cards ---------- */
 
 
 /* to make a button-look link */
@@ -639,9 +645,60 @@ img #pic {
 
 .events {
   background-color: #9daf4b;
+  padding: 30px;
 }
 
+.active-events {
+  background-color: #a77171;
+  margin-top: 20px;
+}
 
+/* modal create a new event */
+.modal {
+  --bs-modal-width: 700px;
+}
+
+.modal-content {
+  padding-left: 10px;
+  padding-right: 10px;
+  /* maybe use a backgound image */
+}
+
+.form-control, textarea {
+  background-color: white;
+  max-width: 700px;
+}
+
+textarea {
+  width: 650px;
+  height: 300px;
+}
+
+.col-form-label {
+  display: flex;
+  padding-top: 0;
+}
+
+.skills-modal-form {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  padding: 7px;
+}
+#evt_title {
+  width: 650px;
+}
+
+#lang-select {
+  padding: 3px;
+  margin: 5px;
+}
+
+#evt_address {
+  width: 650px;
+}
+
+/* end of modal */
 .signed-up-events {
   background-color: #d884da;
 }
