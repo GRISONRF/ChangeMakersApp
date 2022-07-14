@@ -9,18 +9,21 @@
 
 
 {% block body %}
+<section class="evt-search">
+   
+    <div class="" id="search-video">
+        <video id="evt-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
+            <source src="/static/images/backgorund/pexels-anthony-shkraba-7475249.mp4" type="video/mp4">
+        </video>
+        <p class="search-text">Search for Volunteer Opportunities near you and help lives!</p>
+    </div>
 
-<div id="all-events"></div>
-<div>
-    <!-- {% for event in events %}
-    <h1> {{event.evt_title}}</h1>
-    <p>By: {{event.inst.inst_name}}</p>
-    <p> City: {{event.evt_city}}</p>
-    <p> Cause: {{event.inst.cause.cause_title}}</p>
-    <a href="events/{{event.event_id}}">
-        <button>More about this Event</button>
-    </a>
-    {% endfor %} -->
+
+    <div class="evt-cards">
+        <div id="all-events"></div>
+    </div>
+       
+</section>
 
     <form action="/vol_profile">
         <button>Go back to your profile</button>

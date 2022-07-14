@@ -819,3 +819,46 @@ textarea {
 .evt-btns {
   background-color: #bb9c36;
 }
+
+
+/* ----------- all events page --------------- */
+
+#search-video{
+  width: 100%;
+  height: auto  !important;
+}
+
+#evt-video {
+  width: 100%   !important;
+  height: auto  !important;
+  object-fit: cover;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.search-text {
+
+  right: 60px;
+  color: rgb(41, 19, 19);
+  font-weight: bold;
+  text-align: center;
+  font-size: 2rem;
+  margin-top: -5vh;
+  opacity: 70%;
+  background-color: #679d48;
+}
+
+
+.evt-search {
+  background-color: rgb(189, 76, 76);
+
+}
+
+
+
+.evt-cards { 
+  padding: 30px;
+}
