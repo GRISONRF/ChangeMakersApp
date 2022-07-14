@@ -18,7 +18,7 @@
 <p>use google maps to select a location?</p> -->
 </section>
 <!----------------------- ABOUT THE APP SECTION ----------------------->
-<section class="fwh-slide cover-main">
+<section class="fwh-slide cover-main" id="#about-us">
     <div class="about-us"> 
         <h1>ABOUT</h1>
             <p>Since 1998, VolunteerMatch has put the power of technology to good use by enabling the social sector to unlock over $14 billion worth of volunteer time. The award-winning nonprofit service has complemented and co-existed with commercial technologies to become the web's largest and most popular volunteer recruiting platform. It serves thousands of nonprofits, a million interested volunteers a month, and has generated over $40 million in mission-related revenue from its legacy corporate volunteering product YourMatch.</p>
@@ -53,9 +53,7 @@
 
 
 
-<section class="fwh-slide cover-main">
-
-    <section id="contact">
+<section class="fwh-slide cover-main" id="contact-us">
 
     <h1 class="section-header">Contact</h1>
 
@@ -63,7 +61,7 @@
 
     <!-- Left contact page --> 
         
-        <form id="contact-form" class="form-horizontal" role="form">
+        <form action="https://postmail.invotes.com/send" method="post"  id="contact-form" class="form-horizontal" role="form">
             
         <div class="form-group">
             <div class="col-sm-12">
@@ -78,6 +76,7 @@
         </div>
 
         <textarea class="form-control" rows="10" placeholder="MESSAGE" name="message" required></textarea>
+        <input type="hidden" name="access_token" value="s93oy4m075w7dqa0plvtr2f1" />
         
         <button class="btn btn-primary send-button" id="submit" type="submit" value="SEND">
             <div class="alt-send-button">

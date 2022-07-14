@@ -89,15 +89,20 @@ height: 100%;
 
 .map,
 #inst-map {
-width: 500px;
-height: 500px;
+width: 436px;
+height: 749px;
+float: left;
+padding: 50px;
+
 }
 
   
 .maps,
 #event-map {
-width: 500px;
-height: 500px;
+width: 436px;
+height: 749px;
+float: left;
+padding: 50px;
 }
 
 
@@ -570,10 +575,67 @@ img #pic {
 
 /* inst profile page */
 
+.inst-name {
+  padding: 30px;
+
+}
+
+
+.pic-container-inst {
+  background-color: #bb9c36;
+  padding-top: 60px;
+}
+
+.inst-desciption p {
+  padding: 50px;
+}
+
+
+/* .pic-div-inst {
+  justify-content: center;
+  display: flex;
+  padding: 50px;
+  height: auto;
+} */
+
+#pic {
+  display: block;
+  width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.upload-pic {
+  text-align: center;
+  padding-bottom: 40px;
+  padding-top:20px;
+}
+
+.about-inst {
+  background-color: #6a80b7;
+  padding: 30px;
+  width: 100vw;
+  height: 70vw;
+}
+
+.about-map {
+  width: 100vw;
+}
 
 .inst-description {
   background-color: #cd91ce;
+  width: 500px;
+  float: left;
+  height: 300px;
+
 }
+/* 
+.class-map {
+  width: 500px;
+  float: left;
+  height: 300px;
+  background-color: #555;
+} */
 
 .events {
   background-color: #9daf4b;

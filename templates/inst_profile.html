@@ -8,6 +8,7 @@
 
 {% block body %}
 <div class="inst-profile">
+  
   <div class="inst-name">
     <h1>{{inst.inst_name}}</h1>
     <!-- I WANT TO DISPLAY THE CAUSE ICON HERE: -->
@@ -15,11 +16,12 @@
   </div>  
 
 
-      
-  <div class="pic-container">
-    <div class="pic-div">
+  
+  <div class="pic-container-inst">
+    <div class="pic-div-inst">
       <img id="pic" src="{{ inst.inst_pic }}">
     </div>
+
     <div class="upload-pic">
       {% if 'inst' in session %}
       <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -29,18 +31,26 @@
       {% endif %}
     </div>
   </div>
-  <div class="inst-desciption">
-      <br>
-      <h2>WHO WE ARE
-      </h2>
-      <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-  </div>
-  <div class="class-map">
-    <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
-      <div id="inst-map"></div>
+
+
+  <section class="about-inst">
+    <div class="about-map row" >
+      <div class="inst-desciption col">
+        <br>
+        <h2>WHO WE ARE
+        </h2>
+        <p>This is an institution Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      </div>
+      <!-- ---------- map ------------
+      -->
+      <div class="class-map col">
+        <div id="{{ inst.inst_id }}" class="map col-lg-4 col-12">
+          <div id="inst-map"></div>
+        </div>
+      </div>
     </div>
-  </div>
-  
+  </section>
+
 
   <div class="events">
 
@@ -73,7 +83,7 @@
     {% if 'inst' in session %}
       <!-- button to create a new event -->
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
-</div>
+  </div>
       <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
