@@ -105,10 +105,14 @@ padding: 50px;
   
 .maps,
 #event-map {
-width: 436px;
-height: 749px;
-float: left;
-padding: 50px;
+  width: 436px;
+  height: 749px;
+  float: left;
+  padding: 50px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -765,3 +769,53 @@ textarea {
   margin-left: 10px;
 } 
 
+/* --------------- event details page --------------- */
+
+.evt-title {
+  background-color: #679d48;
+  padding-left: 30px;
+}
+
+.evt-title p {
+  margin-bottom: 0;
+}
+
+.evt-details {
+  background-color: #a74eca;
+  padding-left: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.evt-details-div {
+  padding-top: 30px;
+}
+
+.evt-details-div p {
+  margin-bottom: 6px;
+}
+
+.evt-skills {
+
+}
+
+.evt-skills p {
+  margin-bottom: 0;
+}
+
+.evt-description {
+  background-color: #9e8686;
+  padding-top: 57px;
+}
+
+.evt-map {
+  background-color: #555;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.evt-btns {
+  background-color: #bb9c36;
+}

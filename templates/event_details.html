@@ -1,64 +1,72 @@
 {% extends 'base.html' %}
 {% block title %} {{event.evt_title}} {% endblock %}
-
 {% block body %}
+<section class="evt-title">
 <h1> {{ event.evt_title }} </h1>
-
-<p>
-    {{ event.evt_description }}
-</p>
-{% if 'volunteer' in session %}
-<P>Cause: {{cause.cause_title}}</P>
-<p>Institution:<a href="/inst_profile/{{event.inst.inst_id}}">{{event.inst.inst_name}}</a></p>
-{% elif 'inst' in session %}
-<p>Cause: {{institution.cause.cause_title}}</p>
-{% endif %}
-
-<p>When: {{event.evt_date}}</p>
-<p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
-<p>Where: {{event.evt_address}}</p>
-<p>Skills:</p>
-{% for skill in event_skills %}
-<p>{{skill.skill_title}}</p>
-{% endfor %} 
-
-
-
-<p>Map should he here:</p>
-<div id="{{ event.event_id }}" class="maps">
-    <div id="event-map"></div>
-</div>
-
-
-
-<div>
+    <div>
+        {% if 'volunteer' in session %}
+        <p>Institution:<a href="/inst_profile/{{event.inst.inst_id}}">{{event.inst.inst_name}}</a></p>
+        <p>Cause: {{cause.cause_title}}</p>
+        {% elif 'inst' in session %}
+        <p>Cause: {{institution.cause.cause_title}}</p>
+        {% endif %}
+    </div>    
+</section>
+<section class="evt-details">
+    <div class="evt-details-div row col-6">
+        <p>When: {{event.evt_date}}</p>
+        <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
+        <p>Where: {{event.evt_address}}</p>
+        <div class="evt-skills">
+            <p>Skills:
+                {% for skill in event_skills %}
+                <li>{{skill.skill_title}}</li>
+                {% endfor %} 
+            </p>
+        </div>
     
-{% if 'volunteer' in session %}
-    {% if ( event_is_saved == false ) %}  
-<form action="/events/{{event.event_id}}/sign_up">    
-    <button>Sign up for this event</button>
-</form>
-<form action="/vol_profile">
-    <button>Go back to your profile</button>
-</form>    
-    {% else %}
-    <h2>You've already signed up for this event.</h2>
-    <form action="/vol_profile">
-        <button>Go back to your profile</button>
-    </form>
+        <div class="evt-description">
+            <p> {{ event.evt_description }} </p>
+        </div>
 
-    {% endif %}
-{% elif 'inst' in session %}
-<form action="/inst_profile">
-    <button>Go back to your profile</button>
-</form>
-{% else %}
-<p>Login or Sign up to attend to this event!</p>
+    </div>    
 
-{% endif %}
-   
-</div>
+    <div class="evt-map row col-6">
+        <p>Map should he here:</p>
+        <div id="{{ event.event_id }}" class="maps">
+            <div id="event-map"></div>
+        </div>
+    </div>
+</section>
 
+<section class="evt-btns">    
+    <div>
+        {% if 'volunteer' in session %}
+            {% if ( event_is_saved == false ) %}  
+        <form action="/events/{{event.event_id}}/sign_up">    
+            <button>Sign up for this event</button>
+        </form>
+        <form action="/vol_profile">
+            <button>Go back to your profile</button>
+        </form>    
+            {% else %}
+            <h2>You've already signed up for this event.</h2>
+            <form action="/vol_profile">
+                <button>Go back to your profile</button>
+            </form>
+
+            {% endif %}
+        {% elif 'inst' in session %}
+        <form action="/inst_profile">
+            <button>Go back to your profile</button>
+        </form>
+        {% else %}
+        <p>Login or Sign up to attend to this event!</p>
+
+        {% endif %}
+    
+    </div>
+</section>
 
 <script src="/static/js/maps.js"></script>
 <script
