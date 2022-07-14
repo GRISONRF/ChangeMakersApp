@@ -699,7 +699,25 @@ textarea {
 }
 
 /* end of modal */
+
+
 .signed-up-events {
   background-color: #d884da;
+}
+
+.inst-rate {
+  background-color: #a74eca;
+  padding: 30px;
+}
+
+/* modal review inst */
+
+.leave-comment {
+  margin-bottom: 7px;
+}
+
+#rate-inst {
+  margin: 10px;
+  padding: 4px;;
 }
 

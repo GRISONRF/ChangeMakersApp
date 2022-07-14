@@ -50,45 +50,43 @@
     </div>
   </section>
 
+  <section class="events" >
+    <div>
 
-  <div class="events">
+      <h1>{{inst.inst_name}} active events</h1>
+      <p hidden id="inst-id">{{inst.inst_id}}</p>
 
-    <h1>{{inst.inst_name}} active events</h1>
-    <p hidden id="inst-id">{{inst.inst_id}}</p>
+      <div class="active-events">
+        {% for event in all_events %}
+          {% if event.inst_id == inst.inst_id %}
 
-    <div class="active-events">
-      {% for event in all_events %}
-        {% if event.inst_id == inst.inst_id %}
-
-      <!-- CARD -->
-      <div class="card">
-        <div class="title">
-          <h1>{{ event.evt_title }}</h1>
+        <!-- CARD -->
+        <div class="card">
+          <div class="title">
+            <h1>{{ event.evt_title }}</h1>
+            </div>
+            <div class="des">
+              <p>{{ event.evt_date }}</p>
+              <p>From: {{ event.evt_start_time }} <p>
+              </p>To: {{ event.evt_end_time }}</p>
+              <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
+              <a href="/events/{{event.event_id}}">
+              <button>More details</button>
+            </a>
+            </div>
           </div>
-          <div class="des">
-            <p>{{ event.evt_date }}</p>
-            <p>From: {{ event.evt_start_time }} <p>
-            </p>To: {{ event.evt_end_time }}</p>
-            <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
-            <a href="/events/{{event.event_id}}">
-            <button>More details</button>
-          </a>
-          </div>
+          {% endif %}
+          {%endfor%}
         </div>
-      
-        {% endif %}
-      {%endfor%}
+        <!-- CARD -->
       </div>
-      <!-- CARD -->
+    
+      <div class="create-evt-btn">
+        {% if 'inst' in session %}
+        <!-- button to create a new event -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
+      </div>  
 
-
-    </div>
-  
-    <div class="create-evt-btn">
-    {% if 'inst' in session %}
-      <!-- button to create a new event -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
-  </div>
       <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -157,16 +155,12 @@
           </div>
         </div>
       </div>
-    {% endif %}
-    
-
-
-  
-  
-
+      {% endif %}     
+    </div>
+  </section>  
 
   <!-- --------------------- modal for review and comments --------------------- -->
-
+  <section class="inst-rate">
   <div class="comment-area">
 
     <!-- Button trigger modal to comment and rate a media -->
@@ -184,27 +178,31 @@
     <!-- review and comment modal form -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Review {{inst.inst_name}}</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form id="comment-form">
-                      <label for="rate-inst">Rate {{inst.inst_name}}:</label>
-                      <select name="rate-inst" id="rate-inst">
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                      <label for="comment-inst">Leave a comment:</label>
-                      <input type="text" id="comment-inst" name="comment-inst">
-                      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
-                  </form>
-              </div>
+          
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Review {{inst.inst_name}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
+          <div class="modal-body">
+            <form id="comment-form">
+              <div>  
+                <label for="rate-inst">Rate {{inst.inst_name}}:</label>
+                  <select name="rate-inst" id="rate-inst">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+              </div>    
+              <label class="leave-comment" for="comment-inst">Leave a comment:</label>
+              <textarea name="comment-inst" type="text" id="comment-inst" placeholder="Tell us about your experience."></textarea>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -240,7 +238,7 @@
   {% if all_comments != None %}
   <p id="no-review">Be the first one to review {{inst.inst_name}}.</p>
   {% endif %}
-
+  </section> 
     
   </div>
     <script src="/static/js/comments.js"></script>
