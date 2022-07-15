@@ -92,7 +92,7 @@ function EventBarContainer() {
             <button type="submit" className="react-submit btn-find" onClick={addEventBarCard}>Search Events</button>
             
             
-            <div>
+            <div className="all-events-cards">
                 {eventCards}        
             </div>
 
