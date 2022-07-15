@@ -9,25 +9,26 @@
 
 
 {% block body %}
-<section class="evt-search">
-   
-    <div class="" id="search-video">
-        <video id="evt-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
-            <source src="/static/images/backgorund/pexels-anthony-shkraba-7475249.mp4" type="video/mp4">
-        </video>
-        <p class="search-text">Search for Volunteer Opportunities near you and help lives!</p>
+<div class="all-evts-page">
+    <div class="evt-search">
+    
+        <div class="" id="search-video">
+            <img id="evt-video" src="/static/images/backgorund/food-truck.jpg">
+            <p class="search-text">Search for Volunteer Opportunities near you and help lives!</p>
+        </div>
+
+
+        <div class="evt-cards">
+            <div id="all-events"></div>
+        </div>
+        
     </div>
 
-
-    <div class="evt-cards">
-        <div id="all-events"></div>
-    </div>
-       
-</section>
-
-    <form action="/vol_profile">
-        <button>Go back to your profile</button>
-    </form>
+        <form action="/vol_profile" style="
+        padding-left: 30px;
+    ">
+            <button>Go back to your profile</button>
+        </form>
 
  
 </div>

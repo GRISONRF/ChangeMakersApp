@@ -1,38 +1,75 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <title>
+        {% block title %}{% endblock %}
+        </title>
 
-{% block title %} PROJECT APP HOMEPAGE {% endblock %}
+        {% block head %}{% endblock %}
+    </head>
+    <body id="bg">
+      <header>
 
-{% block body %}
-
-
-<h2>Create an account as an institution</h2>
-  <form action="/i_register" method="POST">
-    
-    <p>
-      Institution Name <input type="text" name="iname">
-    </p>
-    <p>
-      Institution Address <input type="text" name="iaddress">
-    </p>
-    <p>
-      Email <input type="text" name="iemail">
-    </p>
-
-    <p>
-      Password <input type="password" name="ipassword">
-    </p>
-
-    <label for="inst_cause">Choose a Cause:</label>
-      <select name="cause" id="inst_cause">
-        {% for cause in all_causes %}
-        <option value="{{cause.cause_id}}">{{cause.cause_title}}</option>
-        {% endfor %}
-      </select>
-    <p>
-      <input type="submit">
-    </p>
-  </form>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <div class="container-fluid">
+              <a href="/" class="navbar-brand">
+                  <img src="" height="28" alt="Name of the Project">
+              </a>
+              <button type="button" class="navbar-toggler hidden-md-up pull-right" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarCollapse">
+                  <div class="navbar-nav">
+                      <a href="/#about-us" class="nav-item nav-link active">About</a>
+                      <a href="/#contact-us" class="nav-item nav-link">Contact us</a>
+                  </div>
+                  <div class="navbar-nav ms-auto">
+                      <a href="/login_page" class="nav-item nav-link">Login</a>
+                      <a href="/register" class="nav-item nav-link">Register</a>
+                  </div>           
+              </div>
+          </div>
+        </nav>
+    </header>
 
 
-    <a href="/login_page">If you already have an account, please log in.</a>
-{% endblock %}
+    <section class="register-geral row">
+      <div class="vregister col-5">
+        <h2 style="padding-top: 51px;">
+          Create an account as an Institution </h2>
+        <div class="register-form">
+          <form class="form-register" action="/v_register" method="POST"> 
+            <div class="firstname"><p>Institution Name <input type="text" name="iname" style="
+              width: 38vw; height: 42px;"></p></div>
+
+            <div class="state-form"><p> Institution Address <input type="text" name="iaddress" style="
+              width: 38vw; height: 42px;"></p></div>   
+
+            <div class="email-form"><p> Email <input type="text" name="iemail" style="
+              width: 38vw; height: 42px;"></p></div>
+
+            <div class="pwd-form"><p>Password <input type="password" name="ipassowrd" style="
+              width: 38vw; height: 42px;"></p></div>
+
+            <label for="inst_cause" style=" margin-left: 20px; margin-top: 40px;">Choose a Cause:</label>
+            <select name="cause" id="inst_cause">
+              {% for cause in all_causes %}
+              <option value="{{cause.cause_id}}">{{cause.cause_title}}</option>
+              {% endfor %}
+            </select>
+            <div class="submit-form"><p> <input type="submit" style=" width: 38vw; height: 4vh;"></p></div>
+          </form>
+
+        </div>  
+        <div class="please-login"><a href="/inst_login">If you already have an account, please log in.</a></div>
+      </div>
+    </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+</body>
+</html>

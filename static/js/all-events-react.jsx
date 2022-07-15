@@ -64,33 +64,37 @@ function EventBarContainer() {
     return (
         <React.Fragment>
 
-        <div>
-            <label htmlFor="cityInput">
-                City:
-                <input
-                value={city}
-                onChange={(event) => setCity(event.target.value)}
-                id="cityInput"
-                style={{ marginLeft: '5px' }}
-                />
-            </label>
-
-            <label htmlFor="stateInput">
-                State: 
-                <input
-                value={state}
-                onChange={(event) => setState(event.target.value)}
-                id="stateInput"
-                style={{ marginLeft: '5px' }}
-                />
-            </label>
-        </div>
-
-            <button type="submit" className="btn-find" onClick={addEventBarCard}>Search Events</button>
+            <div className="search-inputs">
+                <div className="city-input">
+                    <label htmlFor="cityInput">
+                        City:
+                        <input
+                        value={city}
+                        onChange={(event) => setCity(event.target.value)}
+                        id="cityInput"
+                        style={{ marginLeft: '5px' }}
+                        />
+                    </label>
+                </div>
+            <div className="state-input"></div>
+                <label htmlFor="stateInput">
+                    State: 
+                    <input
+                    value={state}
+                    onChange={(event) => setState(event.target.value)}
+                    id="stateInput"
+                    style={{ marginLeft: '5px' }}
+                    />
+                </label>
+                
+            </div>
             
-        <div>
-            {eventCards}        
-        </div>
+            <button type="submit" className="react-submit btn-find" onClick={addEventBarCard}>Search Events</button>
+            
+            
+            <div>
+                {eventCards}        
+            </div>
 
         </React.Fragment>
     )

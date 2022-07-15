@@ -2,7 +2,10 @@
 {% block title %} {{event.evt_title}} {% endblock %}
 {% block body %}
 <section class="evt-title">
-<h1> {{ event.evt_title }} </h1>
+<h1 style="
+padding-top: 20px;
+padding-bottom: 10px;
+"> {{ event.evt_title }} </h1>
     <div>
         {% if 'volunteer' in session %}
         <p>Institution:<a href="/inst_profile/{{event.inst.inst_id}}">{{event.inst.inst_name}}</a></p>
@@ -16,14 +19,14 @@
 <section class="evt-details">
     <div class="evt-details-div row col-8">
         <div class="evt-dates col-6">
-            <p>When: {{event.evt_date}}</p>
-            <p>From {{event.evt_start_time}} to {{event.evt_end_time}}</p>
+            <p><b>When:</b> {{event.evt_date}}</p>
+            <p><b>From </b>{{event.evt_start_time}},  <b>To</b> {{event.evt_end_time}}</p>
         </div>
             
         <div class="evt-skills col-6">
-            <p>Skills:
+            <p><b>Skills:</b>
                 {% for skill in event_skills %}
-                <li>{{skill.skill_title}}</li>
+                <p>{{skill.skill_title}}</p>
                 {% endfor %} 
             </p>
         </div>
@@ -54,7 +57,7 @@
     </div>    
 
     <div class="evt-map row col-4">
-        <p>Event Address: {{event.evt_address}}</p>
+        <p><b>Event Address:</b> {{event.evt_address}}</p>
         <div id="{{ event.event_id }}" class="maps">
             <div id="event-map"></div>
         </div>

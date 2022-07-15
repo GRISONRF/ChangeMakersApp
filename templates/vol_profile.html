@@ -10,93 +10,76 @@
 {% block body %}
 
     
-<h1 id="name"> Hi {{ volunteer.fname }}.</h1>
-
-<h3>Your Information:</h3>
-<div class="vprofile-container row"> 
-  <div class="vpic-container col ">      
-    <div class="vpic-div">
-      <img id="vpic" src="{{ volunteer.v_pic }}">
-    </div>
-    <div class="upload-pic">
-      <form action="/upload" method="POST" enctype="multipart/form-data">
-          <input type="file" name="volunteer-pic">
-        <button  class="button" type="submit"> Submit</button>
-      </form>
-    </div>
-  </div>  
-  <div class="col">
-    <div class="name">
-      <ul>
-        <li>Name: {{ volunteer.fname}}</li>
-        <li>Email: {{ volunteer.v_email}}</li>
-        <li>Location: {{volunteer.v_city}}, {{volunteer.v_state}}</li>
-      </ul>
-    </div>
-  </div>
-  <div class="col">
-    <div class="skills"> 
-      <div class="skills-info">
-        {% if 'volunteer' in session %} 
-          {% if volunteer_skills %}
-      
-        <p>Skills:</p>
-          <ul>
-          {% for skill in volunteer_skills %}
-          <li>{{skill.skill_title}}</li>
-          {% endfor %}
-          </ul>
-        {% else %}
+<h1 id="name" style="
+padding: 30px 30px 0 30px;
+"> Hi {{ volunteer.fname }}!</h1>
+<div class="vprofile-container fwh-slide cover-main row">
+    <div class="vpic-container col ">      
+      <div class="vpic-div">
+        <img id="vpic" src="{{ volunteer.v_pic }}">
       </div>
+      <div class="upload-pic">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="volunteer-pic">
+          <button  class="button" type="submit"> Submit</button>
+        </form>
+      </div>
+    </div>  
+    <div class="col">
+      <div class="name">
 
-      <div class="skill-form">
-          <form action="/select_skills" method="POST">
-            <label for="lang-select">Select up to 3 skills: </label>
-            <br>
-            <select name="skill1" id="lang-select">
-              {% for skill in all_skills %}
-              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-              {% endfor %}
-            </select>
-            <select name="skill2" id="lang-select">
-              {% for skill in all_skills %}
-              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-              {% endfor %}
-            </select>
-            <select name="skill3" id="lang-select">
-              {% for skill in all_skills %}
-              <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
-              {% endfor %}
-            </select>
-            <button id="skill-btn" class="button" type="submit"> Select skills</button>         
-          </form>
+          <p><b>Name:</b> {{ volunteer.fname}}</p>
+          <p><b>Email:</b> {{ volunteer.v_email}}</p>
+          <p><b>Location:</b> {{volunteer.v_city}}, {{volunteer.v_state}}</p>
+
+      </div>
+    </div>
+    <div class="col">
+      <div class="skills"> 
+        <div class="skills-info">
+          {% if 'volunteer' in session %} 
+            {% if volunteer_skills %}
+        
+          <p><b>Skills:</b></p>
+            <ul>
+            {% for skill in volunteer_skills %}
+            <li>{{skill.skill_title}}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+        </div>
+
+        <div class="skill-form">
+            <form action="/select_skills" method="POST">
+              <label for="lang-select"><b>Select up to 3 skills: </b></label>
+              <br>
+              <select name="skill1" id="lang-select">
+                {% for skill in all_skills %}
+                <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                {% endfor %}
+              </select>
+              <select name="skill2" id="lang-select">
+                {% for skill in all_skills %}
+                <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                {% endfor %}
+              </select>
+              <select name="skill3" id="lang-select">
+                {% for skill in all_skills %}
+                <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
+                {% endfor %}
+              </select>
+              <button id="skill-btn" class="button" type="submit"> Select skills</button>         
+            </form>
+            {% endif %}
           {% endif %}
-        {% endif %}
-      </div>     
-    </div> 
-  </div>
+        </div>     
+      </div> 
+    </div>
+
 </div>
-<!-- <form action="/update_volunteer">
-    <h4>Update your Information</h4>
-      <p>
-        First Name <input type="text" name="fname">
-      </p>
-      <p>
-        Last Name <input type="text" name="lname">
-      </p>
-      <p>
-        Address <input type="text" name="address">
-      </p>
-      <p>
-        Causes <input type="text" name="causes">
-      </p>
-    <button class="button" type="submit"> Update infos </button>
-</form> -->
-<!-- https://alvarotrigo.com/blog/html-css-tabs/ -->
+
 <div class="signed-up-events">
   <h2> Events {{volunteer.fname}} Signed Up </h2>
-
-
 
   {% for event in my_events %}
     <div class="card">
@@ -107,8 +90,8 @@
       <h1>{{ event.evt_title}}</h1>
       </div>
       <div class="des">
-      <p> When: {{ event.evt_date }} </p>
-      <p> Where: {{ event.evt_city }}</p>
+      <p> <b>When:</b> {{ event.evt_date }} </p>
+      <p><b> Where: </b>{{ event.evt_city }}</p>
       <a href="/events/{{event.event_id}}">
         <button>More details</button>
       </a>
@@ -117,45 +100,19 @@
   {% endfor %}
 </div>
 
-  <!-- {% for event in my_events %}
-    <div class="card">
-      <div class="card-image" style="background-image: url({{event.evt_pic}});">
-      </div>
-      <div class="card-text">
-        <h2>{{ event.evt_title }}</h2>
-        <p>{{ event.evt_date }}</p>
-        <p>From: {{ event.evt_start_time }} To: {{ event.evt_end_time }}</p>
-        <p>{{ event.evt_city }}, {{ event.evt_state }}</p>
-        <a href="/events/{{event.event_id}}">
-        <button> More details </button>
-      </div>
-    </div>  
-  {% endfor %} -->
-
 </div>
 
-
-
-
-
-
-
-
-
-
 <div class="events">
-
-  <h2>Recommended events:</h2>
-  <div id="recommended-events">
-
+  <div class="recommended-events">
+    <h2>Recommended events:</h2>
+    <div id="recommended-events"></div>
   </div>
 
-
-
-
-<h2> Search for events by:</h2>
-<div id="events-container"></div>
-
+  <div class="search-events">
+    <h2> Search for events by:</h2>
+    <div id="events-container"></div>
+  </div>
+  
 </div>
 <script src="/static/js/cards-react.jsx" type="text/jsx"></script>
 

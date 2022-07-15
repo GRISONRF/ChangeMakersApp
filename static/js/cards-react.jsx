@@ -89,9 +89,10 @@ function EventCard(props) {
                 <h1>{props.evt_title}</h1>
             </div>
             <div className="des">
-                <p>{props.inst_name}</p>
+                <p>By: {props.inst_name}</p>
+                <p>{props.evt_date}</p>
                 <p>{props.evt_city}, {props.evt_state}</p>
-                <p>{props.cause}</p>
+                <p>{props.cause.cause_title}</p>
                 <a href={`/events/${props.event_id}`}> 
                     <button>More details</button>
                 </a>   
@@ -128,8 +129,8 @@ function EventCardContainer() {
         const causeButtons = [];
         for (const causeButton of all_causes) {     
             causeButtons.push(
-                <button key={ causeButton.cause_id } name= { causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
-                    <img key={ causeButton.cause_name } src= { causeButton.cause_icon } height ="30" width="50" />
+                <button className="react-btn" key={ causeButton.cause_id } name={ causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
+                    <img key={ causeButton.cause_name } src={ causeButton.cause_icon } height ="30" width="50" />
                 </button>
             );
         }  
@@ -153,33 +154,47 @@ function EventCardContainer() {
 
     return (
         <React.Fragment>
+            <div className="search-inputs">
+                <div className="city-input">
+                    <label htmlFor="cityInput">
+                        City:
+                        <input
+                        value={city}
+                        onChange={(event) => setCity(event.target.value)}
+                        id="cityInput"
+                        style={{ marginLeft: '5px' }}
+                        />
+                    </label>
+                </div>
+                <div className="state-input">
+                    <label htmlFor="stateInput">
+                        State: 
+                        <input
+                        value={state}
+                        onChange={(event) => setState(event.target.value)}
+                        id="stateInput"
+                        style={{ marginLeft: '5px' }}
+                        />
+                </label>
+                </div>
+            </div>
 
-            <label htmlFor="cityInput">
-                City:
-                <input
-                value={city}
-                onChange={(event) => setCity(event.target.value)}
-                id="cityInput"
-                style={{ marginLeft: '5px' }}
-                />
-            </label>
-
-            <label htmlFor="stateInput">
-                State: 
-                <input
-                value={state}
-                onChange={(event) => setState(event.target.value)}
-                id="stateInput"
-                style={{ marginLeft: '5px' }}
-                />
-            </label>
-
-            <p>Cause:</p>
-            {causeButtons}
+            <div className="cause-container">
+                <div className="p-cause">
+                    <p>Cause:</p>
+                </div>
+               <div className="cause-btns">
+                    {causeButtons} 
+                </div>
+            </div>
+            
             
             <button type="submit" className="btn-find" onClick={addEventCard}>Find</button>
 
-            {eventCards}                
+            <div className="cards-container">
+                {eventCards}
+            </div>
+                           
         </React.Fragment>
     )
 }

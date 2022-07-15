@@ -2,7 +2,139 @@
   font-family: macho, sans-serif;
   font-style: normal;
   font-weight: 400;
+  background-color: #f6fbfc
 }
+
+#bg {
+  background-image: url('/static/images/backgorund/birds.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+
+}
+
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
+.navbar {
+  background-color: #f55a45 !important;
+}
+
+.navbar.navbar-expand-md.navbar-light.bg-light a {
+  color:white;
+}
+
+.register-page {
+  display: flex;
+  justify-content: center;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-top: 163px;
+  padding: 51px;
+  background: rgba(0, 0, 0, 0.198);
+  width: 35vw;
+  border-radius: 31px;
+}
+
+.register-geral {
+
+}
+
+.vregister {
+  background: white;
+  margin: 35px;
+  padding-bottom: 54vh;
+  height: 87vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-form {
+  margin-top: 35px;
+}
+
+.form-register {
+
+}
+
+.firstname {
+  margin: 20px;
+}
+
+.lastname {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.city-form {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.state-form {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.email-form{
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.pwd-form {
+  margin-left: 20px;
+  margin-top: 40px;
+}
+
+.submit-form{
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+.please-login {
+  margin: 20px;
+
+}
+
+.vol-register {
+  margin: 30px;
+}
+
+.inst-register {
+
+}
+
+.login-register {
+  background-color: white;
+  padding: 8px;
+  border-radius: 11px;
+}
+
+
+
+
+button, select {
+  height: 42px;
+  width: 29.8vw
+}
+
+
 
 
 /* ---------- events cards ---------- */
@@ -25,15 +157,12 @@
 }
 
 .title{
-
   text-align: center;
   padding: 10px;
 }
 
 .card h1 {
-  font-family: macho, sans-serif;
   font-style: normal;
-  font-weight: 400;
   font-size: 30px;
 }
 
@@ -251,11 +380,8 @@ height: 100%;
 
  
 .about-us {
-  background-color: #d884da;
   padding: 50px;
 }
-
-
 
 .container {
   text-align: center;
@@ -271,7 +397,6 @@ height: 100%;
   position: relative;
   width: 309px;
   height: 296px;
-  background: rgb(133, 209, 114);
   float: left;
   margin: 39px;
   box-sizing: border-box;
@@ -286,7 +411,6 @@ height: 100%;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #f00;
   transition: 0.5s;
   z-index: 1;
 }
@@ -347,24 +471,24 @@ height: 100%;
 }
 
 .container .box:nth-child(1) .icon {
-  background: #9daf4b;
+  background: #F9CE69;
 }
 .container .box:nth-child(1) {
-  background: #679d48;
+  background: #4741A6;
 }
 
 .container .box:nth-child(2) .icon {
-  background: #bb9c36;
+  background: #4741A6;
 }
 .container .box:nth-child(2) {
-  background: #d6d25c;
+  background: #F9CE69;
 }
 
 .container .box:nth-child(3) .icon {
-  background: #679d48;
+  background: #F9CE69;
 }
 .container .box:nth-child(3) {
-  background: #9daf4b;
+  background: #4741A6;
 }
 
 /*  */
@@ -390,20 +514,29 @@ height: 100%;
 .text-video {
   position: absolute;
   right: 60px;
-  color: rgb(41, 19, 19);
+  color: rgb(255, 255, 255);
   font-family: Trebuchet MS;
   font-weight: bold;
   text-align: center;
   font-size: 2rem;
   margin-top: 61vh;
   opacity: 70%;
-  background-color: #679d48;
+  background-color: #00000084;
+}
+
+#hp-pic{
+  width: 100%   !important;
+  object-fit: cover;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 /* CONTACT FORM */
 .contact-us {
-  background-color: #6a80b7;
-  padding: 50px;
+
 }
 
 
@@ -659,25 +792,29 @@ hr {
 
 
 
+/* ------------- vol profile page ---------------- */
 
+.img-to-inst
 
-
-
-
-
-/* vol profile page */
-
-
+#inst-into-cont {
+  width: 100%   !important;
+  object-fit: cover;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
 
 .vprofile-container {
-  background-color: #e0ebb4;
   flex-direction: row;
   justify-content: space-around;
+  background-image: url('/static/images/backgorund/vol-cont.png');
+  background-repeat: no-repeat;
 }
 
 
 .vpic-container {
-  background-color: #bb9c36;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -685,7 +822,6 @@ hr {
 }
 
 .vprofile-info {
-  background-color: #cd91ce;
 }
 
 .vpic-div {
@@ -699,13 +835,11 @@ img#vpic {
 }
 
 .name {
-  background-color: #6a80b7;
   margin: 20px;
 }
 
 
 .skills {
-  background-color: #77b6f1;
   display: flex;
   margin: 20px;
 }
@@ -714,6 +848,49 @@ img#vpic {
   display: flex;
 }
 
+.recommended-events {
+}
+
+#events-container {
+}
+
+.search-events {
+
+}
+
+.cards-container {
+
+}
+
+
+.react-btn {
+
+}
+
+.search-inputs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.city-input {
+ 
+}
+
+.state-input {
+  margin-left: 30px;
+}
+
+.cause-container {
+
+}
+
+.p-cause{
+  margin-bottom: -38px;
+}
+
+.cause-btns {
+
+}
 
 /* ------------------------ inst profile page ------------- */
 
@@ -721,9 +898,11 @@ img#vpic {
   padding: 30px;
 
 }
+.img-to-inst {
+
+}
 
 .iprofile-container {
-  background-color: #a74eca;
   padding-left: 30px;
   display: flex;
   flex-direction: row;
@@ -767,7 +946,6 @@ img#vpic {
 }
 
 .inst-description {
-  background-color: #cd91ce;
   width: 45vw;
   float: left;
   height: 300px;
@@ -779,7 +957,6 @@ img#vpic {
 }
 
 .about-inst {
-  background-color: #6a80b7;
   padding: 30px;
   width: 100vw;
   height: 70vw;
@@ -790,21 +967,26 @@ img#vpic {
 }
 
 .inst-map {
-  background-color: #555;
+  padding-top: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-
+.inst-addr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .events {
-  background-color: #9daf4b;
   padding: 30px;
+    background-color: #ff4b339c;
+    border-radius: 31px;
+    margin: 20px;
 }
 
 .active-events {
-  background-color: #a77171;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -860,12 +1042,10 @@ textarea {
 
 
 .signed-up-events {
-  background-color: #d884da;
   padding: 30px;
 }
 
 .inst-rate {
-  background-color: #a74eca;
   padding: 30px;
 }
 
@@ -894,7 +1074,10 @@ textarea {
 }
 
 #inst-comments-div {
-  background-color: gray;
+  background-image: url('/static/images/backgorund/birds.jpg');
+  background-repeat: no-repeat;
+ 
+  background-size: cover;
 }
 
 #comment-container {
@@ -923,11 +1106,11 @@ textarea {
   margin-left: 10px;
 } 
 
+
 /* --------------- event details page --------------- */
 
 .evt-title {
-  background-color: #679d48;
-  padding-left: 30px;
+  padding-left: 50px;
 }
 
 .evt-title p {
@@ -940,11 +1123,12 @@ textarea {
 
 
 .evt-details {
-  background-color: #a74eca;
-  padding-left: 30px;
+  padding-left: 50px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  background-color: #00000029;
+  margin: 30px;
 }
 
 .evt-details-div {
@@ -964,7 +1148,6 @@ textarea {
 }
 
 .evt-description {
-  background-color: #9e8686;
   padding-top: 20px;
   padding-bottom: 20px;
   width: 61vw;
@@ -987,7 +1170,6 @@ textarea {
 }
 
 .evt-map {
-  background-color: #555;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -995,7 +1177,6 @@ textarea {
 }
 
 .evt-btns {
-  background-color: #bb9c36;
   padding: 30px;
 }
 
@@ -1007,9 +1188,13 @@ textarea {
   height: auto  !important;
 }
 
+.all-evts-page {
+
+}
+
 #evt-video {
   width: 100%   !important;
-  height: auto  !important;
+  height: 58vh;
   object-fit: cover;
   left: 0;
   right: 0;
@@ -1021,22 +1206,24 @@ textarea {
 .search-text {
 
   right: 60px;
-  color: rgb(41, 19, 19);
+  color: rgba(255, 255, 255, 0.928);
   font-weight: bold;
   text-align: center;
   font-size: 2rem;
   margin-top: -5vh;
   opacity: 70%;
-  background-color: #679d48;
+  background-color: #0000006f;
 }
 
 
 .evt-search {
-  background-color: rgb(189, 76, 76);
 
 }
 
-
+.react-submit {
+  width: 31vw;
+  height: 4vh;
+}
 
 .evt-cards { 
   padding: 30px;
