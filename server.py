@@ -440,6 +440,7 @@ def create_event():
     if "inst" in session:
         inst_id = session["inst"]
         inst = crud.get_inst_by_id(inst_id)
+        evt_pic = "/static/images/background/Screenshot.png"
 
         new_event = crud.create_event(
             evt_title, 

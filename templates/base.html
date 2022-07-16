@@ -41,7 +41,7 @@
                     {% elif 'inst' in session %}
 
                     <div class="navbar-nav ms-auto">
-                        <a href="/inst_profile/{{inst.inst_id}}" class="nav-item nav-link"><b>Profile</b></a>
+                        <a href="/inst_profile/" class="nav-item nav-link"><b>Profile</b></a>
                         <a href="/logout" class="nav-item nav-link"><b>Logout</b></a>
                     </div>
 
@@ -80,6 +80,11 @@
         <footer>
             <div class="container" style="text-align: justify; height: 171px;">
                 <div class="row">
+                    <div class="logo-pic col-md-3 item">
+                        <a href="/" class="navbar-brand">
+                    <img class="nav-logo" src="/static/images/applogotest.png" height="28" alt="Name of the Project">
+                </a>
+                    </div>
                     <div class="col-sm-6 col-md-3 item">
                         <h3>Services</h3>
                         <ul>
@@ -96,11 +101,11 @@
                             <li><a href="#">Careers</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-6 item text">
+                    <div class="col-md-3 item text">
                         <h3>Company Name</h3>
                         <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
                     </div>
-                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                    <!-- <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div> -->
                 </div>
                 <p class="copyright">Company Name © 2018</p>
             </div>

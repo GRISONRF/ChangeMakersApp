@@ -1,46 +1,20 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link rel="stylesheet" href="/static/css/style.css" />
-        <title>
-        {% block title %}{% endblock %}
-        </title>
+{% extends 'base.html' %}
 
-        {% block head %}{% endblock %}
-    </head>
-    <body id="bg">
-        <header>
+{% block title %} RegisterGE {% endblock %}
 
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
-                <div class="container-fluid">
-                    <a href="/" class="navbar-brand">
-                        <img src="" height="28" alt="Name of the Project">
-                    </a>
-                    <button type="button" class="navbar-toggler hidden-md-up pull-right" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav">
-                            <a href="/#about-us" class="nav-item nav-link active">About</a>
-                            <a href="/#contact-us" class="nav-item nav-link">Contact us</a>
-                        </div>
-                        <div class="navbar-nav ms-auto">
-                            <a href="/login_page" class="nav-item nav-link">Login</a>
-                            <a href="/register" class="nav-item nav-link">Register</a>
-                        </div>           
-                    </div>
-                </div>
-            </nav>
-        </header>
+{% block body %}
+<section class="img js-fullheight" id="bg" style="background-image: url(/static/images/backgorund/Screenshot.png); height: 72vh;">>
+
         <section class="register-page">
             <div class="register-container">
                 <h2>Create an Account as:</h2>
 
-                <div class="vol-register"><a href="/volu_register" class="btn btn-lg btn-primary">VOLUNTEER</a></div>
-                <div class="inst-register"><a href="/inst_register" class="btn btn-lg btn-primary">INSTITUTION</a></div>
+                <div class="vol-register"><a href="/volu_register" class="btn btn-lg " style="
+                    width: 336px; background: #4741a6; color: white;
+                "><b>VOLUNTEER</b></a></div>
+                <div class="inst-register"><a href="/inst_register" class="btn btn-lg" style="
+                    width: 336px; background: #4741a6; color: white;
+                "><b>INSTITUTION</b></a></div>
                 <br>
                 <div class="login-register"><a href="/login_page">I already have an account</a></div>
             </div>
@@ -54,11 +28,5 @@
         {{ msg }}
       </p>
     {% endfor %}
-
-    {% block body %}{% endblock %}
-
-    {% block after_body %}{% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-
-</body>
-</html>
+</section>
+{%endblock%}
