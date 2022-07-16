@@ -123,12 +123,12 @@ def register_volunteer():
     vlname = request.form.get("lname")
     vcity = request.form.get("vcity")
     vstate = request.form.get("vstate")
-    
+    print(volu_password)
     user = crud.get_volunteer_by_email(volu_email)
-
+    print('\n' * 5)
     # Hashing password
     volu_hashed = argon2.hash(volu_password)
-
+    print(volu_hashed)
     if user:
         flash("User email already exists.")
     else:
@@ -440,7 +440,6 @@ def create_event():
     if "inst" in session:
         inst_id = session["inst"]
         inst = crud.get_inst_by_id(inst_id)
-        evt_pic = "/static/images/background/Screenshot.png"
 
         new_event = crud.create_event(
             evt_title, 
