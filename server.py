@@ -29,7 +29,13 @@ evt_pic = "/static/images/background/hands.back.png"
 def homepage():
     """view homepage"""
 
-    return render_template('homepage.html')
+    all_inst = crud.get_all_institutions()
+    inst_pic_hp = []
+    for inst in all_inst:
+        if inst.inst_pic != "/static/images/volunteer-icon.PNG":
+            inst_pic_hp.append(inst)
+        
+    return render_template('homepage.html', inst_pic_hp=inst_pic_hp)
 
 
 # ---------------- REGISTER PAGE ----------------

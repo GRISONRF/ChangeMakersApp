@@ -16,6 +16,30 @@
 
 <section class="fwh-slide cover-main">
 </section>
+
+<section class="all-inst-hp">
+    <h1 style="
+    margin-left: 50px; margin-top: 55px;
+">Institutions near you:</h1>
+    
+
+    <div class="line-pic-hp">
+        {% for inst in inst_pic_hp %}
+        <a href="/inst_profile/{{inst.inst_id}}">
+            <div class="inst-hp">
+            <p>{{inst.inst_name}}</p>
+            <img class="img-hp-card" src="{{inst.inst_pic}}">
+            </div>
+        </a>
+        {%endfor%}
+    </div>
+    
+
+</section>
+
+
+
+
 <!----------------------- ABOUT THE APP SECTION ----------------------->
 <section class="fwh-slide cover-main" id="about-us">
     <div class="about-us"> 
