@@ -54,16 +54,19 @@ padding: 30px 30px 0 30px;
               <label for="lang-select"><b>Select up to 3 skills: </b></label>
               <br>
               <select name="skill1" id="lang-select">
+                <option value="" disabled selected>Select a skill</option>
                 {% for skill in all_skills %}
                 <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
                 {% endfor %}
               </select>
               <select name="skill2" id="lang-select">
+                <option value="" disabled selected>Select a skill</option>
                 {% for skill in all_skills %}
                 <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
                 {% endfor %}
               </select>
               <select name="skill3" id="lang-select">
+                <option value="" disabled selected>Select a skill</option>
                 {% for skill in all_skills %}
                 <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
                 {% endfor %}
@@ -80,6 +83,7 @@ padding: 30px 30px 0 30px;
 
 <div class="signed-up-events">
   <h2> Events {{volunteer.fname}} Signed Up </h2>
+
   {% for event in my_events %}
     <div class="card">
       <div class="image">

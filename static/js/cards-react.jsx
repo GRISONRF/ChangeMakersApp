@@ -130,7 +130,7 @@ function EventCardContainer() {
         for (const causeButton of all_causes) {     
             causeButtons.push(
                 <button className="react-btn" key={ causeButton.cause_id } name={ causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
-                    <img key={ causeButton.cause_name } src={ causeButton.cause_icon } height ="30" width="50" />
+                    <img className="react-pic" key={ causeButton.cause_name } src={ causeButton.cause_icon } height ="30" width="50" />
                 </button>
             );
         }  

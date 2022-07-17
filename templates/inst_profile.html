@@ -141,16 +141,19 @@
                   <label for="lang-select">Select up to 3 skills: </label>
                   <div class="skills-modal-form">
                     <select name="skill1" id="lang-select">
+                      <option value="" disabled selected>Select a skill</option>
                       {% for skill in all_skills %}
                       <option value="{{skill.skill_id}}" placeholder="Select a Skill">{{skill.skill_title}}</option>
                       {% endfor %}
                     </select>
                     <select name="skill2" id="lang-select">
+                      <option value="" disabled selected>Select a skill</option>
                       {% for skill in all_skills %}
                       <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
                       {% endfor %}
                     </select>
                     <select name="skill3" id="lang-select">
+                      <option value="" disabled selected>Select a skill</option>
                       {% for skill in all_skills %}
                       <option value="{{skill.skill_id}}">{{skill.skill_title}}</option>
                       {% endfor %}

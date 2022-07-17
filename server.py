@@ -3,6 +3,7 @@
 from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
+# from flask_fontawesome import FontAwesome
 import crud
 from model import connect_to_db, db, Volunteer, Institution, Event
 from jinja2 import StrictUndefined
@@ -13,11 +14,17 @@ import cloudinary.uploader
 import os
 from passlib.hash import argon2
 
+
+# INSTALLED_APPS = [
+#     'fontawesomefree'
+#   ]
+
 CLOUDINARY_KEY= os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
 CLOUD_NAME = "dwn0hs3si"
 
 app = Flask(__name__)
+# fa = FontAwesome(app)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
