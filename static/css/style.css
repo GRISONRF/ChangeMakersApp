@@ -1,8 +1,12 @@
 * body {
-  font-family: macho, sans-serif;
+  font-family: 'Alegreya Sans', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200;
   background-color: #f6fbfc
+}
+
+p, li {
+  font-size: 25px;;
 }
 
 #bg {
@@ -33,7 +37,12 @@ a​:hover { color: rgb(51, 0, 128);
 }
 
 .nav-logo {
-  width: 5vw;
+  width: 6vw;
+  height: auto;
+}
+
+.nav-footer {
+  width: 11vw;
   height: auto;
 }
 
@@ -480,7 +489,7 @@ height: 100%;
   position: absolute;
   right: 60px;
   color: rgb(255, 255, 255);
-  font-family: Trebuchet MS;
+  font-family: 'Alegreya Sans', sans-serif;
   font-weight: bold;
   text-align: center;
   font-size: 2rem;
@@ -883,6 +892,11 @@ img#vpic {
   height: 46px;
   width: 46px;
 }
+
+.btn-find {
+  width: 20vw;
+}
+
 
 .search-inputs {
   display: flex;

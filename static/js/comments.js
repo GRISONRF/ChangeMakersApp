@@ -43,11 +43,25 @@ commentForm.addEventListener('submit', (evt) => {
                 commentDiv.setAttribute('class', `${comment-div}`);
             };
 
+            const rateReview = comment.review
+            if (comment.review == 1) {
+              comment.review = '⭐';
+            } else if (comment.review == 2) {
+              comment.review = '⭐⭐';
+            } else if (comment.review == 3) {
+              comment.review = '⭐⭐⭐';
+            } else if (comment.review == 4) {
+              comment.review = '⭐⭐⭐⭐';
+            } else {
+              comment.review = '⭐⭐⭐⭐⭐';
+            }
+      
+
             commentDiv.insertAdjacentHTML(
                 'afterbegin',
                 `<div id="${comment.comment_id}" class="comment-block">
                 <p id="comment-volunteer-name">${instReviewInfo.volunteer_name}</p>
-                <p id="inst-review">Rate: ${comment.review}</p>
+                <p id="inst-review">${comment.review}</p>
                 <p>${comment.comment}</p> 
                 <button type="button" id="delete-${comment.comment_id}" value="${comment.comment_id}" class="btn btn-outline-danger delete-comment-btn">Delete</button>`
             );
