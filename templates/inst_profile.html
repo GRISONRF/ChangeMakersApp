@@ -97,7 +97,7 @@
       <div class="create-evt-btn">
         {% if 'inst' in session %}
         <!-- button to create a new event -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
+        <button type="button" class="button" data-bs-toggle="modal" data-bs-target="#createEvent" data-bs-whatever="@mdo">Create a New Event</button>
       </div>  
 
       <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -165,7 +165,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" form="form-new-evt">Create Event</button>
+              <button type="submit" class="button" form="form-new-evt">Create Event</button>
             </div>
 
           </div>
@@ -182,7 +182,7 @@
       <!-- Button trigger modal to comment and rate a media -->
       {%if 'volunteer' in session %}
       <label class="comment-inst-btn row" for="comment-inst-btn">Have you worked with this institution? Tell us about your experience!</label>
-      <button type="button" class="btn btn-primary col-3 row" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn col-3 row" id="comment-inst-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <p hidden id="volunteer-id">{{volunteer.volunteer_id}}</p> 
       <p hidden id="volunteer-name">{{volunteer.fname}}</p> 
           Rate your experience
@@ -215,7 +215,7 @@
               </div>    
               <label class="leave-comment" for="comment-inst">Leave a comment:</label>
               <textarea name="comment-inst" type="text" id="comment-inst" placeholder="Tell us about your experience."></textarea>
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
+              <button type="submit" class="btn" data-bs-dismiss="modal" id="submit-comment-btn">Submit Comment</button>
             </form>
           </div>
         </div>

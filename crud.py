@@ -99,7 +99,7 @@ def get_inst_by_event(event_id):
 #Do I need to add volunteer, inst and comments as parameters?
 def create_event(evt_title, evt_date, evt_start_time, evt_end_time, evt_address, evt_city, evt_state, evt_lat, evt_lng, inst_id, evt_description, evt_pic):
     """ Create and return an event """
-    evt_pic = "/static/images/backgorund/Screenshot.png"
+    evt_pic = "/static/images/newevent.png"
     new_event = Event(
         evt_title=evt_title, 
         evt_date=evt_date, 

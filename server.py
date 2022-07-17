@@ -73,7 +73,7 @@ def register_institution():
     inst_password = request.form.get("ipassword")
     inst_address = request.form.get("iaddress")
     inst_cause = request.form.get("cause")
-    inst_pic = "/static/images/inst_pic.png"
+    inst_pic = "/static/images/newinst.png"
     geolocator = Nominatim(user_agent='project')
     
     # using geocode to get the address, lat and lng
@@ -145,7 +145,7 @@ def register_volunteer():
     if user:
         flash("User email already exists.")
     else:
-        volunteer_pic = "/static/images/volunteer-icon.PNG"
+        volunteer_pic = "/static/images/newvol.png"
         user = crud.create_volunteer(
             vfname, 
             vlname, 
