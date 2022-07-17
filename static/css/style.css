@@ -2,11 +2,15 @@
   font-family: 'Alegreya Sans', sans-serif;
   font-style: normal;
   font-weight: 200;
-  background-color: #f6fbfc
+  background-color: #ffffff;
 }
 
 p, li {
-  font-size: 25px;;
+  font-size: 21px;;
+}
+
+.b, strong {
+  font-size: larger;
 }
 
 #bg {
@@ -56,6 +60,10 @@ a​:hover { color: rgb(51, 0, 128);
 
 .navbar.navbar-expand-md.navbar-light.bg-light a {
   color:white;
+}
+
+.navbar-collapse{
+  font-size: xx-large;
 }
 
 .register-page {
@@ -368,7 +376,7 @@ height: 100%;
   width: 100vw;
   height: 404px;
   margin: auto;
-  margin-left: 99px;
+  margin-left: 171px;
 }
 
 .container .box {
@@ -447,6 +455,7 @@ height: 100%;
   padding: 0;
   text-align: center;
   color:#fff;
+  font-size: large;
 }
 
 .container .box:nth-child(1) .icon {
@@ -498,7 +507,7 @@ height: 100%;
   font-weight: bold;
   text-align: center;
   font-size: 2rem;
-  margin-top: 41vh;
+  margin-top: -9vh;
   opacity: 70%;
   background-color: rgb(0 0 0 / 70%);
 }
@@ -905,7 +914,7 @@ hr {
   background-repeat: no-repeat;
   margin: 39px;
   border-radius: 30px;
-  border: 1px solid #4741A6;
+  border: 1px solid #4741a638;;
 }
 
 
@@ -964,6 +973,9 @@ img#vpic {
 
 }
 
+.highlight {
+  background-color: #4741A6;
+}
 
 .react-btn {
   width: 86px;
@@ -974,6 +986,10 @@ img#vpic {
   margin-top: 40px;
 }
 
+.react-btn:focus {
+  background-color: #4741A6;
+}
+
 .react-pic {
   height: 46px;
   width: 46px;
@@ -981,6 +997,7 @@ img#vpic {
 
 .btn-find {
   width: 20vw;
+  font-size: x-large;
 }
 
 
@@ -1174,6 +1191,7 @@ textarea {
 
 .leave-comment {
   margin-bottom: 7px;
+  font-size: x-large;
 }
 
 #rate-inst {
@@ -1186,7 +1204,7 @@ textarea {
 }
 
 .comment-inst-btn {
-  
+  font-size: xx-large;
 }
 
 .comment-area {
@@ -1197,6 +1215,9 @@ textarea {
 #comment-inst-btn {
   padding: 10px;
   margin-top: 17px;
+  background-color: #4741A6;
+  color: white;
+  font-size: x-large;
 }
 
 #inst-comments-div {

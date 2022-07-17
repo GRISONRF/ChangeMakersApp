@@ -8,7 +8,7 @@ padding-bottom: 10px;
 "> {{ event.evt_title }} </h1>
     <div>
         {% if 'volunteer' in session %}
-        <p>Institution:<a href="/inst_profile/{{event.inst.inst_id}}">{{event.inst.inst_name}}</a></p>
+        <p>Institution:<a href="/inst_profile/{{event.inst.inst_id}}"> {{event.inst.inst_name}}</a></p>
         <p>Cause: {{cause.cause_title}}</p>
         {% elif 'inst' in session %}
         <p>Cause: {{institution.cause.cause_title}}</p>
@@ -70,15 +70,15 @@ padding-bottom: 10px;
         {% if 'volunteer' in session %}
             {% if ( event_is_saved == false ) %}  
         <form action="/events/{{event.event_id}}/sign_up">    
-            <button>Sign up for this event</button>
+            <button style="font-size: x-large;">Sign up for this event</button>
         </form>
         <form action="/vol_profile">
-            <button>Go back to your profile</button>
+            <button style="font-size: x-large;">Go back to your profile</button>
         </form>    
             {% else %}
             <h2>You've already signed up for this event.</h2>
             <form action="/vol_profile">
-                <button>Go back to your profile</button>
+                <button style="font-size: x-large;">Go back to your profile</button>
             </form>
 
             {% endif %}

@@ -89,14 +89,13 @@ function EventCard(props) {
                 <h1>{props.evt_title}</h1>
             </div>
             <div className="des">
-                <p>By: {props.inst_name}</p>
                 <p>{props.evt_date}</p>
                 <p>{props.evt_city}, {props.evt_state}</p>
                 <p>{props.cause.cause_title}</p>
                 <a href={`/events/${props.event_id}`}> 
-                    <button>More details</button>
+                <button>More details</button>
                 </a>   
-            </div>
+            </div>           
         </div>
     );
 }
@@ -129,7 +128,7 @@ function EventCardContainer() {
         const causeButtons = [];
         for (const causeButton of all_causes) {     
             causeButtons.push(
-                <button className="react-btn" key={ causeButton.cause_id } name={ causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
+                <button className="react-btn" id={ causeButton.cause_id} key={ causeButton.cause_id } name={ causeButton.cause_name } type="submit" onClick = {() => {setCause(causeButton.cause_name)}}> 
                     <img className="react-pic" key={ causeButton.cause_name } src={ causeButton.cause_icon } height ="30" width="50" />
                 </button>
             );
@@ -214,7 +213,6 @@ function RecommendedEventsCards(props) {
                 <h1>{props.evt_title}</h1>
             </div>
             <div className="des">
-                <p>{props.inst_name}</p>
                 <p>{props.evt_city}, {props.evt_state}</p>
                 <p>{props.cause}</p>
                 <a href={`/events/${props.event_id}`}> 

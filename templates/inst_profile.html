@@ -70,10 +70,10 @@
         <!-- CARD -->
         <div class="card">
           <div class="image">
-          <img src=" {{event.evt_pic}}">
+            <img src=" {{event.evt_pic}}">
           </div>
           <div class="title">
-          <h1>{{ event.evt_title }}</h1>
+            <h1>{{ event.evt_title }}</h1>
           </div>
           <div class="des">
             <p>{{ event.evt_date }}</p>
@@ -173,7 +173,7 @@
       </div>
       {% endif %}     
     </div>
-  </section>  
+  </section>   
 
   <!-- --------------------- modal for review and comments --------------------- -->
   <section class="inst-rate">
@@ -204,7 +204,7 @@
           <div class="modal-body">
             <form id="comment-form">
               <div>  
-                <label for="rate-inst">Rate {{inst.inst_name}}:</label>
+                <label for="rate-inst" style="font-size: x-large;">Rate {{inst.inst_name}}:</label>
                   <select name="rate-inst" id="rate-inst">
                     <option value="1">⭐</option>
                     <option value="2">⭐⭐</option>
