@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 {%block head %}
 
-{% block title %} PROJECT APP HOMEPAGE {% endblock %}
+{% block title %}{% endblock %}
 {%endblock%}
 {% block body %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" integrity="sha384-eoTu3+HydHRBIjnCVwsFyCpUDZHZSFKEJD0mc3ZqSBSb6YhZzRHeiomAUWCstIWo" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css" integrity="sha512-eMxdaSf5XW3ZW1wZCrWItO2jZ7A9FhuZfjVdztr7ZsKNOmt6TUMTQgfpNoVRyfPE5S9BC0A4suXzsGSrAOWcoQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js" integrity="sha512-j+F4W//4Pu39at5I8HC8q2l1BNz4OF3ju39HyWeqKQagW6ww3ZF9gFcu8rzUbyTDY7gEo/vqqzGte0UPpo65QQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
 <!-- photo -->
 <div class="" id="homepage-vid">
     <div class="" id="search-video">
-        <img id="evt-video" src="/static/images/backgorund/food-truck.jpg">
+        <img id="evt-video" src="/static/images/backgorund/coverpic2.jpg">
         <button class="text-video btn">Find opportunities near you</button>
         <!-- <p class="search-text">Search for Volunteer Opportunities near you and help lives!</p> -->
     </div>
@@ -18,29 +23,55 @@
 
 <section class="fwh-slide cover-main">
 </section>
+<!-- insts near you -->
 
-<section class="all-inst-hp">
-    <h1 style="
-    margin-left: 50px; margin-top: 55px;
-">Institutions near you:</h1>
-    
-
-    <div class="line-pic-hp">
-        {% for inst in inst_pic_hp %}
-        <a href="/inst_profile/{{inst.inst_id}}">
-            <div class="inst-hp">
-            <p>{{inst.inst_name}}</p>
-            <img class="img-hp-card" src="{{inst.inst_pic}}">
+<section id="slider">
+    <div class="container-slide">
+        <div class="subcontainer-slide">
+            <div>
+                <h2>Institutions near you</h2>
             </div>
-        </a>
-        {%endfor%}
+            <div class="slider-wrapper">
+                <br>
+                <div class="my-slider">
+
+                    {% for inst in all_inst %}
+                    <div>
+                        <div class="slide">
+                            <div>
+                                <img class="slide-img img-1" src="{{inst.inst_pic}}">
+                                <h3 style="display: flex; justify-content: center;">{{inst.inst_name}}</h3>
+                            </div>
+                            <br>
+                            <div>
+                                <a href="/inst_profile/{{inst.inst_id}}" style="display: flex;justify-content: center; padding-bottom: 9px; font-size: larger">More details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    
+                </div>
+            </div>
+        </div>
     </div>
-    
+
 
 </section>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+<!-- end insts near you -->
 
 <!----------------------- ABOUT THE APP SECTION ----------------------->
 <section class="fwh-slide cover-main" id="about-us">
@@ -196,7 +227,7 @@
         </div>  -->
     <!-- </div> -->
 </section>
-
+<script src="/static/js/all-insts.js"></script>
 <scrip src="/static/js/contact-form.js"></scrip>
 
 {% endblock %}
