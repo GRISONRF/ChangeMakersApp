@@ -2,16 +2,19 @@
 
 from model import db, Volunteer, Favorite, Institution, VolunteerEvt, Event, VolunteerComment, Cause, Skill, VolunteerSkill, EventSkill, connect_to_db
 from geopy.geocoders import Nominatim
+from passlib.hash import argon2
 
 # -------------- Volunteer functions ---------------
 def create_volunteer(fname, lname, v_email, v_password, v_city, v_state, v_pic):
     """ Create and return a new user (volunteer) """
 
+    volu_hashed = argon2.hash(v_password)
+
     volunteer = Volunteer(
         fname=fname, 
         lname=lname, 
         v_email=v_email, 
-        v_password=v_password,
+        v_password=volu_hashed,
         v_city=v_city,
         v_state=v_state,
         v_pic=v_pic
@@ -42,10 +45,12 @@ def get_volunteer_by_email(v_email):
 def create_institution(inst_name, inst_email,inst_password, inst_address, inst_city, inst_state, inst_lat, inst_lng, inst_pic, cause_id):
     """ Create and return a new institution """
 
+    hashed_pw = argon2.hash(inst_password)
+
     institution = Institution(
         inst_name=inst_name, 
         inst_email=inst_email,
-        inst_password=inst_password, 
+        inst_password=hashed_pw, 
         inst_address=inst_address,
         inst_city=inst_city,
         inst_state=inst_state,
@@ -212,8 +217,11 @@ def get_event_by_city_cause(city, state, cause_name):
 def get_events_by_city_state_skill(city, state, skill):
     """ Return all the events by the city, state and cause_name """
 
-    events = Event.query.join(EventSkill).filter(Event.evt_city == city and Event.evt_state == state and EventSkill.skill_id.in_(skill)).all() 
+    events = Event.query.join(EventSkill).filter(Event.evt_city == city, Event.evt_state == state, EventSkill.skill_id.in_(skill)).all() 
    
+    print(events)
+    print('\n'*5)
+
     return events
 
     

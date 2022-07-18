@@ -22,8 +22,10 @@
           <div class="pwd-form"><p>Password <input type="password" name="ipassword" style="
             width: 38vw; height: 42px;"></p></div>
 
-          <label for="inst_cause" style=" margin-left: 20px; margin-top: 40px;">Choose a Cause:</label>
-          <select name="cause" id="inst_cause">
+          <label for="inst_cause" style=" margin-left: 20px; margin-top: 40px; font-size: 21px;">Choose a Cause:</label>
+          <select name="cause" id="inst_cause" style="
+          font-size: 21px;
+      ">
             {% for cause in all_causes %}
             <option value="{{cause.cause_id}}">{{cause.cause_title}}</option>
             {% endfor %}

@@ -32,7 +32,7 @@ race = crud.create_cause("race", "Race and Ethnicity", "/static/images/race.png"
 women = crud.create_cause("women", "Women", "/static/images/women.png")
 other = crud.create_cause("other", "Others", "/static/images/other.png")
 
-db.session.add_all([advocacy, animals, art, children, education, hunger, homeless, immigrants, lgbtq, race, women])
+db.session.add_all([advocacy, animals, art, children, education, environment, homeless, health, hunger, immigrants, lgbtq, race, women, other])
 db.session.commit()
 
 
@@ -91,7 +91,6 @@ db.session.commit()
 
 
 # -------------- institution -----------------
-
 
 # ------------------- volunteer -------------------
 

@@ -32,14 +32,21 @@ app.jinja_env.undefined = StrictUndefined
 evt_pic = "/static/images/background/hands.back.png"
 
 # ---------------- HOMEPAGE ----------------
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def homepage():
     """view homepage"""
-
+    # where = request.form['location']
+    # print(where)
     all_inst = crud.get_all_institutions()
         
     return render_template('homepage.html', all_inst=all_inst)
 
+
+# @app.route('/find-btn', methods=['POST'])
+# def button_find_inst():
+#     """ Get the user's location and display cards """
+
+    
 
 # ---------------- REGISTER PAGE ----------------
 @app.route('/register')
@@ -78,8 +85,8 @@ def register_institution():
     inst_lng = iaddress.longitude
     iaddress = iaddress.address
 
-    # using PasswordHash
-    hashed_pw = argon2.hash(inst_password)
+    # # using PasswordHash
+    # hashed_pw = argon2.hash(inst_password)
 
     
     # using the lat and lng to get the city and state
@@ -96,7 +103,7 @@ def register_institution():
         user = crud.create_institution(
             inst_name, 
             inst_email, 
-            hashed_pw, 
+            inst_password, 
             iaddress, 
             inst_city, 
             inst_state, 
@@ -132,12 +139,12 @@ def register_volunteer():
     vlname = request.form.get("lname")
     vcity = request.form.get("vcity")
     vstate = request.form.get("vstate")
-    print(volu_password)
     user = crud.get_volunteer_by_email(volu_email)
-    print('\n' * 5)
+
+
     # Hashing password
-    volu_hashed = argon2.hash(volu_password)
-    print(volu_hashed)
+    # volu_hashed = argon2.hash(volu_password)
+    # print(volu_hashed)
     if user:
         flash("User email already exists.")
     else:
@@ -146,7 +153,7 @@ def register_volunteer():
             vfname, 
             vlname, 
             volu_email, 
-            volu_hashed, 
+            volu_password, 
             vcity, 
             vstate, 
             volunteer_pic
@@ -593,8 +600,14 @@ def get_recommended_results():
         rState = crud.get_state_by_vol(volunteer_id)
         rSkill = crud.get_skills_by_volunteer(volunteer_id) #list
         skills_id = crud.get_skills_id_by_skill_obj(rSkill)
-
+        print("*****************VOLUNTEER SKILL:")
+        print(rSkill)
+        print('\n'*5)
+        print(skills_id)
+        print('\n'*5)
         events_by_location_skill = crud.get_events_by_city_state_skill(rCity, rState, skills_id)
+        print('############# events_by_location_skill:')
+        print(events_by_location_skill)
 
         # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
 
@@ -670,8 +683,6 @@ def get_search_results():
         city = crud.get_city_by_vol(volunteer_id)
 
         events_by_city = crud.get_events_by_city(city)
-
-        print(events_by_city)
 
         # what I want to display in the result card: event title, institution name, event location, institution/event cause, event date.
         search_results_bar = []
