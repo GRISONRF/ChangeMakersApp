@@ -895,7 +895,7 @@ hr {
 
 /* ------------- vol profile page ---------------- */
 
-.img-to-inst
+
 
 #inst-into-cont {
   width: 100%   !important;
@@ -910,11 +910,12 @@ hr {
 .vprofile-container {
   flex-direction: row;
   justify-content: space-around;
-  background-image: url('/static/images/backgorund/vol-cont.png');
+  background-image: url('/static/images/backgorund/maybevolbar1.jpg');
   background-repeat: no-repeat;
   margin: 39px;
   border-radius: 30px;
-  border: 1px solid #4741a638;;
+
+  background-size: cover;
 }
 
 
@@ -923,6 +924,7 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #ffffff94;
 }
 
 .vprofile-info {
@@ -960,12 +962,22 @@ img#vpic {
   }
 
 .recommended-events {
+  padding: 30px;
+  padding-left: 66px;
+  font-size: 20px;
+}
+
+#recommended-events {
+  font-size: larger;
 }
 
 #events-container {
 }
 
 .search-events {
+  padding: 30px;
+  padding-left: 66px;
+  font-size: 20px;  
 
 }
 
@@ -1025,6 +1037,45 @@ img#vpic {
 .cause-btns {
 
 }
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #f9ce69;
+    background-color: #f9ce6959;
+  padding-left: 82px;
+  font-size: 24px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #f7a87fc7;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #FF4B33;
+  color: white;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
 
 /* ------------------------ inst profile page ------------- */
 

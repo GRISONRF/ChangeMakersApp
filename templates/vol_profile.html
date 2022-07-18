@@ -25,7 +25,10 @@ padding: 30px 30px 0 30px;
         </form>
       </div>
     </div>  
-    <div class="col">
+    <div class="col" style="
+    background-color: #ffffff94;
+    padding-top: 30px;
+">
       <div class="name">
 
           <p><b>Name:</b> {{ volunteer.fname}}</p>
@@ -34,7 +37,10 @@ padding: 30px 30px 0 30px;
 
       </div>
     </div>
-    <div class="col">
+    <div class="col" style="
+    background-color: #ffffff94;
+    padding-top: 30px;
+">
       <div class="skills"> 
         <div class="skills-info">
           {% if 'volunteer' in session %} 
@@ -81,7 +87,9 @@ padding: 30px 30px 0 30px;
 
 </div>
 
-<div class="signed-up-events">
+
+<!-- default content for nav -->
+<!-- <div class="signed-up-events">
   <h2> Events {{volunteer.fname}} Signed Up </h2>
 
   {% for event in my_events %}
@@ -103,9 +111,73 @@ padding: 30px 30px 0 30px;
   {% endfor %}
 </div>
 
+</div> -->
+<!-- end of default -->
+
+
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'London')"  id="defaultOpen">Events {{volunteer.fname}} Signed Up </button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')" style="margin-left: 61px;">Recommended Events</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')" style="margin-left: 61px;">Search Events</button>
 </div>
 
-<div class="events">
+<!-- Tab content -->
+<div id="London" class="tabcontent">
+  <div class="signed-up-events">
+    <h2> Events {{volunteer.fname}} Signed Up </h2>
+  
+    {% for event in my_events %}
+      <div class="card">
+        <div class="image">
+        <img src=" {{event.evt_pic}}">
+        </div>
+        <div class="title">
+        <h1>{{ event.evt_title}}</h1>
+        </div>
+        <div class="des">
+        <p> <b>When:</b> {{ event.evt_date }} </p>
+        <p><b> Where: </b>{{ event.evt_city }}</p>
+        <a href="/events/{{event.event_id}}">
+          <button>More details</button>
+        </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  </div>
+</div>
+
+<div id="Paris" class="tabcontent">
+    <div class="recommended-events">
+      <h2>Recommended events:</h2>
+      <p> These events were picked for you based on your location (Denver, Colorado) and your selected skills.</p>
+      <div id="recommended-events"></div>
+    </div>
+</div>
+
+<div id="Tokyo" class="tabcontent">
+  <div class="search-events">
+    <h2> Search for events by:</h2>
+    <p> Search every event in whatever city you want, and you can also choose by the cause of the event.</p>
+    <div id="events-container"></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="events">
   <div class="recommended-events">
     <h2 style="font-size: large;">Recommended events:</h2>
     <div id="recommended-events"></div>
@@ -116,7 +188,10 @@ padding: 30px 30px 0 30px;
     <div id="events-container"></div>
   </div>
   
-</div>
+</div> -->
+
+
+<script src="/static/js/tab-vol.js"></script>
 <script src="/static/js/cards-react.jsx" type="text/jsx"></script>
 
 {% endblock %} 
