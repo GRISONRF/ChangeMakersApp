@@ -233,7 +233,10 @@
       {% if all_comments != None %}
       {% for item in all_comments %}
       <div id="{{item.comment_id}}" class="comment-block">
-        <p id="comment-volunteer-name">{{item.volunteer.fname}}</p>
+        <div class="head-comment-sec">
+          <img id="comment-pic" src="{{item.volunteer.v_pic}}">
+          <p id="comment-volunteer-name">{{item.volunteer.fname}}</p>
+        </div>
         {% if item.review == 1 %}
         <p id="inst-review">⭐</p>
         {% elif item.review == 2 %}
@@ -246,13 +249,15 @@
         <p id="inst-review">⭐⭐⭐⭐⭐</p>
         {% endif %}
         <p id="inst-comment">{{item.comment}}</p>
+        
       </div>
 
 
       <!-- Delete button for comment -->
       {%if 'volunteer' in session %}
       {%if item.volunteer_id == session['volunteer'] %}
-      <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="delete-btn btn btn-outline-danger">Delete</button>
+      <button type="button" id="delete-{{item.comment_id}}" value="{{item.comment_id}}" class="delete-comment-btn btn btn-outline-danger">Delete</button>
+      <div class="horizontalLine"></div>
       {% endif %}
       {% endif %}
       {% endfor %}

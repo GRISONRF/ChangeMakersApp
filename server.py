@@ -215,6 +215,7 @@ def login():
             inst_comments = crud.get_reviews_by_inst(inst_id)
 
             return redirect(f'/inst_profile/{inst_id}')
+            
     else:
         flash("User email or password don't match. Try again.")
         
@@ -264,6 +265,7 @@ def inst_ratings(inst_id):
         inst_review = request.json.get('review')
         volunteer = crud.get_volunter_by_id(volunteer_id)
         volunteer_fname = volunteer.fname
+        volunteer_pic = volunteer.v_pic
         all_comments = crud.get_reviews_by_inst(inst_id)
 
         volunteer_comment = crud.create_inst_comment(
@@ -282,6 +284,7 @@ def inst_ratings(inst_id):
             "inst_id": int(inst_id),
             "volunteer_id": volunteer_id,
             "volunteer_fname": volunteer_fname,
+            "volunteer_pic": volunteer_pic
         }
        
 
@@ -293,7 +296,10 @@ def delete_comment(comment_id):
     """ Delete the comment from the db """
 
     comment = crud.get_review_by_id(comment_id)
+    print('\n'*5)
+    print(comment)
     volunteer_id = comment.volunteer_id
+    print(volunteer_id)
     crud.delete_comment_by_id(comment_id)
 
 
@@ -600,17 +606,9 @@ def get_recommended_results():
         rState = crud.get_state_by_vol(volunteer_id)
         rSkill = crud.get_skills_by_volunteer(volunteer_id) #list
         skills_id = crud.get_skills_id_by_skill_obj(rSkill)
-        print("*****************VOLUNTEER SKILL:")
-        print(rSkill)
-        print('\n'*5)
-        print(skills_id)
-        print('\n'*5)
         events_by_location_skill = crud.get_events_by_city_state_skill(rCity, rState, skills_id)
-        print('############# events_by_location_skill:')
-        print(events_by_location_skill)
 
         # what I want to display in the recommendations card: event title, institution name, event location, institution/event cause, event date.
-
         recommendedResults = []
         for event in list(events_by_location_skill):
              recommendedResults.append(

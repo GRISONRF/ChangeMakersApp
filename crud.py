@@ -218,9 +218,6 @@ def get_events_by_city_state_skill(city, state, skill):
     """ Return all the events by the city, state and cause_name """
 
     events = Event.query.join(EventSkill).filter(Event.evt_city == city, Event.evt_state == state, EventSkill.skill_id.in_(skill)).all() 
-   
-    print(events)
-    print('\n'*5)
 
     return events
 

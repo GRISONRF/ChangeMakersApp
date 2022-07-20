@@ -32,7 +32,7 @@ commentForm.addEventListener('submit', (evt) => {
 
             return response.json(); })
         .then((comment) => {
-
+            console.log(comment)
             let commentDiv;
 
             commentDiv = document.querySelector('.comment-div');
@@ -60,10 +60,15 @@ commentForm.addEventListener('submit', (evt) => {
             commentDiv.insertAdjacentHTML(
                 'afterbegin',
                 `<div id="${comment.comment_id}" class="comment-block">
+                <div class="head-comment-sec">
+                <img id="comment-pic" src="${comment.volunteer_pic}" >
                 <p id="comment-volunteer-name">${instReviewInfo.volunteer_name}</p>
+                </div>
                 <p id="inst-review">${comment.review}</p>
                 <p>${comment.comment}</p> 
-                <button type="button" id="delete-${comment.comment_id}" value="${comment.comment_id}" class="btn btn-outline-danger delete-comment-btn">Delete</button>`
+                <button type="button" id="delete-${comment.comment_id}" value="${comment.comment_id}" class="btn btn-outline-danger delete-comment-btn">Delete</button>
+                <div class="horizontalLine"></div>`
+                
             );
 
             no_comment = document.querySelector('#no-comment');

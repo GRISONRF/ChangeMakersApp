@@ -14,7 +14,7 @@ function initMap() {
 
             const basicMap = new google.maps.Map(document.querySelector('#inst-map'), {
                 center: jsonData,
-                zoom: 12,
+                zoom: 15,
             });
 
             const coordMarker = new google.maps.Marker({
@@ -40,7 +40,7 @@ function eventMap() {
 
             const basicMap = new google.maps.Map(document.querySelector('#event-map'), {
                 center: jsonData,
-                zoom: 12,
+                zoom: 15,
             });
 
             const coordMarker = new google.maps.Marker({
