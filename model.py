@@ -200,7 +200,6 @@ class VolunteerSkill(db.Model):
         return f'<< VolunteerSkill volunteer_skill_id={self.volunteer_skill_id} volunteer_id={self.volunteer_id} skill_id={self.skill_id} >>'
 
 
-
 class EventSkill(db.Model):
     """ A Event Skill """
 
