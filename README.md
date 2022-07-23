@@ -7,13 +7,10 @@
 :standing_man: Volunteers can select up to 3 skills for themselves and sign up for events/opportunities. They can search the events based on their location, the Institution cause or/and the matching skills. They can also leave a comment and rate the Institution they worked with.
 
 ## Table of contents
-🤖 [Technologies](#technologies-used)
-
-⭐ [Features](#features)
-
-📖 [Set Up](#set-up)
-
-🌸 [About Me](#about-me)
+* 🤖 [Technologies](#technologies-used)
+* ⭐ [Features](#features)
+* 📖 [Set Up](#set-up)
+* 🌸 [About Me](#about-me)
 
 ## Technologies Used
 * Backend: Python, Flask, SQL, PostgreSQL, SQLAlchemy.
