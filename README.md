@@ -16,9 +16,9 @@
 🌸 [About Me](#about-me)
 
 ## Technologies Used
-*Backend: Python, Flask, SQL, PostgreSQL, SQLAlchemy.
-*Frontend: Javascript, React JS, HTML, CSS, Bootstrap, AJAX, JSON, Jinja2.
-*APIs: Geolocation API, Google Maps API.
+* Backend: Python, Flask, SQL, PostgreSQL, SQLAlchemy.
+* Frontend: Javascript, React JS, HTML, CSS, Bootstrap, AJAX, JSON, Jinja2.
+* APIs: Geolocation API, Google Maps API.
 
 ## Features
 
