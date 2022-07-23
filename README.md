@@ -1,4 +1,4 @@
-<img src="static/images/applogotest.png" width="60" margin-left:"10">
+<img src="static/images/applogotest.png" width="60">
 # ChangeMakers
 
 ChangeMakers has been designed to make it easier for people to find volunteer opportunities near them, and for institutions to find qualified volunteers for upcoming events.
