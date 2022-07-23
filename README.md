@@ -1,7 +1,6 @@
 <img src="static/images/applogotest.png" width="60">
-# ChangeMakers
 
-ChangeMakers has been designed to make it easier for people to find volunteer opportunities near them, and for institutions to find qualified volunteers for upcoming events.
+**ChangeMakers** has been designed to make it easier for people to find volunteer opportunities near them, and for institutions to find qualified volunteers for upcoming events.
 
 :office: Institutions can create events/opportunities and set up the skills they need for each particular one. 
 
