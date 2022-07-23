@@ -14,7 +14,7 @@
 
 ## Technologies Used
 * Backend: Python, Flask, SQL, PostgreSQL, SQLAlchemy.
-* Frontend: Javascript, React JS, HTML, CSS, Bootstrap, AJAX, JSON, Jinja2.
+* Frontend: Javascript, React JS, HTML, CSS, Bootstrap, AJAX, Jinja2.
 * APIs: Geolocation API, Google Maps API.
 
 ## Features
