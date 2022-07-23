@@ -21,9 +21,6 @@
 
 ## Set Up
 
-
-## About Me
-
 To run this project, first clone or fork this repo:
 ```
 git clone https://github.com/GRISONRF/final-project-hackbright.git
@@ -55,3 +52,5 @@ Run the app:
 python3 server.py
 ```
 You can now navigate to 'localhost:5000/' to access the travel app
+
+## About me
