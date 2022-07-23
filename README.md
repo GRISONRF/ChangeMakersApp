@@ -19,3 +19,39 @@
 
 ## Features
 
+## Set Up
+
+
+## About Me
+
+To run this project, first clone or fork this repo:
+```
+git clone https://github.com/GRISONRF/final-project-hackbright.git
+```
+Create and activate a virtual environment inside your directory
+```
+virtualenv env
+source env/bin/activate
+```
+Install the dependencies:
+```
+pip install -r requirements.txt
+```
+Sign up to obtain key for GoogleMaps 
+Save your Mapbox API key in a file called `secrets.sh` using this format:
+```
+export APP_KEY="YOUR_KEY_GOES_HERE"
+```
+Source your key into your virtual environment:
+```
+source secrets.sh
+```
+Set up the database:
+```
+python3 seed_database.py
+```
+Run the app:
+```
+python3 server.py
+```
+You can now navigate to 'localhost:5000/' to access the travel app
