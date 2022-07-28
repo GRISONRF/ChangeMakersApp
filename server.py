@@ -1,5 +1,3 @@
-"""Server for movie ratings app."""
-
 from contextlib import redirect_stderr
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
