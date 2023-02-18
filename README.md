@@ -76,6 +76,6 @@ Run the app:
 ```
 python3 server.py
 ```
-You can now navigate to 'localhost:5000/' to access the travel app
+You can now navigate to 'localhost:5000/' to access the app
 
 ## About me
